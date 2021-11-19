@@ -2,6 +2,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# main python console for all scripts: https://trinket.io/embed/python3/c387baae37?toggleCode=true&runOption=run&start=result
+
 import requests
 import re
 from bs4 import BeautifulSoup
@@ -30,7 +32,7 @@ all_data=''
 for i in range(len(scripts)):
     data = response.text
     data=data[data.find('#...start_'+scripts[i]+'...#'):data.find('#...end_'+scripts[i]+'...#')+19].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
-    data=data.replace(r'Ã¤','ä').replace(r'\u002F','/').replace(r'Ã¼','ü').replace(r'Ã¶','ö')
+    #data=data.replace('sonderkrams','')
     all_data += '\n' + data.replace('#...start_'+scripts[i]+'...#\n','').replace('#...end_'+scripts[i]+'...#\n','')
     file = open(scripts[i]+'.py', 'w')
     data = data.replace(')\n\nplt.show()',')\n\nplt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)')
@@ -52,18 +54,14 @@ if x =='':
   import script2
   #import script3
   #import script4
-'''
-else:
-    import scripts[int(x)]
-
-elif x == '1':
+if x == '1':
     import script1
-elif x == '2':
+if x == '2':
     import script2
-elif x == '3':
+if x == '3':
     import script3
-elif x == '4':
+if x == '4':
     import script4
-'''
+
 
 #...end_main...#
