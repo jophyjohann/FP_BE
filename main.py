@@ -48,21 +48,25 @@ all_data = all_data.replace('#...start...#\n','').replace('#...end...#','').repl
 
 print('Typing in the number of script to execute or hit ENTER to continue with executing all scripts..')
 
+
 x = input()
-if x.isdigit():
-    if int(x) <= len(scripts) and int(x) > 0:
-        file = open(scripts[int(x)-1]+'.py', 'r')
-        exec(file.read())
-    else:
-        print('Loading all')
-        for i in range(len(scripts)):
-            file = open(scripts[i]+'.py', 'r')
+while(True):
+    if x.isdigit():
+        if int(x) <= len(scripts) and int(x) > 0:
+            file = open(scripts[int(x)-1]+'.py', 'r')
             exec(file.read())
-else:
-  print('Loading all')
-  for i in range(len(scripts)):
-      file = open(scripts[i]+'.py', 'r')
-      exec(file.read())
+        else:
+            print('Loading all')
+            for i in range(len(scripts)):
+                file = open(scripts[i]+'.py', 'r')
+                exec(file.read())
+    else:
+      print('Loading all')
+      for i in range(len(scripts)):
+          file = open(scripts[i]+'.py', 'r')
+          exec(file.read())
+    print('\nExecuted sucessfully...')
+    input()
 
 
 #...end_main...#
