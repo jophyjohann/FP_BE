@@ -30,7 +30,7 @@ data=[]
 all_data=''
 for i in range(len(scripts)):
     data[i] = response.text
-    data[i]=str(data[i][data.find('#...start_'+scripts[i]'...#'):data.find('#...end_'+scripts[i]'...#')+11]).replace(r'\\n',r'**üü**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'\"','"').replace(r"\\","\\")
+    data[i]=str(data[i][data.find('#...start_'+scripts[i]'...#'):data.find('#...end_'+scripts[i]'...#')+11]).replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
     data[i]=data[i].replace(r'Ã¤','ä').replace(r'\u002F','/').replace(r'Ã¼','ü').replace(r'Ã¶','ö')
     all_data += '\n' + data[i].replace('#...start_'+scripts[i]'...#\n','').replace('#...end_'+scripts[i]'...#\n','')
     file = open(scripts[i]+'.py', 'w')
