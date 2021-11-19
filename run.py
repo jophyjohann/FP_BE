@@ -50,12 +50,14 @@ target_url = 'https://codesandbox.io/embed/fp-be-bc6t9?fontsize=14&hidenavigatio
 response = get(target_url)
 # create scripts
 scriptse.append('export')
+scriptse.append('AnalyzeData')
+scriptse.append('DatasetTools')
 
-def read_file(files, i):
+def read_file(file, i):
     data = response.text
-    data=data[data.find('#...start_'+scriptse[i]+'...#'):data.find('#...end_'+scriptse[i]+'...#')+12+len(scriptse[i])].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
+    data=data[data.find('#...start_'+file+'...#'):data.find('#...end_'+file+'...#')+12+len(file)].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
     data=data.replace('sonderkrams','')
-    file = open(scriptse[i]+'.py', 'w')
+    file = open(file+'.py', 'w')
     data = data.replace(')\n\nplt.show()',')\n\nplt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)')
     data = data.replace(')\n    plt.show()',')\n    plt.show()\n\n    # wait a second for reloading the matplotlib module due to issues\n    time.sleep(0.5)\n    importlib.reload(plt)\n    time.sleep(0.5)')
     data = data.replace('\n\nimport','\n\nimport time\nimport')
@@ -70,31 +72,25 @@ print('Typing in the number of script to execute or hit ENTER to continue with e
 
 x = input()
 while(True):
-    if x.isdigit():
-        if int(x) <= len(scripts) and int(x) > 0:
-            file = open(scripts[int(x)-1]+'.py', 'r')
-            exec(file.read())
-        else:
-            print('Loading all')
-            for i in range(len(scripts)):
-                file = open(scripts[i]+'.py', 'r')
-                exec(file.read())
+    if x.isdigit() and int(x) <= len(scripts) and int(x) > 0:
+        file = open(scripts[int(x)-1]+'.py', 'r')
+        exec(file.read())
     else:
       print('Loading all')
       for i in range(len(scripts)):
           file = open(scripts[i]+'.py', 'r')
           exec(file.read())
     print('\nExecuted sucessfully...')
-    input()
+    y = input()
+    if y != '' and y != x:
+        x = y
     response = get(target_url)
-    if x.isdigit():
-        read_file(scriptse[int(x)-1],int(x)-1)
+    if x.isdigit() and int(x) <= len(scripts) and int(x) > 0:
+        read_file(scripts[int(x)-1],int(x)-1)
     else:
-        for i in range(len(scriptse)):
-            read_file(scriptse[i],i)
+        for i in range(len(scripts)):
+            read_file(scripts[i],i)
             
-
-
 
 
 #...end_run...#
