@@ -9,8 +9,30 @@ from requests import get
 
 #...start_synch_files...#
 # synch the files with online storage on trinket python console over github (dont forget to push to repo on github when files changed)
-files=["dat1.dat",
-        "dat2.dat",]
+files=["AM.TXT",
+        "CS_ALU12.TXT",
+        "CS_ALU3.TXT",
+        "CS_ALU3.TXT",
+        "CS_ALU6.TXT",
+        "CS_ALU9.TXT",
+        "CS_BLANK.TXT",
+        "CS_GAMMA.TXT",
+        "CS_PAP1.TXT",
+        "CS_PAP2.TXT",
+        "CS_PAP3.TXT",
+        "CS_PAP4.TXT",
+        "EMPTY.TXT",
+        "KR.TXT",
+        "KR_ALU12.TXT",
+        "KR_ALU3.TXT",
+        "KR_ALU6.TXT",
+        "KR_ALU9.TXT",
+        "KR_GAMMA.TXT",
+        "KR_PAP1.TXT",
+        "KR_PAP2.TXT",
+        "KR_PAP3.TXT",
+        "KR_PAP4.TXT",
+        "KR_PB.TXT"]
 
 for file in files:
   with open(file, 'w') as f:
