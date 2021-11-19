@@ -7,6 +7,7 @@ import re
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
+print('here i am')
 
 #...start_synch_files...#
 # synch the files with online storage on trinket python console over github (dont forget to push to repo on github when files changed)
@@ -19,20 +20,17 @@ for file in files:
 #...end_synch_files...#
 
 # get realtime code from codesandbox (embedded link) and get right format
-scripts = [script1,
-           script2]
+scripts = ['script1',
+           'script2']
 
-target_url = https://codesandbox.io/embed/fp-be-bc6t9?fontsize=14&hidenavigation=1&theme=dark&view=editor
+target_url = 'https://codesandbox.io/embed/fp-be-bc6t9?fontsize=14&hidenavigation=1&theme=dark&view=editor'
 
-response=[]
-for i in range(len(target_url_scripts)):
-    response[i] = requests.get(target_url_scripts[i])
-
+response = requests.get(target_url)
 # create scripts
 data=[]
 all_data=''
 for i in range(len(scripts)):
-    data[i] = response[i].text
+    data[i] = response.text
     data[i]=str(data[i][data.find('#...start_'+scripts[i]'...#'):data.find('#...end_'+scripts[i]'...#')+11]).replace(r'\\n',r'**üü**').replace(r"\n","\n").replace(r'**üü**',r"\n").replace(r'\"','"').replace(r"\\","\\")
     data[i]=data[i].replace(r'Ã¤','ä').replace(r'\u002F','/').replace(r'Ã¼','ü').replace(r'Ã¶','ö')
     all_data += '\n' + data[i].replace('#...start_'+scripts[i]'...#\n','').replace('#...end_'+scripts[i]'...#\n','')
@@ -55,10 +53,10 @@ if x =='':
   #import script2
   #import script3
   #import script4
+'''
 else:
     import scripts[int(x)]
 
-'''
 elif x == '1':
     import script1
 elif x == '2':
