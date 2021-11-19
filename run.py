@@ -79,8 +79,6 @@ while(True):
     else:
       print('Loading all')
       for i in range(len(scripts)):
-          print("len",len(scripts))
-          print(i)
           file = open(scripts[i]+'.py', 'r')
           exec(file.read())
     print('\nExecuted sucessfully...')
