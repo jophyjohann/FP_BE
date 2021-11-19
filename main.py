@@ -1,4 +1,4 @@
-#...start...#
+#...start_main...#
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -22,8 +22,7 @@ for file in files:
 scripts = [script1,
            script2]
 
-target_url_scripts = [,
-                     ]
+target_url = https://codesandbox.io/embed/fp-be-bc6t9?fontsize=14&hidenavigation=1&theme=dark&view=editor
 
 response=[]
 for i in range(len(target_url_scripts)):
@@ -32,11 +31,11 @@ for i in range(len(target_url_scripts)):
 # create scripts
 data=[]
 all_data=''
-for i in range(len(target_url_scripts)):
+for i in range(len(scripts)):
     data[i] = response[i].text
-    data[i]=str(data[i][data.find('#...start...#'):data.find('#...end...#')+11]).replace(r'\\n',r'**üü**').replace(r"\n","\n").replace(r'**üü**',r"\n").replace(r'\"','"').replace(r"\\","\\")
+    data[i]=str(data[i][data.find('#...start_'+scripts[i]'...#'):data.find('#...end_'+scripts[i]'...#')+11]).replace(r'\\n',r'**üü**').replace(r"\n","\n").replace(r'**üü**',r"\n").replace(r'\"','"').replace(r"\\","\\")
     data[i]=data[i].replace(r'Ã¤','ä').replace(r'\u002F','/').replace(r'Ã¼','ü').replace(r'Ã¶','ö')
-    all_data += '\n' + data[i]
+    all_data += '\n' + data[i].replace('#...start_'+scripts[i]'...#\n','').replace('#...end_'+scripts[i]'...#\n','')
     file = open(scripts[i]+'.py', 'w')
     data = data.replace('plt.show()','plt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)\n')
     data = data.replace('import','import time\nimport')
@@ -46,6 +45,8 @@ for i in range(len(target_url_scripts)):
 # create export script
 all_data = all_data.replace('#...start...#\n','').replace('#...end...#','').replace('plt.show()','#plt.show()')
 
+
+print('Typing in the number of script to execute or hit ENTER to continue with executing all scripts..')
 
 x = input()
 if x =='':
@@ -68,4 +69,4 @@ elif x == '4':
     import script4
 '''
 
-#...end...#
+#...end_main...#
