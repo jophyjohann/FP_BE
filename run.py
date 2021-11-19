@@ -6,6 +6,7 @@
 
 
 from requests import get
+import importlib
 
 #...start_synch_files...#
 # synch the files with online storage on trinket python console over github (dont forget to push to repo on github when files changed)
@@ -44,6 +45,7 @@ for file in files:
 scripts = ['script1',
            'script2',
            'script3']
+script=5*[False]
 
 target_url = 'https://codesandbox.io/embed/fp-be-bc6t9?fontsize=14&hidenavigation=1&theme=dark&view=editor'
 
@@ -71,11 +73,40 @@ for i in range(len(scriptse)):
 
 print('Typing in the number of script to execute or hit ENTER to continue with executing all scripts..')
 
+
+def exec_file(num):
+    if num==1:
+        import script1
+        if script[1]:
+            importlib.reload(script1)
+        script[1] = True
+    elif num==2:
+        import script2
+        if script[2]:
+            importlib.reload(script2)
+        script[2] = True
+    elif num==3:
+        import script3
+        if script[3]:
+            importlib.reload(script3)
+        script[3] = True
+    elif num==4:
+        import script4
+        if script[4]:
+            importlib.reload(script4)
+        script[4] = True
+    elif num==5:
+        import script5
+        if script[5]:
+            importlib.reload(script5)
+        script[5] = True
+
 x = input()
 while(True):
     if x.isdigit() and int(x) <= len(scripts) and int(x) > 0:
         file = open(scripts[int(x)-1]+'.py', 'r')
-        exec(file.read())
+        #exec(file.read())
+        exec_file(int(x))
     else:
       print('Loading all..\n')
       for i in range(len(scripts)):
