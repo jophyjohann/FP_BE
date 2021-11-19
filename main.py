@@ -26,17 +26,17 @@ target_url = 'https://codesandbox.io/embed/fp-be-bc6t9?fontsize=14&hidenavigatio
 
 response = requests.get(target_url)
 # create scripts
-data=[]
 all_data=''
 for i in range(len(scripts)):
-    data[i] = response.text
-    data[i]=str(data[i][data.find('#...start_'+scripts[i]'...#'):data.find('#...end_'+scripts[i]'...#')+11]).replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
-    data[i]=data[i].replace(r'Ã¤','ä').replace(r'\u002F','/').replace(r'Ã¼','ü').replace(r'Ã¶','ö')
-    all_data += '\n' + data[i].replace('#...start_'+scripts[i]'...#\n','').replace('#...end_'+scripts[i]'...#\n','')
+    data = response.text
+    data=data[data.find('#...start_'+scripts[i]+'...#'):data.find('#...end_'+scripts[i]+'...#')+11].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
+    data=data.replace(r'Ã¤','ä').replace(r'\u002F','/').replace(r'Ã¼','ü').replace(r'Ã¶','ö')
+    all_data += '\n' + data.replace('#...start_'+scripts[i]+'...#\n','').replace('#...end_'+scripts[i]+'...#\n','')
     file = open(scripts[i]+'.py', 'w')
-    data = data.replace('plt.show()','plt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)\n')
-    data = data.replace('import','import time\nimport')
-    file.writelines(data[i])
+    data = data.replace(')\n\nplt.show()',')\n\nplt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)')
+    data = data.replace(')\n    plt.show()',')\n    plt.show()\n\n    # wait a second for reloading the matplotlib module due to issues\n    time.sleep(0.5)\n    importlib.reload(plt)\n    time.sleep(0.5)')
+    data = data.replace('\n\nimport','\n\nimport time\nimport')
+    file.writelines(data)
     file.close
 
 # create export script
