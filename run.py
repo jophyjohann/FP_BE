@@ -42,7 +42,8 @@ for file in files:
 
 # get realtime code from codesandbox (embedded link) and get right format
 scriptse=scripts = ['script1',
-                    'script2']
+                    'script2',
+                    'script3']
 
 target_url = 'https://codesandbox.io/embed/fp-be-bc6t9?fontsize=14&hidenavigation=1&theme=dark&view=editor'
 

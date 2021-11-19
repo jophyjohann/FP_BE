@@ -3,7 +3,8 @@
 # -*- coding: utf-8 -*-
 
 scripts = ['script1',
-           'script2']
+           'script2',
+           'script3']
 
 for i in range(len(scripts)):
     file = open(scripts[i]+'.py', 'r')
