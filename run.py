@@ -111,7 +111,9 @@ while(True):
       print('Loading all..\n')
       for i in range(len(scripts)):
           file = open(scripts[i]+'.py', 'r')
-          exec(file.read())
+          #exec(file.read())
+          exec_file(i+1)
+
     print('\nExecuted sucessfully...')
     y = input()
     if y != '' and y != x:
