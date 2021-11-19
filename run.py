@@ -41,14 +41,15 @@ for file in files:
 
 
 # get realtime code from codesandbox (embedded link) and get right format
-scriptse=scripts = ['script1',
-                    'script2',
-                    'script3']
+scripts = ['script1',
+           'script2',
+           'script3']
 
 target_url = 'https://codesandbox.io/embed/fp-be-bc6t9?fontsize=14&hidenavigation=1&theme=dark&view=editor'
 
 response = get(target_url)
-# create scripts
+
+scriptse = scripts.copy()
 scriptse.append('export')
 scriptse.append('AnalyzeData')
 scriptse.append('DatasetTools')
@@ -78,6 +79,8 @@ while(True):
     else:
       print('Loading all')
       for i in range(len(scripts)):
+          print("len",len(scripts))
+          print(i)
           file = open(scripts[i]+'.py', 'r')
           exec(file.read())
     print('\nExecuted sucessfully...')
