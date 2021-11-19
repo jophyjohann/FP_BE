@@ -10,7 +10,7 @@ for i in range(len(scripts)):
     data = file.read()
     export_data = ('\n' + data.replace('#...start_'+scripts[i]+'...#\n','').replace('#...end_'+scripts[i]+'...#',''))
     export_data = export_data.replace('#...start...#\n','').replace('#...end...#','').replace('plt.show()','#plt.show()').replace("#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n","")
-    export_data = export_data.eplace(export_data[i][export_data[i].find('# main python console'):export_data[i].find('start=result')+12],'')
+    export_data = export_data.replace(export_data[i][export_data[i].find('# main python console'):export_data[i].find('start=result')+12],'')
     
     exec(export_data[i])
 
