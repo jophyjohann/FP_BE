@@ -2,7 +2,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-print('Hello World')
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -70,6 +69,7 @@ def main():
     #plt.ylim(0, 400)
     plt.title(r"Cs Gammaspektrum")
     plt.show()
+
 
 
 #...end_script1...#

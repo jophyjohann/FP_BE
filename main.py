@@ -48,20 +48,20 @@ all_data = all_data.replace('#...start...#\n','').replace('#...end...#','').repl
 print('Typing in the number of script to execute or hit ENTER to continue with executing all scripts..')
 
 x = input()
-if x =='':
+if x.isdigit():
+    if int(x) <= len(scripts) and int(x) > 0:
+        file = open(scripts[int(x)-1]+'.py', 'r')
+        exec(file.read())
+    else:
+        print('Loading all')
+        for i in range(len(scripts)):
+            file = open(scripts[i]+'.py', 'r')
+            exec(file.read())
+else:
   print('Loading all')
-  import script1
-  import script2
-  #import script3
-  #import script4
-if x == '1':
-    import script1
-if x == '2':
-    import script2
-if x == '3':
-    import script3
-if x == '4':
-    import script4
+  for i in range(len(scripts)):
+      file = open(scripts[i]+'.py', 'r')
+      exec(file.read())
 
 
 #...end_main...#
