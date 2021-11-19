@@ -1,8 +1,8 @@
-#...start_main...#
+#...start_run...#
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# main python console for all scripts: https://trinket.io/embed/python3/56bdbaffcc?toggleCode=true&runOption=run&start=result
+# main python console for all scripts: https://trinket.io/embed/python3/c2d7505334?toggleCode=true&runOption=run&start=result
 
 
 from requests import get
@@ -70,4 +70,4 @@ while(True):
     input()
 
 
-#...end_main...#
+#...end_run...#
