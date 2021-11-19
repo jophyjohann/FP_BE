@@ -2,7 +2,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# main python console for all scripts: https://trinket.io/embed/python3/c2d7505334?toggleCode=true&runOption=run&start=result
+# main python console for all scripts: https://trinket.io/embed/python3/384c7dcf76?toggleCode=true&runOption=run&start=result
 
 
 from requests import get
