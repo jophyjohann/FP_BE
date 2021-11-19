@@ -2,7 +2,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# main python console for all scripts: https://trinket.io/embed/python3/c387baae37?toggleCode=true&runOption=run&start=result
+# main python console for all scripts: https://trinket.io/embed/python3/a2cbc71ace?toggleCode=true&runOption=run&start=result
 
 import requests
 import re
@@ -32,7 +32,7 @@ all_data=''
 for i in range(len(scripts)):
     data = response.text
     data=data[data.find('#...start_'+scripts[i]+'...#'):data.find('#...end_'+scripts[i]+'...#')+19].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
-    #data=data.replace('sonderkrams','')
+    data=data.replace('sonderkrams','')
     all_data += '\n' + data.replace('#...start_'+scripts[i]+'...#\n','').replace('#...end_'+scripts[i]+'...#\n','')
     file = open(scripts[i]+'.py', 'w')
     data = data.replace(')\n\nplt.show()',')\n\nplt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)')
