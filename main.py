@@ -29,7 +29,7 @@ response = requests.get(target_url)
 all_data=''
 for i in range(len(scripts)):
     data = response.text
-    data=data[data.find('#...start_'+scripts[i]+'...#'):data.find('#...end_'+scripts[i]+'...#')+11].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
+    data=data[data.find('#...start_'+scripts[i]+'...#'):data.find('#...end_'+scripts[i]+'...#')+19].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
     data=data.replace(r'Ã¤','ä').replace(r'\u002F','/').replace(r'Ã¼','ü').replace(r'Ã¶','ö')
     all_data += '\n' + data.replace('#...start_'+scripts[i]+'...#\n','').replace('#...end_'+scripts[i]+'...#\n','')
     file = open(scripts[i]+'.py', 'w')
@@ -49,7 +49,7 @@ x = input()
 if x =='':
   print('Loading all')
   import script1
-  #import script2
+  import script2
   #import script3
   #import script4
 '''
