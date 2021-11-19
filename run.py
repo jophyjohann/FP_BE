@@ -52,9 +52,9 @@ scriptse.append('export')
 
 def read_file_data(scripts,i,data):
     data = response.text
-    data=data[data.find('#...start_'+scriptse[i]+'...#'):data.find('#...end_'+scriptse[i]+'...#')+12+len(scriptse[i])].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
+    data=data[data.find('#...start_'+scripts[i]+'...#'):data.find('#...end_'+scripts[i]+'...#')+12+len(scripts[i])].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
     data=data.replace('sonderkrams','')
-    file = open(scriptse[i]+'.py', 'w')
+    file = open(scripts[i]+'.py', 'w')
     data = data.replace(')\n\nplt.show()',')\n\nplt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)')
     data = data.replace(')\n    plt.show()',')\n    plt.show()\n\n    # wait a second for reloading the matplotlib module due to issues\n    time.sleep(0.5)\n    importlib.reload(plt)\n    time.sleep(0.5)')
     data = data.replace('\n\nimport','\n\nimport time\nimport')
@@ -63,8 +63,8 @@ def read_file_data(scripts,i,data):
     file.close
 
 
-for i in range(len(scripts)):
-    read_file_data(scripts[i],i,response)
+for i in range(len(scriptse)):
+    read_file_data(scriptse[i],i,response)
 
 
 print('Typing in the number of script to execute or hit ENTER to continue with executing all scripts..')
