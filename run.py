@@ -39,6 +39,7 @@ for i in range(len(scripts)):
     data = data.replace(')\n\nplt.show()',')\n\nplt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)')
     data = data.replace(')\n    plt.show()',')\n    plt.show()\n\n    # wait a second for reloading the matplotlib module due to issues\n    time.sleep(0.5)\n    importlib.reload(plt)\n    time.sleep(0.5)')
     data = data.replace('\n\nimport','\n\nimport time\nimport')
+    data = data.replace('\n\nimport','\n\nimport importlib\nimport')
     file.writelines(data)
     file.close
 
