@@ -2,6 +2,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-print('test test test')
+print('script3.py is running!')
 
 #...end_script3...#

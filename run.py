@@ -51,11 +51,11 @@ response = get(target_url)
 # create scripts
 scriptse.append('export')
 
-def read_file_data(files,i,data):
+def read_file(files, i):
     data = response.text
-    data=data[data.find('#...start_'+files[i]+'...#'):data.find('#...end_'+files[i]+'...#')+12+len(files[i])].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
+    data=data[data.find('#...start_'+scriptse[i]+'...#'):data.find('#...end_'+scriptse[i]+'...#')+12+len(scriptse[i])].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
     data=data.replace('sonderkrams','')
-    file = open(files[i]+'.py', 'w')
+    file = open(scriptse[i]+'.py', 'w')
     data = data.replace(')\n\nplt.show()',')\n\nplt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)')
     data = data.replace(')\n    plt.show()',')\n    plt.show()\n\n    # wait a second for reloading the matplotlib module due to issues\n    time.sleep(0.5)\n    importlib.reload(plt)\n    time.sleep(0.5)')
     data = data.replace('\n\nimport','\n\nimport time\nimport')
@@ -63,10 +63,8 @@ def read_file_data(files,i,data):
     file.writelines(data)
     file.close
 
-
-for j in range(len(scriptse)):
-    read_file_data(scriptse[j],j,response)
-
+for i in range(len(scriptse)):
+    read_file(scriptse[i],i)
 
 print('Typing in the number of script to execute or hit ENTER to continue with executing all scripts..')
 
@@ -90,10 +88,12 @@ while(True):
     input()
     response = get(target_url)
     if x.isdigit():
-        read_file_data(scripts[int(x)],int(x),response)
+        read_file(scriptse[int(x)-1],int(x)-1)
     else:
-        for j in range(len(scripts)):
-            read_file_data(scripts[j],j,response)
+        for i in range(len(scriptse)):
+            read_file(scriptse[i],i)
+            
+
 
 
 
