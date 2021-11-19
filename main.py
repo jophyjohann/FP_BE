@@ -42,11 +42,11 @@ for i in range(len(scripts)):
     file.writelines(data)
     file.close
 
-'''
+
 # create export script
 file = open('export.py', 'w')
-file.writelines('')
-'''
+file.writelines('import main\nfor i in range(len(main.export_data)):\n    exec(main.export_data[i])')
+
 
 print('Typing in the number of script to execute or hit ENTER to continue with executing all scripts..')
 
