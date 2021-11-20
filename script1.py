@@ -3,8 +3,6 @@
 # -*- coding: utf-8 -*-
 
 # main python console for all scripts: https://trinket.io/embed/python3/56bdbaffcc?toggleCode=true&runOption=run&start=result
-# alternative: https://trinket.io/embed/python3/f8dcbf9239?toggleCode=true&runOption=run&start=result
-# a2: https://trinket.io/embed/python3/349a164f34?toggleCode=true&runOption=run&start=result
 
 import numpy as np
 import matplotlib.pyplot as plt

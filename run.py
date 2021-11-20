@@ -3,6 +3,8 @@
 # -*- coding: utf-8 -*-
 
 # main python console for all scripts: https://trinket.io/embed/python3/384c7dcf76?toggleCode=true&runOption=run&start=result
+# alternative: https://trinket.io/embed/python3/f8dcbf9239?toggleCode=true&runOption=run&start=result
+# a2: https://trinket.io/embed/python3/349a164f34?toggleCode=true&runOption=run&start=result
 
 
 from requests import get
