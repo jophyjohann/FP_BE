@@ -78,7 +78,7 @@ def read_file(file, i):
 for i in range(len(scriptse)):
     read_file(scriptse[i],i)
 
-print('Typing in the number of script to execute or hit ENTER to continue with executing all scripts..')
+#print('Typing in the number of script to execute or hit ENTER to continue with executing all scripts..')
 
 
 def exec_file(num):
