@@ -44,12 +44,12 @@ def main():
                       [   0,  -800, 450, 120, 825, 860,  20,  20],   # min bounds
                       [-0.2,  -940, 400,  90, 800, 850,   5,   5],   # start values
                       [-0.4, -1200, 380,  10, 790, 840,   2,   2]]   # max bounds
-    popt, pcov = curve_fit(func, x_cs[fitrange[0]:fit_range[1]], y_cs[fitrange[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    popt, pcov = curve_fit(func, x_cs[fit_range[0]:fit_range[1]], y_cs[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
     print(popt)
 
     # Plot spectrum Cs
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(x_cs[fitrange[0]:fit_range[1]], func(x_cs, *popt), 'r--')
+    plt.plot(x_cs[fit_range[0]:fit_range[1]], func(x_cs, *popt), 'r--')
     plt.plot(x_cs, y_cs, '-', label='Cs Spektrum')
     plt.xlabel(r"Channels")
     plt.ylabel(r"Counts")
