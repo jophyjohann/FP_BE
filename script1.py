@@ -103,7 +103,7 @@ def main():
 
 # fitting the function
     fit_range = [550, 700]
-    plot_range = [500,900]
+    plot_range = [550,700]
     fit_parameters = [["a", "b" ,"C", "d"],
                       [10, -610,  15, 15],   # max bounds
                       [5, -625,  5, 5],     # start values
