@@ -49,7 +49,7 @@ def main():
 
     # Plot spectrum Cs
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(x_cs[fit_range[0]:fit_range[1]], func(x_cs, *popt), 'r--')
+    plt.plot(x_cs[fit_range[0]:fit_range[1]], func(x_cs[fit_range[0]:fit_range[1]], *popt), 'r--')
     plt.plot(x_cs, y_cs, '-', label='Cs Spektrum')
     plt.xlabel(r"Channels")
     plt.ylabel(r"Counts")
