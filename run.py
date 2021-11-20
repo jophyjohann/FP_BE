@@ -37,9 +37,12 @@ files=["AM.TXT",
         "KR_PB.TXT"]
 
 
-for file in files:
-  with open(file, 'w') as f:
-    f.write(get("https://raw.githubusercontent.com/jophyjohann/FP_BE/main/"+folder+file).text)
+def get_files_from_github():
+    for file in files:
+        with open(file, 'w') as f:
+            f.write(get("https://raw.githubusercontent.com/jophyjohann/FP_BE/main/"+folder+file).text)
+
+get_files_from_github()
 #...end_synch_files...#
 
 
@@ -102,6 +105,7 @@ def exec_file(num):
         if script[5]:
             importlib.reload(script5)
         script[5] = True
+
 
 x = input()
 while(True):
