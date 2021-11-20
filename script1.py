@@ -34,22 +34,22 @@ def main():
         return lin(x, a, b) + Gauss(x, C_1, mu_1, sigma_1) + Gauss(x, C_2, mu_2, sigma_2)
 
     # Für Cs Spektrum
-    x_cs = dataSet_cs['channel'][700:1000]
-    y_cs = dataSet_cs['counts'][700:1000]
+    x_cs = dataSet_cs['channel']#[700:1000]
+    y_cs = dataSet_cs['counts']#[700:1000]
 
-    # Plot spectrum Cs
-    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-
+    
     # fitting the function
+    fit_range = [700,1000]
     fit_parameters = [["a" , "b"  ,"C1","C2","μ1","μ2","σ1","σ2"],
                       [   0,  -800, 450, 120, 825, 860,  20,  20],   # min bounds
                       [-0.2,  -940, 400,  90, 800, 850,   5,   5],   # start values
                       [-0.4, -1200, 380,  10, 790, 840,   2,   2]]   # max bounds
-    popt, pcov = curve_fit(func, x_cs, y_cs, fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    popt, pcov = curve_fit(func, x_cs[fitrange[0]:fit_range[1]], y_cs[fitrange[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
     print(popt)
-    # plot characteristic curve with regression line
-    plt.figure(figsize=(8, 4), dpi=120)
-    plt.plot(x_cs, func(x_cs, *popt), 'r--')
+
+    # Plot spectrum Cs
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(x_cs[fitrange[0]:fit_range[1]], func(x_cs, *popt), 'r--')
     plt.plot(x_cs, y_cs, '-', label='Cs Spektrum')
     plt.xlabel(r"Channels")
     plt.ylabel(r"Counts")
