@@ -11,7 +11,7 @@ import DatasetTools
 
 
 def main():
-    directory_path = 'JohSim/'
+    directory_path = ''
     file_path_cs = directory_path + 'CS_BLANK.TXT'
     file_path_cs_gamma = directory_path + 'CS_GAMMA.TXT'
 
@@ -22,7 +22,7 @@ def main():
     dataSet_cs_beta = dataSet_cs
     dataSet_cs_beta = DatasetTools.subtract_file(dataSet_cs_beta, dataSet_cs_gamma)
 
-    #print(dataSet_cs)
+    print(dataSet_cs)
 
     def lin(x, a, b):
         return a * (x + b)
@@ -72,5 +72,7 @@ def main():
     plt.show()
 
 
+if __name__ == '__main__':
+    main()
 
 #...end_script1...#

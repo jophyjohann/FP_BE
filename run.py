@@ -10,6 +10,7 @@ import importlib
 
 #...start_synch_files...#
 # synch the files with online storage on trinket python console over github (dont forget to push to repo on github when files changed)
+folder="measurements/"
 files=["AM.TXT",
         "CS_ALU12.TXT",
         "CS_ALU3.TXT",
@@ -35,9 +36,10 @@ files=["AM.TXT",
         "KR_PAP4.TXT",
         "KR_PB.TXT"]
 
+
 for file in files:
   with open(file, 'w') as f:
-    f.write(get("https://raw.githubusercontent.com/jophyjohann/FP_BE/main/"+file).text)
+    f.write(get("https://raw.githubusercontent.com/jophyjohann/FP_BE/main/"+folder+file).text)
 #...end_synch_files...#
 
 

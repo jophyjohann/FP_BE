@@ -16,7 +16,6 @@ def main():
     dataSet_cs_beta = dataSet_cs
     dataSet_cs_beta = DatasetTools.subtract_file(dataSet_cs_beta, dataSet_cs_gamma)
 
-    print(dataSet_cs)
 
 if __name__ == '__main__':
     main()
