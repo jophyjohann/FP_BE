@@ -34,7 +34,7 @@ def main():
         return lin(x, a, b) + Gauss(x, C_1, mu_1, sigma_1) + Gauss(x, C_2, mu_2, sigma_2)
 
     def erf(x, a, b, C, d):
-        return -np.sign(a*x+b)*C*np.sqrt(1 - np.exp(-(a*x+b)**2))*(np.sqrt(np.pi/4) + 31/200*np.exp(-(a*x+b)**2) - 341/8000*np.exp(-2*((a*x+b)**2))) + d
+        return -np.sign(x+b)*C*np.sqrt(1 - np.exp(-(x+b)**2))*(np.sqrt(np.pi/4) + 31/200*a*np.exp(-(x+b)**2) - 341/8000*a*np.exp(-2*((x+b)**2))) + d
 
     def logistic(x, a, b, c, d):
         return a / np.sqrt(1 + np.exp(-b * (x + c))) + d
@@ -105,9 +105,9 @@ def main():
     fit_range = [550, 700]
     plot_range = [550,700]
     fit_parameters = [["a", "b" ,"C", "d"],
-                      [10, -610,  15, 15],   # max bounds
-                      [5, -625,  5, 5],     # start values
-                      [1, -650,  1, 0]]     # min bounds
+                      [0, -610,  15, 15],   # max bounds
+                      [-5, -625,  5, 5],     # start values
+                      [-10, -650,  1, 0]]     # min bounds
 
     popt, pcov = curve_fit(erf, x_cs_G[fit_range[0]:fit_range[1]], y_cs_G[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
     print(popt)
