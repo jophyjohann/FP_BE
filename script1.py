@@ -22,7 +22,7 @@ def main():
     dataSet_cs_beta = dataSet_cs
     dataSet_cs_beta = DatasetTools.subtract_file(dataSet_cs_beta, dataSet_cs_gamma)
 
-    print(dataSet_cs)
+    #print(dataSet_cs)
 
     def lin(x, a, b):
         return a * (x + b)
@@ -41,9 +41,12 @@ def main():
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 
     # fitting the function
-    popt, pcov = curve_fit(func, x_cs, y_cs, [-1/10, -850, 400, 100, 800, 850, 20, 15], bounds=([-0.3, -900, 380, 10, 775, 835, 15, 15], [0, -700, 420, 150, 820, 875, 50, 50]))
+    fit_parameters = [["a" , "b"  ,"C1","C2","μ1","μ2","σ1","σ2"],
+                      [   0,  -800, 450, 120, 825, 860,  20,  20],   # min bounds
+                      [-0.2,  -940, 400,  90, 800, 850,   5,   5],   # start values
+                      [-0.4, -1200, 380,  10, 790, 840,   2,   2]]   # max bounds
+    popt, pcov = curve_fit(func, x_cs, y_cs, fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
     print(popt)
-    print(*popt)
     # plot characteristic curve with regression line
     plt.figure(figsize=(8, 4), dpi=120)
     plt.plot(x_cs, func(x_cs, *popt), 'r--')
@@ -71,8 +74,6 @@ def main():
     plt.title(r"Cs Gammaspektrum")
     plt.show()
 
-
-if __name__ == '__main__':
-    main()
+main()
 
 #...end_script1...#

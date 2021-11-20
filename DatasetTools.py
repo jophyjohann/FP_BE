@@ -1,3 +1,7 @@
+#...start_DatasetTools...#
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import copy
 
@@ -77,3 +81,5 @@ def rebin_file(dataSet1, rebin=1):
 def calibrate_dataSets(dataSets, cal_parameters):
     for dataSet in dataSets:
         dataSet['energy'] = cal_parameters[0] * dataSet['channel'] + cal_parameters[1]
+
+#...end_DatasetTools...#

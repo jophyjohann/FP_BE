@@ -1,3 +1,7 @@
+#...start_AnalyzeData...#
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import *
@@ -17,6 +21,6 @@ def main():
     dataSet_cs_beta = DatasetTools.subtract_file(dataSet_cs_beta, dataSet_cs_gamma)
 
 
-if __name__ == '__main__':
-    main()
+#main()
 
+#...end_AnalyzeData...#
