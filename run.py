@@ -109,7 +109,8 @@ def exec_file(num):
         script[5] = True
 
 
-x = input()
+#x = input()
+x='1'
 while(True):
     if x.isdigit() and int(x) <= len(scripts) and int(x) > 0:
         file = open(scripts[int(x)-1]+'.py', 'r')

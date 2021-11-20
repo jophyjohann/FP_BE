@@ -2,7 +2,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# main python console for all scripts: https://trinket.io/embed/python3/56bdbaffcc?toggleCode=true&runOption=run&start=result
+# main python console for all scripts: https://trinket.io/embed/python3/384c7dcf76?toggleCode=true&runOption=run&start=result
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -48,12 +48,11 @@ def main():
                       [-0.2,  -940, 400,  90, 800, 850,   5,   5],   # start values
                       [-0.4, -1200, 380,  10, 790, 840,   2,   2]]   # min bounds
     popt, pcov = curve_fit(func, x_cs[fit_range[0]:fit_range[1]], y_cs[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
-    print(popt)
-
+    
     # Plot whole spectrum Cs
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(x_cs, y_cs, '-', label='Cs Spektrum')
-    plt.xlabel(r"Channels")
+    plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
     #plt.legend()
     plt.xlim(0, 2000)
@@ -66,14 +65,19 @@ def main():
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(x_cs[fit_range[0]:fit_range[1]], func(x_cs[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
     plt.plot(x_cs[plot_range[0]:plot_range[1]], y_cs[plot_range[0]:plot_range[1]], '-', label='Cs Spektrum von '+str(plot_range[0])+" bis "+str(plot_range[1]))
-    plt.errorbar(x_cs[plot_range[0]:plot_range[1]], y_cs[plot_range[0]:plot_range[1]], yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
-    plt.xlabel(r"Channels")
+    plt.errorbar(x_cs[plot_range[0]:plot_range[1]], y_cs[plot_range[0]:plot_range[1]], label="Fehlerbalken", yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
+    plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 500)
     plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     plt.show()
+    
+    print("Parameter für den Fit:\n\n")
+    print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
+    print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt[6],np.sqrt(np.diag(pcov))[6]))
+    print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
     
 
     # Für Cs_Gamma Spektrum
@@ -83,7 +87,7 @@ def main():
     #Plot Gamma spectrum Cs
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(x_cs_G, y_cs_G, '-', label='Cs Gamma')
-    plt.xlabel(r"Channels")
+    plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
     plt.legend()
     #plt.xlim(0, 800)
