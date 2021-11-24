@@ -22,7 +22,6 @@ def main():
     dataSet_cs_beta = dataSet_cs
     dataSet_cs_beta = DatasetTools.subtract_file(dataSet_cs_beta, dataSet_cs_gamma)
 
-    #print(dataSet_cs)
 
     def lin(x, a, b):
         return a * (x + b)
@@ -114,7 +113,7 @@ def main():
 
 
     fit_parameters2 = [["a","b",  "c","d"], #only for quick testing.. all good
-                      [ -5,  20, -550, 50],   # max bounds
+                      [ -5,  20, -550, 50],     # max bounds
                       [-15,  10, -625, 15],     # start values
                       [-50, 0.1, -700,  5]]     # min bounds
 
@@ -132,6 +131,25 @@ def main():
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 40)
     plt.title(r"Cs Gammaspektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
+    plt.show()
+
+
+    # Nur Beta Spektrum (Gamma abgezogen)
+    x_cs_B = dataSet_cs_beta['channel']#[700:1000]
+    y_cs_B = dataSet_cs_beta['counts']#[700:1000]
+    DN = dataSet_cs_beta['counts_uncert']         # Unsicherheiten
+
+    # Plot Beta spectrum of Cs
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(x_cs_B, y_cs_B, '-', label='Cs Beta-Spektrum')
+    plt.errorbar(x_cs_B, y_cs_B, label="Fehlerbalken", yerr=DN, fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
+    plt.xlabel(r"Channel")
+    plt.ylabel(r"Counts")
+    #plt.legend()
+    plt.xlim(0, 1000)
+    plt.ylim(0, 700)
+    plt.title("Cs Beta-Spektrum")
+    plt.legend()
     plt.show()
 
 main()
