@@ -103,14 +103,14 @@ def main():
 # fitting the function
     fit_range = [550, 700]
     plot_range = [550,700]
+    '''
     fit_parameters = [["a", "b" ,"C", "d"],
                       [0, -610,  15, 15],   # max bounds
                       [-5, -625,  5, 5],     # start values
                       [-10, -650,  1, 0]]     # min bounds
-
-    popt, pcov = curve_fit(erf, x_cs_G[fit_range[0]:fit_range[1]], y_cs_G[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
-    print(popt)
-
+    '''
+    #popt, pcov = curve_fit(erf, x_cs_G[fit_range[0]:fit_range[1]], y_cs_G[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    
 
     fit_parameters2 = [["a","b",  "c","d"], #only for quick testing.. all good
                       [ -5,  20, -550, 50],     # max bounds
@@ -118,12 +118,12 @@ def main():
                       [-50, 0.1, -700,  5]]     # min bounds
 
     popt2, pcov2 = curve_fit(logistic, x_cs_G[fit_range[0]:fit_range[1]], y_cs_G[fit_range[0]:fit_range[1]], fit_parameters2[2], bounds=(fit_parameters2[3],fit_parameters2[1]))  
-    
+    popt, pcov = popt2, pcov2
     #Plot limited Gamma spectrum Cs
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(x_cs_G[plot_range[0]:plot_range[1]], y_cs_G[plot_range[0]:plot_range[1]], '-', label='Cs Spektrum von '+str(plot_range[0])+" bis "+str(plot_range[1]))
-    plt.plot(x_cs_G[fit_range[0]:fit_range[1]], erf(x_cs_G[fit_range[0]:fit_range[1]], *popt), 'r--', label="FehlerFkt. Fit von "+str(plot_range[0])+" bis "+str(plot_range[1]))
-    plt.plot(x_cs_G[fit_range[0]:fit_range[1]], logistic(x_cs_G[fit_range[0]:fit_range[1]], *popt2), '--', color='lime', label="Logist. Fkt. Fit von "+str(plot_range[0])+" bis "+str(plot_range[1]))
+    #plt.plot(x_cs_G[fit_range[0]:fit_range[1]], erf(x_cs_G[fit_range[0]:fit_range[1]], *popt), 'r--', label="FehlerFkt. Fit von "+str(plot_range[0])+" bis "+str(plot_range[1]))
+    plt.plot(x_cs_G[fit_range[0]:fit_range[1]], logistic(x_cs_G[fit_range[0]:fit_range[1]], *popt2), 'r--', label="Logist. Fkt. Fit von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     plt.errorbar(x_cs_G[plot_range[0]:plot_range[1]], y_cs_G[plot_range[0]:plot_range[1]], label="Fehlerbalken", yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
     plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
@@ -133,6 +133,9 @@ def main():
     plt.title(r"Cs Gammaspektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     plt.show()
 
+    print("Parameter für den Fit:\n\n")
+    print("Logistische Funktion mit y = a / (1 + exp(- b * (x + c)))\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n-> c = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1],popt[2],np.sqrt(np.diag(pcov))[2]))
+    
 
     # Nur Beta Spektrum (Gamma abgezogen)
     x_cs_B = dataSet_cs_beta['channel']#[700:1000]
