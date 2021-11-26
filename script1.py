@@ -104,7 +104,7 @@ def main():
     fit_range = [550, 700]
     plot_range = [550,700]
 
-    fit_parameters2 = [["a","b",  "c","d"], #only for quick testing.. all good
+    fit_parameters2 = [["a","b",  "c","d"],
                       [ -5,  20, -550, 50],     # max bounds
                       [-15,  10, -625, 15],     # start values
                       [-50, 0.1, -700,  5]]     # min bounds
