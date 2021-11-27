@@ -38,6 +38,10 @@ def main():
     def logistic(x, a, b, c, d):
         return a / np.sqrt(1 + np.exp(-b * (x + c))) + d
 
+    def func2(x, a, b, C_1, mu_1, sigma_1,):
+        return lin(x, a, b) + Gauss(x, C_1, mu_1, sigma_1)
+
+
     # Für Cs Spektrum
     x_cs = dataSet_cs['channel']#[700:1000]
     y_cs = dataSet_cs['counts']#[700:1000]
@@ -166,8 +170,8 @@ def main():
     dataSet_Am = DatasetTools.read_file(file_path_Am)
     
     # Für Am Spektrum
-    x_Am = dataSet_Am['channel']#[700:1000]
-    y_Am = dataSet_Am['counts']#[700:1000]
+    x_Am = dataSet_Am['channel']
+    y_Am = dataSet_Am['counts']
     DN = dataSet_Am['counts_uncert']         # Unsicherheiten
     
     # Plot whole spectrum Am
@@ -175,10 +179,34 @@ def main():
     plt.plot(x_Am, y_Am, '-', label='Am Spektrum')
     plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
-    #plt.legend()
-    plt.xlim(0, 2000)
-    plt.ylim(0, 700)
-    plt.title("Cs Spektrum")
+    plt.legend()
+    plt.xlim(0, 200)
+    plt.ylim(0, 1100)
+    plt.title("Am 241 Spektrum")
+    plt.show()
+
+
+    # fitting the function
+    plot_range = [0,150]
+    fit_range = [50,100]
+    fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
+                      [   0,  -30, 175, 100,  75],   # max bounds
+                      [-0.2,  -50,  150, 75,   50],    # start values
+                      [-10, -70,  100, 40,   10]]     # min bounds
+    popt, pcov = curve_fit(func2, x_Am[fit_range[0]:fit_range[1]], y_Am[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+
+
+    # Plot limited spectrum of Am with fit
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(x_Am[fit_range[0]:fit_range[1]], func2(x_Am[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
+    plt.plot(x_Am[plot_range[0]:plot_range[1]], y_Am[plot_range[0]:plot_range[1]], '-', label='Am Spektrum von '+str(plot_range[0])+" bis "+str(plot_range[1]))
+    plt.errorbar(x_Am[plot_range[0]:plot_range[1]], y_Am[plot_range[0]:plot_range[1]], label="Fehlerbalken", yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
+    plt.xlabel(r"Channel")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    plt.ylim(0, 500)
+    plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     plt.show()
 
 
