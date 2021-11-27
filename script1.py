@@ -249,7 +249,7 @@ def main():
     plt.show()
     
     print("Parameter für den Fit:\n")
-    print("Anstieg a*(x+b)\n a={:.4f}\n Energie-Achsenabschnitt a*b={:.4f}".format(popt[0], popt[1]*popt[0]) )
+    print("Anstieg a * (x + b)\n->a = {:.4f}\n->Energie-Achsenabschnitt a * b = {:.4f}".format(popt[0], popt[1]*popt[0]) )
     
 main()
 
