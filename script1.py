@@ -187,7 +187,7 @@ def main():
 
 
     # fitting the function
-    plot_range = [0,150]
+    plot_range = [40,150]
     fit_range = [50,100]
     fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
                       [   0,  -30, 175, 100,  75],   # max bounds
@@ -205,8 +205,8 @@ def main():
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
-    plt.ylim(0, 500)
-    plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
+    plt.ylim(0, 200)
+    plt.title("Am 241 Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     plt.show()
 
 
