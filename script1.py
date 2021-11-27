@@ -44,8 +44,8 @@ def main():
     DN = dataSet_cs['counts_uncert']         # Unsicherheiten
     
     # fitting the function
-    fit_range = [700,900]
-    plot_range = [700,900]
+    plot_range = [750,900]
+    fit_range = [750,900]
     fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
                       [   0,  -800, 450, 120, 825, 860,  20,  20],   # max bounds
                       [-0.2,  -940, 400,  90, 800, 850,   5,   5],   # start values
@@ -82,21 +82,51 @@ def main():
     print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt[6],np.sqrt(np.diag(pcov))[6]))
     print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
     
+    
+
+    # fitting the function again but now with other limits
+    fit_range = [780,870]
+    
+    # Plot limited spectrum Cs
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(x_cs[fit_range[0]:fit_range[1]], func(x_cs[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
+    plt.plot(x_cs[plot_range[0]:plot_range[1]], y_cs[plot_range[0]:plot_range[1]], '-', label='Cs Spektrum von '+str(plot_range[0])+" bis "+str(plot_range[1]))
+    plt.errorbar(x_cs[plot_range[0]:plot_range[1]], y_cs[plot_range[0]:plot_range[1]], label="Fehlerbalken", yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
+    plt.xlabel(r"Channel")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    plt.ylim(0, 500)
+    plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
+    plt.show()
+    
+    print("Parameter für den Fit:\n\n")
+    print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
+    print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt[6],np.sqrt(np.diag(pcov))[6]))
+    print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
+    
+
 
     # Für Cs_Gamma Spektrum
     x_cs_G = dataSet_cs_gamma['channel'] 
     y_cs_G = dataSet_cs_gamma['counts']
-    DN = dataSet_cs_gamma['counts_uncert']         # Unsicherheiten
+    DN_gamma = dataSet_cs_gamma['counts_uncert']         # Unsicherheiten
 
-    #Plot Gamma spectrum Cs
+    # Nur Beta Spektrum (Gamma abgezogen)
+    x_cs_B = dataSet_cs_beta['channel']#[700:1000]
+    y_cs_B = dataSet_cs_beta['counts']#[700:1000]
+    DN_betta = dataSet_cs_beta['counts_uncert']         # Unsicherheiten
+
+    #Plot Gamma and Betta spectrum Cs
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(x_cs_G, y_cs_G, '-', label='Cs Gamma')
+    plt.plot(x_cs_G, y_cs_G, '-', label='Cs Gamma-Spektrum')
+    plt.plot(x_cs_B, y_cs_B, '-', label='Cs Beta-Spektrum')
     plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
     plt.legend()
-    #plt.xlim(0, 800)
-    #plt.ylim(0, 400)
-    plt.title(r"Cs Gammaspektrum")
+    plt.xlim(0, 1000)
+    plt.ylim(0, 700)
+    plt.title(r"Cs Gamma und Betta-Spektrum")
     plt.show()
 
 
@@ -115,7 +145,7 @@ def main():
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(x_cs_G[plot_range[0]:plot_range[1]], y_cs_G[plot_range[0]:plot_range[1]], '-', label='Cs Spektrum von '+str(plot_range[0])+" bis "+str(plot_range[1]))
     plt.plot(x_cs_G[fit_range[0]:fit_range[1]], logistic(x_cs_G[fit_range[0]:fit_range[1]], *popt), 'r--', label="Logist. Fkt. Fit von "+str(plot_range[0])+" bis "+str(plot_range[1]))
-    plt.errorbar(x_cs_G[plot_range[0]:plot_range[1]], y_cs_G[plot_range[0]:plot_range[1]], label="Fehlerbalken", yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
+    plt.errorbar(x_cs_G[plot_range[0]:plot_range[1]], y_cs_G[plot_range[0]:plot_range[1]], label="Fehlerbalken", yerr=DN_gamma[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
     plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
     plt.legend()
@@ -128,23 +158,27 @@ def main():
     print("Logistische Funktion mit y = a / (1 + exp(- b * (x + c))) + d\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n-> c = {:.4f} +/- {:.4f}\n-> d = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1],popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3]))
     
 
-    # Nur Beta Spektrum (Gamma abgezogen)
-    x_cs_B = dataSet_cs_beta['channel']#[700:1000]
-    y_cs_B = dataSet_cs_beta['counts']#[700:1000]
-    DN = dataSet_cs_beta['counts_uncert']         # Unsicherheiten
+    # Am Messung
 
-    # Plot Beta spectrum of Cs
+    file_path_Am = directory_path + 'AM.TXT'
+    dataSet_Am = DatasetTools.read_file(file_path_Am)
+    
+    # Für Am Spektrum
+    x_Am = dataSet_Am['channel']#[700:1000]
+    y_Am = dataSet_Am['counts']#[700:1000]
+    DN = dataSet_Am['counts_uncert']         # Unsicherheiten
+    
+    # Plot whole spectrum Am
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(x_cs_B, y_cs_B, '-', label='Cs Beta-Spektrum')
-    plt.errorbar(x_cs_B, y_cs_B, label="Fehlerbalken", yerr=DN, fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
+    plt.plot(x_Am, y_Am, '-', label='Am Spektrum')
     plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
     #plt.legend()
-    plt.xlim(0, 1000)
+    plt.xlim(0, 2000)
     plt.ylim(0, 700)
-    plt.title("Cs Beta-Spektrum")
-    plt.legend()
+    plt.title("Cs Spektrum")
     plt.show()
+
 
 main()
 
