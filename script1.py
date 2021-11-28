@@ -57,6 +57,7 @@ def main():
     popt, pcov = curve_fit(func, x_cs[fit_range[0]:fit_range[1]], y_cs[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
     
     opt_fit_parameters1 = popt.copy()
+    pcov1 = pcov.copy()
 
     # Plot whole spectrum Cs
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
@@ -149,6 +150,7 @@ def main():
     popt, pcov = curve_fit(logistic, x_cs_G[fit_range[0]:fit_range[1]], y_cs_G[fit_range[0]:fit_range[1]], fit_parameters2[2], bounds=(fit_parameters2[3],fit_parameters2[1]))  
 
     opt_fit_parameters2 = popt.copy()
+    pcov2 = pcov.copy()
 
 
     #Plot limited Gamma spectrum Cs
@@ -193,14 +195,15 @@ def main():
     plot_range = [40,120]
     fit_range = [55,90]
     fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
-                      [   0,  -30, 175, 100,  75],   # max bounds
+                      [   0,  -30, 175, 100,  75],     # max bounds
                       [-0.2,  -50,  150, 75,   50],    # start values
-                      [-10, -70,  100, 40,   10]]     # min bounds
+                      [-10, -70,  100, 40,   10]]      # min bounds
     
     
     popt, pcov = curve_fit(func2, x_Am[fit_range[0]:fit_range[1]], y_Am[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
 
     opt_fit_parameters3 = popt.copy()
+    pcov3 = pcov.copy()
 
     # Plot limited spectrum of Am with fit
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
@@ -215,6 +218,11 @@ def main():
     plt.title("Am 241 Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     plt.show()
 
+    print("Parameter für den Fit:\n")
+    print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
+    print("Gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3],popt[4],np.sqrt(np.diag(pcov))[4]))
+    
+
 
     # Energie Kallibrierungs Fit
     # Literaturwerte
@@ -225,7 +233,9 @@ def main():
 
     y_Kall = [E_Cs_K, E_Cs_L, E_Compton, E_Am_241]
     x_Kall = [opt_fit_parameters1[4], opt_fit_parameters1[5], -opt_fit_parameters2[2], opt_fit_parameters3[3]]
-    # UNSICHERHEITEN SIND DIE ENTSPRECHENDEN SIGMAS
+    # Unsicherheiten
+    D_Kall = [np.sqrt(np.diag(pcov1))[4], np.sqrt(np.diag(pcov1))[5], np.sqrt(np.diag(pcov2))[2], np.sqrt(np.diag(pcov3))[3]] # Uncertainties
+    print(D_Kall)
 
     # Linear Fit
     fit_range = [0,1000]
@@ -235,11 +245,14 @@ def main():
                       [ 0, -100]]    # min bounds
     
     popt, pcov = curve_fit(lin, x_Kall[fit_range[0]:fit_range[1]], y_Kall[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    popt_Kall = popt.copy()
+    pcov_Kall = pcov.copy()
 
     # Plot 
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(x_Kall, y_Kall, '.')
     plt.plot(x_Kall[fit_range[0]:fit_range[1]], lin(x_Kall[fit_range[0]:fit_range[1]], *popt), 'r--', label="Linearer Fit")
+    plt.errorbar(x_Kall, y_Kall, label="Fehlerbalken", xerr=D_Kall, fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
     plt.xlabel(r"Kannal")
     plt.ylabel(r"Energie/keV")
     plt.legend()
@@ -249,8 +262,59 @@ def main():
     plt.show()
     
     print("Parameter für den Fit:\n")
-    print("Anstieg a * (x + b)\n-> a = {:.4f}\n-> Energie-Achsenabschnitt a * b = {:.4f}".format(popt[0], popt[1]*popt[0]) )
+    print("Lineare Funktion y = a * (x + b)\n-> a = ({:.4f} +/- {:.4f})keV/Kannal\n-> b = ({:.4f} +/- {:.4f})Kannal".format(popt[0], np.sqrt(np.diag(pcov))[0], popt[1], np.sqrt(np.diag(pcov))[1]))
+    print("c = a*b = ({:.4f} +/- {:.4f})keV".format(popt[0]*popt[1], np.sqrt((popt[0]*np.sqrt(np.diag(pcov))[0])**2 + (popt[1]*np.sqrt(np.diag(pcov))[1])**2)))   # Fehlerfortpflanzung für Delta c
+
+
+
+    # Kr Spektren Messung
+
+    file_path_Kr = directory_path + 'KR.TXT'
+    file_path_Kr_Gamma = directory_path + 'KR_GAMMA.TXT'
+
+    dataSet_Kr = DatasetTools.read_file(file_path_Kr)
+    dataSet_Kr_Gamma = DatasetTools.read_file(file_path_Kr_Gamma)
+
+    # Subtract gamma
+    dataSet_Kr_beta = dataSet_Kr
+    dataSet_Kr_beta = DatasetTools.subtract_file(dataSet_Kr_beta, dataSet_Kr_Gamma)
+
+
+    # Für Kr gesamt Spektrum
+    x_Kr = dataSet_Kr['channel']
+    E_Kr = popt_Kall[0]*(x_Kr + popt_Kall[1])    # In Energien Umrechnen
+    y_Kr = dataSet_Kr['counts']
+    DN = dataSet_Kr['counts_uncert']         # Unsicherheiten
+
+    # Für Kr Gamma Spektrum
+    y_Kr_G = dataSet_Kr_Gamma['counts']
+
+    # Für Kr Beta Spektrum
+    y_Kr_B = dataSet_Kr_beta['counts']
     
+    # Plot whole spectrum Kr
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(E_Kr, y_Kr, '-', label='Kr Spektrum')
+    plt.xlabel(r"Channel")
+    plt.ylabel(r"Energie/keV")
+    plt.legend()
+    plt.xlim(0, 1200)
+    plt.ylim(0, 1750)
+    plt.title("Kr gesamt Spektrum")
+    plt.show()
+
+    # Plot Gamma and Beta spectra of Kr
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(E_Kr, y_Kr_B, '-', label='Kr Beta-Spektrum')
+    plt.plot(E_Kr, y_Kr_G, '-', label='Kr Gamma-Spektrum')
+    plt.xlabel(r"Channel")
+    plt.ylabel(r"Energie/keV")
+    plt.legend()
+    plt.xlim(0, 1200)
+    plt.ylim(0, 1750)
+    plt.title("Kr Gamma- und Beta-Spektrum")
+    plt.show()
+
 main()
 
 #...end_script1...#
