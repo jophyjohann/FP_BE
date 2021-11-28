@@ -253,7 +253,7 @@ def main():
     plt.plot(x_Kall, y_Kall, '.')
     plt.plot(x_Kall[fit_range[0]:fit_range[1]], lin(x_Kall[fit_range[0]:fit_range[1]], *popt), 'r--', label="Linearer Fit")
     plt.errorbar(x_Kall, y_Kall, label="Fehlerbalken", xerr=D_Kall, fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
-    plt.xlabel(r"Kannal")
+    plt.xlabel(r"Kanal")
     plt.ylabel(r"Energie/keV")
     plt.legend()
     #plt.xlim()
@@ -262,7 +262,7 @@ def main():
     plt.show()
     
     print("Parameter für den Fit:\n")
-    print("Lineare Funktion y = a * (x + b)\n-> a = ({:.4f} +/- {:.4f})keV/Kannal\n-> b = ({:.4f} +/- {:.4f})Kannal".format(popt[0], np.sqrt(np.diag(pcov))[0], popt[1], np.sqrt(np.diag(pcov))[1]))
+    print("Lineare Funktion y = a * (x + b)\n-> a = ({:.4f} +/- {:.4f})keV/Kanal\n-> b = ({:.4f} +/- {:.4f})Kanal".format(popt[0], np.sqrt(np.diag(pcov))[0], popt[1], np.sqrt(np.diag(pcov))[1]))
     print("c = a*b = ({:.4f} +/- {:.4f})keV".format(popt[0]*popt[1], np.sqrt((popt[0]*np.sqrt(np.diag(pcov))[0])**2 + (popt[1]*np.sqrt(np.diag(pcov))[1])**2)))   # Fehlerfortpflanzung für Delta c
 
 
