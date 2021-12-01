@@ -72,10 +72,10 @@ def prepare_export_file(file_name, i):
     data = data.replace('\n\nimport','\n\nimport importlib\nimport')
     data = data.replace('main','main'+str(i+1))
     file = open('export.py', 'w')
-    export_data += ('\n' + data.replace('#...start_'+file_name+'...#\n','').replace('#...end_'+file_name+'...#',''))
-    export_data = export_data.replace('#...start...#\n','').replace('#...end...#','').replace('plt.show()','#plt.show()').replace("#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n","")
-    export_data = export_data.replace(export_data[export_data.find('# main python console'):export_data.find('start=result')+12],'')
-    export_data = export_data.replace('time.sleep(0.5)','#time.sleep(0.5)').replace('importlib.reload(plt)','#importlib.reload(plt)').replace('import importlib\n','').replace('import time\n','').replace('print','#print')
+    data += ('\n' + data.replace('#...start_'+file_name+'...#\n','').replace('#...end_'+file_name+'...#',''))
+    data = data.replace('#...start...#\n','').replace('#...end...#','').replace('plt.show()','#plt.show()').replace("#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n","")
+    data = data.replace(data[data.find('# main python console'):data.find('start=result')+12],'')
+    export_data += data.replace('time.sleep(0.5)','#time.sleep(0.5)').replace('importlib.reload(plt)','#importlib.reload(plt)').replace('import importlib\n','').replace('import time\n','').replace('print','#print')
     file.writelines(export_data)
     file.close
 
