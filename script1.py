@@ -276,21 +276,36 @@ def main():
 
     # plot nun mit Energiekalibrierung:
 
-    #Cs Gamma und Beta-Spektrum
-    plot_range = [0,800]
+    #Cs Gamma Spektrum
+    plot_range = [20,800]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(lin(x_cs_G,popt[0],popt[1]), y_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    plt.xscale('log')
+    plt.xlim(plot_range[0], plot_range[1])
+    fig.set_xticks([20,30,40,50,100,200,300,500,800])
+    #plt.ylim(0, 700)
+    plt.title("Cs Gamma Spektrum (energiekalibriert)")
+    #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
+    plt.show()
+   
+   #Cs Beta Spektrum
+    plot_range = [0,800]
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(lin(x_cs_B,popt[0],popt[1]), y_cs_B, '-', label="Cs Beta-Spektrum bis "+str(plot_range[1]))
+    plt.plot(lin(x_cs_G,popt[0],popt[1]), y_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
     #plt.ylim(0, 700)
-    plt.title("Cs Gamma und Beta-Spektrum (energiekalibriert)")
-    #plt.savefig('plot_cs_and_gamma_calib.pdf', bbox_inches='tight')
+    plt.title("Cs Beta Spektrum (energiekalibriert)")
+    #plt.savefig('plot_cs_calib.pdf', bbox_inches='tight')
     plt.show()
    
-   # Plot whole spectrum Am
+   # Am Spektrum
     plot_range = [0,100]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(lin(x_Am,popt[0],popt[1]), y_Am, '-', label="Am Spektrum bis "+str(plot_range[1]))
