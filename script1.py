@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import *
 import DatasetTools
-
+from matplotlib.ticker import ScalarFormatter
 
 def main():
     directory_path = ''
@@ -285,7 +285,13 @@ def main():
     plt.legend()
     plt.xscale('log')
     plt.xlim(plot_range[0], plot_range[1])
-    fig.set_xticks([20,30,40,50,100,200,300,500,800])
+    plt.xaxis.set_major_formatter(ticker.FuncFormatter(lambda y, _: '{:g}'.format(y)))
+    '''
+    formatter = ScalarFormatter()
+    formatter.set_scientific(False)
+    plt.set_major_formatter(formatter)
+    '''
+    #fig.set_xticks([20,30,40,50,100,200,300,500,800])
     #plt.ylim(0, 700)
     plt.title("Cs Gamma Spektrum (energiekalibriert)")
     #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
