@@ -60,11 +60,12 @@ scriptse = scripts.copy()
 scriptse.append('AnalyzeData')
 scriptse.append('DatasetTools')
 
-def read_file(file, i):
+export_data=[]
+def read_file(file_name, i):
     data = response.text
-    data=data[data.find('#...start_'+file+'...#'):data.find('#...end_'+file+'...#')+12+len(file)].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
+    data=data[data.find('#...start_'+file_name+'...#'):data.find('#...end_'+file_name+'...#')+12+len(file_name)].replace(r'\\n',r'**üü**').replace(r'\\r',r'**ää**').replace(r"\n","\n").replace(r"\r","").replace(r'**üü**',r"\n").replace(r'**ää**',r"\r").replace(r'\"','"').replace(r"\\","\\")
     data=data.replace('sonderkrams','')
-    file = open(file+'.py', 'w')
+    file = open(file_name+'.py', 'w')
     data = data.replace(')\n\nplt.show()',')\n\nplt.show()\n\n# wait a second for reloading the matplotlib module due to issues\ntime.sleep(0.5)\nimportlib.reload(plt)\ntime.sleep(0.5)')
     data = data.replace(')\n    plt.show()',')\n    plt.show()\n\n    # wait a second for reloading the matplotlib module due to issues\n    time.sleep(0.5)\n    importlib.reload(plt)\n    time.sleep(0.5)')
     data = data.replace('\n\nimport','\n\nimport time\nimport')
@@ -72,10 +73,10 @@ def read_file(file, i):
     file.writelines(data)
     file.close
     file = open('export.py', 'w')
-    export_data = ('\n' + data.replace('#...start_'+file+'...#\n','').replace('#...end_'+file+'...#',''))
-    export_data = export_data.replace('#...start...#\n','').replace('#...end...#','').replace('plt.show()','#plt.show()').replace("#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n","")
-    export_data = export_data.replace(export_data[export_data.find('# main python console'):export_data.find('start=result')+12],'')
-    export_data = export_data.replace('time.sleep(0.5)','#time.sleep(0.5)').replace('importlib.reload(plt)','#importlib.reload(plt)').replace('import importlib\n','').replace('import time\n','').replace('print','#print')
+    export_data += ('\n' + data.replace('#...start_'+file_name+'...#\n','').replace('#...end_'+file_name+'...#',''))
+    #export_data = export_data.replace('#...start...#\n','').replace('#...end...#','').replace('plt.show()','#plt.show()').replace("#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n","")
+    #export_data = export_data.replace(export_data[export_data.find('# main python console'):export_data.find('start=result')+12],'')
+    #export_data = export_data.replace('time.sleep(0.5)','#time.sleep(0.5)').replace('importlib.reload(plt)','#importlib.reload(plt)').replace('import importlib\n','').replace('import time\n','').replace('print','#print')
     file.writelines(export_data)
     file.close
 
