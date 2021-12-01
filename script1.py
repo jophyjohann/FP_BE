@@ -300,7 +300,7 @@ def main():
     plt.xlim(plot_range[0], plot_range[1])
     #plt.ylim(0, 1100)
     plt.title("Am 241 Spektrum (energiekalibriert)")
-    plt.savefig('plot_am_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_am_calib.pdf', bbox_inches='tight')
     plt.show()
 
 
@@ -339,7 +339,7 @@ def main():
     plt.xlim(0, 1200)
     plt.ylim(0, 1750)
     plt.title("Kr gesamt Spektrum (energiekalibriert)")
-    plt.savefig('plot_kr_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_kr_calib.pdf', bbox_inches='tight')
     plt.show()
 
     # Plot Gamma and Beta spectra of Kr
@@ -352,7 +352,7 @@ def main():
     plt.xlim(0, 1200)
     plt.ylim(0, 1750)
     plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
-    plt.savefig('plot_kr_and_gamma_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_kr_and_gamma_calib.pdf', bbox_inches='tight')
     plt.show()
 
 main()
