@@ -80,7 +80,8 @@ def prepare_export_file(file_name, i):
     file.close
 
 for i in range(len(scripts)):
-    read_file(scripts[i],i)
+    prepare_export_file(scripts[i],i)
+
 
 def read_file(file_name, i):
     data = response.text
@@ -94,7 +95,6 @@ def read_file(file_name, i):
     file.writelines(data)
     file.close
     
-
 for i in range(len(scriptse)):
     read_file(scriptse[i],i)
 
