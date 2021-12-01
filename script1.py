@@ -123,9 +123,9 @@ def main():
     # Nur Beta Spektrum (Gamma abgezogen)
     x_cs_B = dataSet_cs_beta['channel']#[700:1000]
     y_cs_B = dataSet_cs_beta['counts']#[700:1000]
-    DN_betta = dataSet_cs_beta['counts_uncert']         # Unsicherheiten
+    DN_Beta = dataSet_cs_beta['counts_uncert']         # Unsicherheiten
 
-    #Plot Gamma and Betta spectrum Cs
+    #Plot Gamma and Beta spectrum Cs
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(x_cs_G, y_cs_G, '-', label='Cs Gamma-Spektrum')
     plt.plot(x_cs_B, y_cs_B, '-', label='Cs Beta-Spektrum')
@@ -134,7 +134,7 @@ def main():
     plt.legend()
     plt.xlim(0, 1000)
     plt.ylim(0, 700)
-    plt.title(r"Cs Gamma und Betta-Spektrum")
+    plt.title(r"Cs Gamma und Beta-Spektrum")
     plt.show()
 
 
@@ -267,6 +267,34 @@ def main():
     print("c = a*b = ({:.4f} +/- {:.4f})keV".format(popt[0]*popt[1], np.sqrt((popt[0]*np.sqrt(np.diag(pcov))[0])**2 + (popt[1]*np.sqrt(np.diag(pcov))[1])**2)))   # Fehlerfortpflanzung für Delta c
 
 
+    # plot nun mit Energiekalibrierung:
+
+    #Cs Gamma und Beta-Spektrum
+    plot_range = [0,800]
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(x_cs_G,popt[0],popt[1]), y_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
+    plt.plot(lin(x_cs_B,popt[0],popt[1]), y_cs_B, '-', label="Cs Beta-Spektrum bis "+str(plot_range[1]))
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    #plt.ylim(0, 700)
+    plt.title("Cs Gamma und Beta-Spektrum (energiekalibriert)")
+    plt.show()
+   
+   # Plot whole spectrum Am
+    plot_range = [0,100]
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(x_Am,popt[0],popt[1]), y_Am, '-', label="Am Spektrum bis "+str(plot_range[1]))
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    #plt.ylim(0, 1100)
+    plt.title("Am 241 Spektrum (energiekalibriert)")
+    plt.show()
+
+
 
     # Kr Spektren Messung
 
@@ -296,24 +324,24 @@ def main():
     # Plot whole spectrum Kr
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(E_Kr, y_Kr, '-', label='Kr Spektrum')
-    plt.xlabel(r"Energie/keV")
+    plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(0, 1200)
     plt.ylim(0, 1750)
-    plt.title("Kr gesamt Spektrum")
+    plt.title("Kr gesamt Spektrum (energiekalibriert)")
     plt.show()
 
     # Plot Gamma and Beta spectra of Kr
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(E_Kr, y_Kr_B, '-', label='Kr Beta-Spektrum')
     plt.plot(E_Kr, y_Kr_G, '-', label='Kr Gamma-Spektrum')
-    plt.xlabel(r"Energie/keV")
+    plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(0, 1200)
     plt.ylim(0, 1750)
-    plt.title("Kr Gamma- und Beta-Spektrum")
+    plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
     plt.show()
 
 main()
