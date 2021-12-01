@@ -235,7 +235,8 @@ def main():
     x_Kall = [opt_fit_parameters1[4], opt_fit_parameters1[5], -opt_fit_parameters2[2], opt_fit_parameters3[3]]
     # Unsicherheiten
     D_Kall = [np.sqrt(np.diag(pcov1))[4], np.sqrt(np.diag(pcov1))[5], np.sqrt(np.diag(pcov2))[2], np.sqrt(np.diag(pcov3))[3]] # Uncertainties
-    print(D_Kall)
+    
+    #print(D_Kall)
 
     # Linear Fit
     fit_range = [0,1000]
@@ -295,8 +296,8 @@ def main():
     # Plot whole spectrum Kr
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(E_Kr, y_Kr, '-', label='Kr Spektrum')
-    plt.xlabel(r"Channel")
-    plt.ylabel(r"Energie/keV")
+    plt.xlabel(r"Energie/keV")
+    plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(0, 1200)
     plt.ylim(0, 1750)
@@ -307,8 +308,8 @@ def main():
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(E_Kr, y_Kr_B, '-', label='Kr Beta-Spektrum')
     plt.plot(E_Kr, y_Kr_G, '-', label='Kr Gamma-Spektrum')
-    plt.xlabel(r"Channel")
-    plt.ylabel(r"Energie/keV")
+    plt.xlabel(r"Energie/keV")
+    plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(0, 1200)
     plt.ylim(0, 1750)
