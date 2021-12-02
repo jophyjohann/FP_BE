@@ -371,6 +371,12 @@ def main():
     #plt.savefig('plot_kr_and_gamma_calib.pdf', bbox_inches='tight')
     plt.show()
 
+
+    # Auflösevermögen Spektrometer
+    print("\nAuflösevermögen Spektrometer\n")
+    
+
+
 main()
 
 #...end_script1...#
