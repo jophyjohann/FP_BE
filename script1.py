@@ -408,8 +408,8 @@ def main():
 
     # Auflösevermögen Spektrometer
     print("\nAuflösevermögen Spektrometer\n")
-    print("Bei Linie von K-Konv.elektron: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[6],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[4],popt_Kall[0],popt_Kall[1])))
-    print("Bei Linie von L-Konv.elektron: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[7],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[5],popt_Kall[0],popt_Kall[1])))
+    print("Bei Linie von K-Konv.elektronen: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[6],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[4],popt_Kall[0],popt_Kall[1])))
+    print("Bei Linie von L-Konv.elektronen: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[7],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[5],popt_Kall[0],popt_Kall[1])))
     
 
 main()
