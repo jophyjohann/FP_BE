@@ -320,26 +320,27 @@ def main():
     plt.show()
 
     # Am Spektrum rebinned
-    dataSet_Am = DatasetTools.rebin_file(dataSet_Am,4)  
+    bins_combined = 4
+    dataSet_Am = DatasetTools.rebin_file(dataSet_Am,bins_combined)  
 
     
     # fitting the function
-    fit_range = [40,75]
+    fit_range = [13,25] #channel bounds must be devided by 'bins_combined'
     fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
-                      [   0,  -40, 700, 60,  20],     # max bounds
-                      [-3,  -75,  500, 55,   7],    # start values
-                      [-10, -100,  100, 40,   2]]      # min bounds
+                      [   0,  -65, 600, 65,  15],     # max bounds
+                      [-3,  -77,  500, 57,   12],    # start values
+                      [-10, -90,  200, 50,   5]]      # min bounds
     
     
-    popt, pcov = curve_fit(func2, x_Am[fit_range[0]:fit_range[1]], y_Am[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
-
+    popt, pcov = curve_fit(func2, lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], dataSet_Am['counts'][fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    
     opt_fit_parameters4 = popt.copy()
     pcov4 = pcov.copy()
-
+    
     plot_range = [0,100]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1]), dataSet_Am['counts'], '-', label="Am Spektrum bis "+str(plot_range[1]))
-    plt.plot(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], func2(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
+    plt.plot(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], func2(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(int(lin(fit_range[0]*bins_combined,popt_Kall[0],popt_Kall[1])))+" bis "+str(int(lin(fit_range[1]*bins_combined,popt_Kall[0],popt_Kall[1]))))
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
