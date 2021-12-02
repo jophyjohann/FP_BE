@@ -279,7 +279,7 @@ def main():
     #Cs Gamma Spektrum
     plot_range = [20,800]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(x_cs_G,popt[0],popt[1]), y_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
+    plt.plot(lin(x_cs_G,popt_Kall[0],popt_Kall[1]), y_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
@@ -295,8 +295,8 @@ def main():
    #Cs Beta Spektrum
     plot_range = [0,800]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(x_cs_B,popt[0],popt[1]), y_cs_B, '-', label="Cs Beta-Spektrum bis "+str(plot_range[1]))
-    plt.plot(lin(x_cs_G,popt[0],popt[1]), y_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
+    plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), y_cs_B, '-', label="Cs Beta-Spektrum bis "+str(plot_range[1]))
+    plt.plot(lin(x_cs_G,popt_Kall[0],popt_Kall[1]), y_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
@@ -309,12 +309,12 @@ def main():
    # Am Spektrum
     plot_range = [0,100]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(x_Am,popt[0],popt[1]), y_Am, '-', label="Am Spektrum bis "+str(plot_range[1]))
+    plt.plot(lin(x_Am,popt_Kall[0],popt_Kall[1]), y_Am, '-', label="Am Spektrum bis "+str(plot_range[1]))
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
-    #plt.ylim(0, 1100)
+    plt.ylim(0, 1100)
     plt.title("Am 241 Spektrum (energiekalibriert)")
     #plt.savefig('plot_am_calib.pdf', bbox_inches='tight')
     plt.show()
@@ -322,17 +322,36 @@ def main():
     # Am Spektrum rebinned
     dataSet_Am = DatasetTools.rebin_file(dataSet_Am,4)  
 
-    #plot_range = [0,100]
+    
+    # fitting the function
+    fit_range = [40,75]
+    fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
+                      [   0,  -40, 700, 60,  20],     # max bounds
+                      [-3,  -75,  500, 55,   7],    # start values
+                      [-10, -100,  100, 40,   2]]      # min bounds
+    
+    
+    popt, pcov = curve_fit(func2, x_Am[fit_range[0]:fit_range[1]], y_Am[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+
+    opt_fit_parameters4 = popt.copy()
+    pcov4 = pcov.copy()
+
+    plot_range = [0,100]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(dataSet_Am['channel'],popt[0],popt[1]), dataSet_Am['counts'], '-', label="Am Spektrum bis "+str(plot_range[1]))
+    plt.plot(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1]), dataSet_Am['counts'], '-', label="Am Spektrum bis "+str(plot_range[1]))
+    plt.plot(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], func2(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
-    #plt.ylim(0, 1100)
+    plt.ylim(0, 3010)
     plt.title("Am 241 Spektrum (energiekalibriert, 4bins zsm)")
-    #plt.savefig('plot_am_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_am_calib_rebinned.pdf', bbox_inches='tight')
     plt.show()
+    
+    print("Parameter für den Fit:\n")
+    print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
+    print("Gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3],popt[4],np.sqrt(np.diag(pcov))[4]))
     
 
     # Kr Spektren Messung
