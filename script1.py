@@ -320,7 +320,7 @@ def main():
     plt.show()
 
     # Am Spektrum rebinned
-    dataSet_Am = DatasetTools.rebin_file(dataSet_Am,10)  
+    dataSet_Am = DatasetTools.rebin_file(dataSet_Am,4)  
 
     #plot_range = [0,100]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
@@ -330,7 +330,7 @@ def main():
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
     #plt.ylim(0, 1100)
-    plt.title("Am 241 Spektrum (energiekalibriert)")
+    plt.title("Am 241 Spektrum (energiekalibriert, 4bins zsm)")
     #plt.savefig('plot_am_calib.pdf', bbox_inches='tight')
     plt.show()
     
