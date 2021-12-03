@@ -682,31 +682,30 @@ def main():
     
     #for alu3
     fit_range = [550,675] 
-    fit_plot_range_cs_alu3 = [550,675]
-    fit_range_conv_cs_alu3 = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
-    fit_plot_range_conv_cs_alu3 = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    fit_plot_range = [550,675]
+    fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
     fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
-                      [   0,  -575, 800, 625,  20],      # max bounds
-                      [-1,  -650,  500, 620,   12],      # start values
+                      [   0,  -575, 800, 615,  20],      # max bounds
+                      [-1,  -650,  500, 610,   12],      # start values
                       [-2, -675,  300, 600,   5]]      # min bounds
     popt, pcov = curve_fit(func2, x_Am[fit_range[0]:fit_range[1]], y_Am[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
     opt_fit_parameters_cs_alu3 = popt.copy()
     pcov_cs_alu3 = pcov.copy()
-    fit_range_cs_alu3 = fit_range
-    fit_plot_range_cs_alu3 = fit_plot_range
+    fit_plot_range_cs_alu3 = fit_plot_range_conv
 
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], '.', label="ungeschirmt")
-    plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu3['counts'][plot_range_conv[0]:plot_range_conv[1]], 'r.', label="mit 3 Alu Lagen geschirmt")
-    plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu6['counts'][plot_range_conv[0]:plot_range_conv[1]], '.', label="mit 6 Alu Lagen geschirmt")
-    plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu9['counts'][plot_range_conv[0]:plot_range_conv[1]], '.', label="mit 9 Alu Lagen geschirmt")
-    plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu12['counts'][plot_range_conv[0]:plot_range_conv[1]], '.', label="mit 12 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], 'r.', label="ungeschirmt")
+    plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu3['counts'][plot_range_conv[0]:plot_range_conv[1]], 'g.', label="mit 3 Alu Lagen geschirmt")
+    #plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu6['counts'][plot_range_conv[0]:plot_range_conv[1]], 'b.', label="mit 6 Alu Lagen geschirmt")
+    #plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu9['counts'][plot_range_conv[0]:plot_range_conv[1]], 'y.', label="mit 9 Alu Lagen geschirmt")
+    #plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu12['counts'][plot_range_conv[0]:plot_range_conv[1]], 'm.', label="mit 12 Alu Lagen geschirmt")
     
-    plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]], func2(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]],*opt_fit_parameters_cs_alu3), 'r--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
+    plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]], func2(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]],*opt_fit_parameters_cs_alu3), 'g--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
-    plt.xlim(plot_range[0], plot_range[1])
+    #plt.xlim(plot_range[0], plot_range[1])
     #plt.ylim(0, 1300)
     #plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV mit Alufolie geschirmt (energiekalibriert)")
     plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
