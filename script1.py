@@ -204,7 +204,7 @@ def main():
     DN = dataSet_Am['counts_uncert']  
 
     # fitting the function
-    plot_range = [12,26]  # Durch 4 geteilt wegen rebin
+    plot_range = [12,25]  # Durch 4 geteilt wegen rebin
     fit_range = [13,24]   # Durch 4 geteilt wegen rebin
     fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
                       [   0,  -70, 600, 80,  15],      # max bounds
