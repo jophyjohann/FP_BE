@@ -28,7 +28,11 @@ def main():
         return a * (x + b)
 
     def lin_inv(y, a, b):
-        return (y - a * b) / a
+        res = (y - a * b) / a
+        for i in range(len(res)):
+            if res[i] < 0:
+                res[i] = 0
+        return res
 
     def Gauss(x, C, mu, sigma):
         return C*np.exp(-(x-mu)**2/(2*sigma**2))
@@ -456,7 +460,7 @@ def main():
 
     # Linear Fit
     fit_range = [450,600] 
-    fit_plot_range = [0,800]
+    fit_plot_range = [0,900]
 
     fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
     fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
