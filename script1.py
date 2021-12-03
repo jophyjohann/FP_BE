@@ -752,7 +752,7 @@ def main():
     plt.ylim(0, 1300)
     #plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV mit Alufolie geschirmt (energiekalibriert)")
     plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
-    #plt.savefig('plot_cs_alu_all_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_cs_alu_all_fit_calib.pdf', bbox_inches='tight')
     plt.show()
 
     popt=opt_fit_parameters_cs_alu3
@@ -859,7 +859,7 @@ def main():
     plt.ylim(0, 1800)
     #plt.title("Kr Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV mit Alufolie geschirmt (energiekalibriert)")
     plt.title("Kr Spektrum mit Alufolie geschirmt (energiekalibriert)")
-    #plt.savefig('plot_kr_alu_all_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_kr_alu_all_fit_calib.pdf', bbox_inches='tight')
     plt.show()
 
     popt=opt_fit_parameters_kr_alu3
@@ -965,7 +965,7 @@ def main():
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 1300)
     plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
-    #plt.savefig('plot_cs_pap_all_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_cs_pap_all_fit_calib.pdf', bbox_inches='tight')
     plt.show()
 
     popt=opt_fit_parameters_cs_pap1
@@ -1072,7 +1072,7 @@ def main():
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 1800)
     plt.title("kr Spektrum mit Papier geschirmt (energiekalibriert)")
-    #plt.savefig('plot_kr_pap_all_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_kr_pap_all_fit_calib.pdf', bbox_inches='tight')
     plt.show()
 
     popt=opt_fit_parameters_kr_pap1
