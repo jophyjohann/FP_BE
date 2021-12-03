@@ -495,14 +495,14 @@ def main():
     # Fermi-Plots von Cs und Kr mit Korrektur
     x_0_cs =  -popt_F_1_cs[1] #  E_0 Die Energie aus dem Ersten Fermiplot ist der Schnittpunkt des Fits mit der Energieachse
     
-    # Korrekturterm
+    # Korrekturterm 
     print(x_cs_F)
     S_1 = (x_cs_F + m)**2 -m + (x_0_cs - x_cs_F)**2
     print("S_1: ", S_1)
     print("(x_cs_F + m)**2: ",(x_cs_F + m)**2)
     print("(x_0_cs - x_cs_F)**2: ",(x_0_cs - x_cs_F)**2)
     F_2 =  np.sqrt(y_cs_B/(np.sqrt(x_cs_F**2+2*m*x_cs_F)*(x_cs_F+m)*F_Cs*S_1))
-    print(F_2)
+    print(max(F_2))
 
     # Linear Fit
     fit_range = [200,475]
@@ -564,12 +564,112 @@ def main():
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
-    #plt.xlim(plot_range[0], plot_range[1])
-    #plt.ylim(0, 1800)
-    plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV mit Alufolie geschirmt (energiekalibriert)")
-    #plt.savefig('plot_kr_beta_and_gamma_calib.pdf', bbox_inches='tight')
+    plt.xlim(plot_range[0], plot_range[1])
+    plt.ylim(0, 1400)
+    #plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV mit Alufolie geschirmt (energiekalibriert)")
+    plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
+    #plt.savefig('plot_cs_alu_all_calib.pdf', bbox_inches='tight')
     plt.show()
+
+
+    #Cs mit Papier
     
+    file_path_cs_pap1 = directory_path + 'CS_PAP1.TXT'
+    file_path_cs_pap2 = directory_path + 'CS_PAP2.TXT'
+    file_path_cs_pap3 = directory_path + 'CS_PAP3.TXT'
+    file_path_cs_pap4 = directory_path + 'CS_PAP4.TXT'
+    
+
+    dataSet_cs_pap1 = DatasetTools.read_file(file_path_cs_pap1)
+    dataSet_cs_pap2 = DatasetTools.read_file(file_path_cs_pap2)
+    dataSet_cs_pap3 = DatasetTools.read_file(file_path_cs_pap3)
+    dataSet_cs_pap4 = DatasetTools.read_file(file_path_cs_pap4)
+    
+    #plot the Cs Spektrum with Papier
+    plot_range = [0,800]
+    plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="ungeschirmt")
+    plt.plot(lin(dataSet_cs_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_pap1['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 1 Papier Lagen geschirmt")
+    plt.plot(lin(dataSet_cs_pap2['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_pap2['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 2 Papier Lagen geschirmt")
+    plt.plot(lin(dataSet_cs_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_pap3['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 3 Papier Lagen geschirmt")
+    plt.plot(lin(dataSet_cs_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_pap4['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 4 Papier Lagen geschirmt")
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    plt.ylim(0, 1700)
+    plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
+    #plt.savefig('plot_cs_pap_all_calib.pdf', bbox_inches='tight')
+    plt.show()
+
+
+    #Kr mit Alu
+    
+    file_path_kr_Alu3 = directory_path + 'KR_ALU3.TXT'
+    file_path_kr_Alu6 = directory_path + 'KR_ALU6.TXT'
+    file_path_kr_Alu9 = directory_path + 'KR_ALU9.TXT'
+    file_path_kr_Alu12 = directory_path + 'KR_ALU12.TXT'
+    
+
+    dataSet_kr_Alu3 = DatasetTools.read_file(file_path_kr_Alu3)
+    dataSet_kr_Alu6 = DatasetTools.read_file(file_path_kr_Alu6)
+    dataSet_kr_Alu9 = DatasetTools.read_file(file_path_kr_Alu9)
+    dataSet_kr_Alu12 = DatasetTools.read_file(file_path_kr_Alu12)
+    
+    #plot the Kr Spektrum with Alu Folie
+    plot_range = [0,800]
+    plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="ungeschirmt")
+    plt.plot(lin(dataSet_kr_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_Alu3['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 3 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_kr_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_Alu6['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 6 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_kr_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_Alu9['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 9 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_kr_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_Alu12['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 12 Alu Lagen geschirmt")
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    plt.ylim(0, 1600)
+    plt.title("Kr Spektrum mit Alufolie geschirmt (energiekalibriert)")
+    #plt.savefig('plot_kr_alu_all_calib.pdf', bbox_inches='tight')
+    plt.show()
+
+
+    #Cs mit Papier
+    
+    file_path_kr_pap1 = directory_path + 'KR_PAP1.TXT'
+    file_path_kr_pap2 = directory_path + 'KR_PAP2.TXT'
+    file_path_kr_pap3 = directory_path + 'KR_PAP3.TXT'
+    file_path_kr_pap4 = directory_path + 'KR_PAP4.TXT'
+    
+
+    dataSet_kr_pap1 = DatasetTools.read_file(file_path_kr_pap1)
+    dataSet_kr_pap2 = DatasetTools.read_file(file_path_kr_pap2)
+    dataSet_kr_pap3 = DatasetTools.read_file(file_path_kr_pap3)
+    dataSet_kr_pap4 = DatasetTools.read_file(file_path_kr_pap4)
+    
+    #plot the Kr Spektrum with Papier
+    plot_range = [0,800]
+    plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="ungeschirmt")
+    plt.plot(lin(dataSet_kr_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_pap1['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 1 Papier Lagen geschirmt")
+    plt.plot(lin(dataSet_kr_pap2['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_pap2['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 2 Papier Lagen geschirmt")
+    plt.plot(lin(dataSet_kr_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_pap3['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 3 Papier Lagen geschirmt")
+    plt.plot(lin(dataSet_kr_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_pap4['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 4 Papier Lagen geschirmt")
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    plt.ylim(0, 1700)
+    plt.title("Kr Spektrum mit Papier geschirmt (energiekalibriert)")
+    #plt.savefig('plot_kr_pap_all_calib.pdf', bbox_inches='tight')
+    plt.show()
+
 
 
 main()
