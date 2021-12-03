@@ -69,7 +69,7 @@ def main():
     plt.ylim(0, 700)
     plt.title("Cs Spektrum")
     #plt.savefig('plot_cs.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
 
     # Plot limited spectrum Cs
@@ -84,7 +84,7 @@ def main():
     plt.ylim(0, 500)
     plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     #plt.savefig('plot_cs_cut.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
     
     print("Parameter für den Fit:\n\n")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
@@ -109,7 +109,7 @@ def main():
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 500)
     plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
-    plt.show()
+    #plt.show()
     
     print("Parameter für den Fit:\n\n")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
@@ -138,7 +138,7 @@ def main():
     plt.ylim(0, 700)
     plt.title(r"Cs Gamma und Beta-Spektrum")
     #plt.savefig('plot_cs_and_gamma.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
 
     # fitting the function
@@ -168,7 +168,7 @@ def main():
     plt.ylim(0, 40)
     plt.title(r"Cs Gammaspektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     #plt.savefig('plot_cs_gamma_cut.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
     print("Parameter für den Fit:\n")
     print("Logistische Funktion mit y = a / (1 + exp(- b * (x + c))) + d\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n-> c = {:.4f} +/- {:.4f}\n-> d = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1],popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3]))
@@ -411,6 +411,7 @@ def main():
     print("Bei Linie von K-Konv.elektronen: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[6],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[4],popt_Kall[0],popt_Kall[1])))
     print("Bei Linie von L-Konv.elektronen: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[7],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[5],popt_Kall[0],popt_Kall[1])))
     
+
 
 main()
 
