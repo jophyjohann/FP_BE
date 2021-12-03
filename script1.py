@@ -496,6 +496,7 @@ def main():
     x_0_cs =  popt_F_1_cs[1] # b = E_0 Die Energie aus dem Ersten Fermiplot
     # Korrekturterm
     S_1 = (x_cs_F + m)**2 -m + (x_0_cs - x_cs_F)**2
+    print((x_cs_F + m)**2)
     print(S_1)
     F_2 =  np.sqrt(y_cs_B/(np.sqrt(x_cs_F**2+2*m*x_cs_F)*(x_cs_F+m)*F_Cs*S_1))
     print(F_2)
@@ -524,7 +525,7 @@ def main():
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Fermi-Term")
     plt.legend()
-    plt.xlim(plot_range[0], plot_range[1])
+    #plt.xlim(plot_range[0], plot_range[1])
     #plt.ylim(0, 0.032)
     plt.title("Cs Beta Spektrum Fermi-Plot mit Korrekturterm")
     #plt.savefig('plot_cs_beta_fermi2.pdf', bbox_inches='tight')
@@ -552,17 +553,17 @@ def main():
     plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
 
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
-    plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu3['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
-    plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu6['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
-    plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu9['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
-    plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu12['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
+    plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="ungeschirmt")
+    plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu3['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 3 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu6['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 6 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu9['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 9 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu12['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 12 Alu Lagen geschirmt")
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
     #plt.xlim(plot_range[0], plot_range[1])
     #plt.ylim(0, 1800)
-    plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
+    plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV mit Alufolie geschirmt (energiekalibriert)")
     #plt.savefig('plot_kr_beta_and_gamma_calib.pdf', bbox_inches='tight')
     plt.show()
     
