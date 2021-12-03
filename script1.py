@@ -656,7 +656,7 @@ def main():
     plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
 
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(dataSet_kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="ungeschirmt")
+    plt.plot(lin(dataSet_Kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_Kr['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="ungeschirmt")
     plt.plot(lin(dataSet_kr_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_pap1['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 1 Papier Lagen geschirmt")
     plt.plot(lin(dataSet_kr_pap2['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_pap2['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 2 Papier Lagen geschirmt")
     plt.plot(lin(dataSet_kr_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_pap3['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 3 Papier Lagen geschirmt")
