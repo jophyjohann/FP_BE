@@ -280,7 +280,7 @@ def main():
     #plt.ylim(0, 700)
     plt.title("Energiekallibrierung")
     #plt.savefig('plot_e_calib.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
     
     print("Parameter für den Fit:\n")
     print("Lineare Funktion y = a * (x + b)\n-> a = ({:.4f} +/- {:.4f})keV/Kanal\n-> b = ({:.4f} +/- {:.4f})Kanal".format(popt[0], np.sqrt(np.diag(pcov))[0], popt[1], np.sqrt(np.diag(pcov))[1]))
@@ -302,7 +302,7 @@ def main():
     plt.ylim(0, 400)
     plt.title("Cs Gamma-Spektrum (energiekalibriert)")
     #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
    
    #Cs Beta Spektrum
     plot_range = [0,800]
@@ -316,21 +316,7 @@ def main():
     plt.ylim(0, 700)
     plt.title("Cs Gamma- und Beta-Spektrum (energiekalibriert)")
     #plt.savefig('plot_cs_beta_and_gamma_calib.pdf', bbox_inches='tight')
-    plt.show()
-   
-   # Am Spektrum
-    plot_range = [0,100]
-    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(x_Am,popt_Kall[0],popt_Kall[1]), y_Am, '-', label="Am Spektrum bis "+str(plot_range[1]))
-    plt.xlabel(r"Energie / keV")
-    plt.ylabel(r"Counts")
-    plt.legend()
-    plt.xlim(plot_range[0], plot_range[1])
-    plt.ylim(0, 1100)
-    plt.title("Am 241 gesamtes Spektrum (energiekalibriert)")
-    #plt.savefig('plot_am_beta_calib.pdf', bbox_inches='tight')
-    plt.show()
-
+    #plt.show()
 
     # Kr Spektren Messung
 
@@ -368,7 +354,7 @@ def main():
     plt.ylim(0, 1800)
     plt.title("Kr Gamma-Spektrum (energiekalibriert)")
     #plt.savefig('plot_kr_gamma_calib.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
     # Plot Gamma and Beta spectra of Kr
     plot_range = [0,800]
@@ -383,7 +369,7 @@ def main():
     plt.ylim(0, 1800)
     plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
     #plt.savefig('plot_kr_beta_and_gamma_calib.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
 
     # Auflösevermögen Spektrometer
@@ -417,7 +403,7 @@ def main():
     print("alpha_L = {:.4f} +/- {:.4g}\n\n".format(alpha_L, D_alpha_L))
     
 
-    # Fermi-Plots von Cs und Kr
+    # Fermi-Plots von Cs und Kr ohne Korrektrur
     
     F_Cs = 6
     F_Kr = 5
@@ -428,11 +414,12 @@ def main():
     F_1 = np.sqrt(y_cs_B/(np.sqrt(x_cs_F**2+2*m*x_cs_F)*(x_cs_F+m)*F_Cs))
 
     # Linear Fit
-    fit_range = [0,1000]
+    fit_range = [275,475]
+    fit_plot_range = [0,800]
     fit_parameters = [[ "a",  "b"],
-                      [ 0, 100],     # max bounds
-                      [ -0.001, 1],       # start values
-                      [ -0.1, -100]]       # min bounds
+                      [ 0, -200],     # max bounds 
+                      [ -0.001, -500],       # start values
+                      [ -0.5, -800]]       # min bounds
     
     popt, pcov = curve_fit(lin, x_cs_F[fit_range[0]:fit_range[1]], F_1[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
     popt_F_1 = popt.copy()
@@ -441,17 +428,61 @@ def main():
     #Cs Beta Spektrum Fermi-Plot
     plot_range = [0,800]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(x_cs_G,popt_Kall[0],popt_Kall[1]), F_1, '-', label="Fermi-Plot ohne Korrektur")
+    plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), F_1, '-', label="Cs Fermi-Plot ohne Korrektur")
+    plt.plot(x_cs_F[fit_plot_range[0]:fit_plot_range[1]], lin(x_cs_F[fit_plot_range[0]:fit_plot_range[1]], *popt), 'r--', label="Linearer Fit (von "+str(int(lin(fit_range[0],popt_Kall[0],popt_Kall[1])))+" bis "+str(int(lin(fit_range[1],popt_Kall[0],popt_Kall[1])))+")")
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Fermi-Term")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
-    plt.ylim(0, 0.04)
+    plt.ylim(0, 0.032)
     plt.title("Cs Beta Spektrum Fermi-Plot ohne Korrekturterm")
     #plt.savefig('plot_cs_beta_fermi1.pdf', bbox_inches='tight')
     plt.show()
 
+    print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} +/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
     
+
+    # Für Kr
+    x_Kr_B = dataSet_Kr_beta['channel']
+    x_Kr_F = lin(x_Kr_B,popt_Kall[0],popt_Kall[1])  # Energy
+    F_1 = np.sqrt(y_Kr_B/(np.sqrt(x_Kr_F**2+2*m*x_Kr_F)*(x_Kr_F+m)*F_Kr))
+
+    # Linear Fit
+    fit_range = [600,700] 
+    fit_plot_range = [100,900]
+    fit_parameters = [[ "a",  "b"],
+                      [ 0, -200],     # max bounds 
+                      [ -0.001, -500],       # start values
+                      [ -0.5, -800]]       # min bounds
+    
+    popt, pcov = curve_fit(lin, x_Kr_F[fit_range[0]:fit_range[1]], F_1[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    popt_F_1 = popt.copy()
+    pcov_F_1 = pcov.copy()
+
+    #Kr Beta Spektrum Fermi-Plot
+    plot_range = [0,800]
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(x_Kr_B,popt_Kall[0],popt_Kall[1]), F_1, '-', label="Kr Fermi-Plot ohne Korrektur")
+    plt.plot(x_Kr_F[fit_plot_range[0]:fit_plot_range[1]], lin(x_Kr_F[fit_plot_range[0]:fit_plot_range[1]], *popt), 'r--', label="Linearer Fit (von "+str(int(lin(fit_range[0],popt_Kall[0],popt_Kall[1])))+" bis "+str(int(lin(fit_range[1],popt_Kall[0],popt_Kall[1])))+")")
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Fermi-Term")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    plt.ylim(0, 0.045)
+    plt.title("Kr Beta Spektrum Fermi-Plot ohne Korrekturterm")
+    #plt.savefig('plot_kr_beta_fermi1.pdf', bbox_inches='tight')
+    plt.show()
+
+    print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} +/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
+    
+
+
+    # Fermi-Plots von Cs und Kr mit Korrektur
+    x_0_cs =  popt_F_1[1] # b = E_0 Die Energie aus dem Ersten Fermiplot
+    # Korrekturterm
+    S_1 = 
+
+
 main()
 
 #...end_script1...#
