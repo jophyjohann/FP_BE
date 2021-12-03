@@ -70,7 +70,7 @@ def main():
     plt.ylim(0, 700)
     plt.title("Cs Spektrum")
     #plt.savefig('plot_cs.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
 
     # Plot limited spectrum Cs
@@ -85,7 +85,7 @@ def main():
     plt.ylim(0, 500)
     plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     #plt.savefig('plot_cs_cut.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
     
     print("Parameter für den Fit:\n\n")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
@@ -194,7 +194,7 @@ def main():
     plt.ylim(0, 1100)
     plt.title("Am 241 Spektrum")
     #plt.savefig('plot_am.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
 
     # Am Spektrum rebinned
@@ -230,7 +230,7 @@ def main():
     plt.ylim(0, 600)
     plt.title("Am 241 Spektrum von "+str(plot_range[0]*bins_combined)+" bis "+str(plot_range[1]*bins_combined)+" rebinned (jeweils "+str(bins_combined)+" Kanäle zsm.)")
     #plt.savefig('plot_am_cut.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
     print("Parameter für den Fit:\n")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
@@ -315,7 +315,7 @@ def main():
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 700)
     plt.title("Cs Gamma- und Beta-Spektrum (energiekalibriert)")
-    #plt.savefig('plot_cs_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_cs_beta_and_gamma_calib.pdf', bbox_inches='tight')
     plt.show()
    
    # Am Spektrum
@@ -328,7 +328,7 @@ def main():
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 1100)
     plt.title("Am 241 gesamtes Spektrum (energiekalibriert)")
-    #plt.savefig('plot_am_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_am_beta_calib.pdf', bbox_inches='tight')
     plt.show()
 
 
@@ -359,20 +359,6 @@ def main():
     
     # Plot whole spectrum Kr
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(E_Kr, y_Kr, '-', label='Kr Spektrum')
-    plt.xlabel(r"Energie / keV")
-    plt.ylabel(r"Counts")
-    plt.legend()
-    plt.xscale('log')
-    plt.xlim(0, 1200)
-    plt.ylim(0, 1800)
-    plt.title("Kr gesamtes Spektrum (energiekalibriert)")
-    #plt.savefig('plot_kr_calib.pdf', bbox_inches='tight')
-    plt.show()
-
-    # Plot Gamma and Beta spectra of Kr
-    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(E_Kr, y_Kr_B, '-', label='Kr Beta-Spektrum')
     plt.plot(E_Kr, y_Kr_G, '-', label='Kr Gamma-Spektrum')
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
@@ -380,8 +366,23 @@ def main():
     plt.xscale('log')
     plt.xlim(0, 1200)
     plt.ylim(0, 1800)
+    plt.title("Kr Gamma-Spektrum (energiekalibriert)")
+    #plt.savefig('plot_kr_gamma_calib.pdf', bbox_inches='tight')
+    plt.show()
+
+    # Plot Gamma and Beta spectra of Kr
+    plot_range = [0,800]
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(E_Kr, y_Kr_G, '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
+    plt.plot(E_Kr, y_Kr_B, '-', label="Kr Beta-Spektrum bis "+str(plot_range[1]))
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    #plt.xscale('log')
+    plt.xlim(plot_range[0], plot_range[1])
+    plt.ylim(0, 1800)
     plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
-    #plt.savefig('plot_kr_and_gamma_calib.pdf', bbox_inches='tight')
+    #plt.savefig('plot_kr_beta_and_gamma_calib.pdf', bbox_inches='tight')
     plt.show()
 
 
@@ -398,66 +399,59 @@ def main():
     print("Bei Linie von L-Konv.elektronen: FWHM={:.4f}keV +/- {:.4f} @ E={:.4f}keV\n\n".format(FWHM_L, delta_FWHM_L, pos_FWHM_L))
     
 
-
-    # Als nächstes Logarithmische darstellung der Gamma-Spektren von Cs und Kr über die Energie
-    # Am besten die Zählraten, also N/t über die Energie.
-
-    '''
-    # Für Cs
-    t_cs_G = dataSet_cs_gamma['time']
-    Z_cs_G = y_cs_G/t_cs_G
-
-    # Plot Z_cs_G gegen Energie     
-    #Cs Gamma Spektrum
-    plot_range = [20,800]
-    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(x_cs_G,popt_Kall[0],popt_Kall[1]), Z_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
-    plt.xlabel(r"Energie / keV")
-    plt.ylabel(r"Logarithmische Zählrate log(Z/s^-1)")
-    plt.legend()
-    #plt.xscale('log')
-    #plt.ylim(0,1)
-    plt.yscale('log')
-    plt.xlim(plot_range[0], plot_range[1])
-    
-    #fig.set_xticks([20,30,40,50,100,200,300,500,800])
-    #plt.ylim(0, 700)
-    plt.title("Cs Gamma Spektrum (energiekalibriert)")
-    #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
-    plt.show()
-
-    # Für Kr
-    t_Kr_G = dataSet_Kr_Gamma['time']
-    Z_Kr_G = y_Kr_G/t_Kr_G
-
-    # Plot Z_Kr_G gegen Energie     
-    #Kr Gamma Spektrum
-    plot_range = [20,800]
-    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(x_Kr,popt_Kall[0],popt_Kall[1]), Z_Kr_G, '-', label="Kr Gamma-Spektrum bis "+str(plot_range[1]))
-    plt.xlabel(r"Energie / keV")
-    plt.ylabel(r"Logarithmische Zählrate log(Z/s^-1)")
-    plt.legend()
-    #plt.xscale('log')
-    #plt.ylim(0, 1)
-    plt.yscale('log')
-    plt.xlim(plot_range[0], plot_range[1])
-    
-    #fig.set_xticks([20,30,40,50,100,200,300,500,800])
-    #plt.ylim(0, 700)
-    plt.title("Cs Gamma Spektrum (energiekalibriert)")
-    #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
-    plt.show()
-    '''
-    
-
     # Konversionskoeffizienten
     # Integral der Fit Funktion von Cs über jeden IC Peak. Als Int. Grenzen mu+- 3sigma
+    print("Konversionskoeffizienten:\n")
+
+    int_range = 3 #multiples of sigma
     
-    N_K = integrate.quad(lambda x: func(x,*opt_fit_parameters1), opt_fit_parameters1[4] - 3*opt_fit_parameters1[6], opt_fit_parameters1[4] + 3*opt_fit_parameters1[6])
-    print(N_K)
-    N_L = integrate.quad(lambda x: func(x,*opt_fit_parameters1), opt_fit_parameters1[4] - 3*opt_fit_parameters1[6], opt_fit_parameters1[4] + 3*opt_fit_parameters1[6])
-    print(N_L)
+    N_K = integrate.quad(lambda x: func(x,*opt_fit_parameters1), opt_fit_parameters1[4] - int_range*opt_fit_parameters1[6], opt_fit_parameters1[4] + int_range*opt_fit_parameters1[6])[0]
+    N_L = integrate.quad(lambda x: func(x,*opt_fit_parameters1), opt_fit_parameters1[5] - int_range*opt_fit_parameters1[7], opt_fit_parameters1[5] + int_range*opt_fit_parameters1[7])[0]
+    N_ges = np.sum(y_cs)
+    
+    alpha_K = N_K/(N_ges-N_K)
+    alpha_L = N_L/(N_ges-N_L)
+    D_alpha_K = np.sqrt((N_ges*np.sqrt(N_K)/(N_ges - N_K)**2)**2 + (-N_K*np.sqrt(N_ges)/(N_ges-N_K)**2)**2)
+    D_alpha_L = np.sqrt((N_ges*np.sqrt(N_L)/(N_ges - N_L)**2)**2 + (-N_L*np.sqrt(N_ges)/(N_ges-N_L)**2)**2)
+    print("alpha_K = {:.4f} +/- {:.4g}".format(alpha_K, D_alpha_K))
+    print("alpha_L = {:.4f} +/- {:.4g}\n\n".format(alpha_L, D_alpha_L))
+    
+
+    # Fermi-Plots von Cs und Kr
+    
+    F_Cs = 6
+    F_Kr = 5
+    m = 511 #keV 
+
+    # Für Cs
+    x_cs_F = lin(x_cs_B,popt_Kall[0],popt_Kall[1])  # Energy
+    F_1 = np.sqrt(y_cs_B/(np.sqrt(x_cs_F**2+2*m*x_cs_F)*(x_cs_F+m)*F_Cs))
+
+    # Linear Fit
+    fit_range = [0,1000]
+    fit_parameters = [[ "a",  "b"],
+                      [ 0, 100],     # max bounds
+                      [ -0.001, 1],       # start values
+                      [ -0.1, -100]]       # min bounds
+    
+    popt, pcov = curve_fit(lin, x_cs_F[fit_range[0]:fit_range[1]], F_1[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    popt_F_1 = popt.copy()
+    pcov_F_1 = pcov.copy()
+
+    #Cs Beta Spektrum Fermi-Plot
+    plot_range = [0,800]
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(x_cs_G,popt_Kall[0],popt_Kall[1]), F_1, '-', label="Fermi-Plot ohne Korrektur")
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Fermi-Term")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    plt.ylim(0, 0.04)
+    plt.title("Cs Beta Spektrum Fermi-Plot ohne Korrekturterm")
+    #plt.savefig('plot_cs_beta_fermi1.pdf', bbox_inches='tight')
+    plt.show()
+
+    
 main()
 
 #...end_script1...#
