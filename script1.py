@@ -569,7 +569,7 @@ def main():
     #plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV mit Alufolie geschirmt (energiekalibriert)")
     plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
     #plt.savefig('plot_cs_alu_all_calib.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
 
     #Cs mit Papier
@@ -602,7 +602,7 @@ def main():
     plt.ylim(0, 2000)
     plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
     #plt.savefig('plot_cs_pap_all_calib.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
 
     #Kr mit Alu
@@ -635,7 +635,7 @@ def main():
     plt.ylim(0, 1700)
     plt.title("Kr Spektrum mit Alufolie geschirmt (energiekalibriert)")
     #plt.savefig('plot_kr_alu_all_calib.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
 
     #Kr mit Papier
@@ -668,7 +668,7 @@ def main():
     plt.ylim(0, 1700)
     plt.title("Kr Spektrum mit Papier geschirmt (energiekalibriert)")
     #plt.savefig('plot_kr_pap_all_calib.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
 
 
 
@@ -681,15 +681,15 @@ def main():
     # Gauss Fits
     
     #for alu3
-    fit_range = [550,675] 
-    fit_plot_range = [550,675]
+    fit_range = [575,625] 
+    fit_plot_range = [575,625]
     fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
     fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
     fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
                       [   0,  -575, 800, 615,  20],      # max bounds
-                      [-1,  -650,  500, 610,   12],      # start values
-                      [-2, -675,  300, 600,   5]]      # min bounds
-    popt, pcov = curve_fit(func2, x_Am[fit_range[0]:fit_range[1]], y_Am[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+                      [-0.2,  -650,  500, 610,   12],      # start values
+                      [-0.5, -675,  300, 600,   5]]      # min bounds
+    popt, pcov = curve_fit(func2, lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], dataSet_cs_Alu3['counts'][fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
     opt_fit_parameters_cs_alu3 = popt.copy()
     pcov_cs_alu3 = pcov.copy()
     fit_plot_range_cs_alu3 = fit_plot_range_conv
@@ -712,7 +712,8 @@ def main():
     #plt.savefig('plot_cs_alu_all_calib.pdf', bbox_inches='tight')
     plt.show()
 
-    print("Gausssche Glockenkurve für Alu3 mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3],popt[4],np.sqrt(np.diag(pcov))[4]))
+    print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(opt_fit_parameters_cs_alu3[0],np.sqrt(np.diag(pcov_cs_alu3))[0],opt_fit_parameters_cs_alu3[1],np.sqrt(np.diag(pcov_cs_alu3))[1]))
+    print("Gausssche Glockenkurve für Alu3 mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(opt_fit_parameters_cs_alu3[2],np.sqrt(np.diag(pcov_cs_alu3))[2],opt_fit_parameters_cs_alu3[3],np.sqrt(np.diag(pcov_cs_alu3))[3],opt_fit_parameters_cs_alu3[4],np.sqrt(np.diag(pcov_cs_alu3))[4]))
     
 
 
