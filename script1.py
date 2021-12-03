@@ -5,6 +5,7 @@
 # main python console for all scripts: https://trinket.io/embed/python3/384c7dcf76?toggleCode=true&runOption=run&start=result
 
 import numpy as np
+import scipy.integrate as integrate
 import matplotlib.pyplot as plt
 from scipy.optimize import *
 import DatasetTools
@@ -69,7 +70,7 @@ def main():
     plt.ylim(0, 700)
     plt.title("Cs Spektrum")
     #plt.savefig('plot_cs.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
 
     # Plot limited spectrum Cs
@@ -84,7 +85,7 @@ def main():
     plt.ylim(0, 500)
     plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     #plt.savefig('plot_cs_cut.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
     
     print("Parameter für den Fit:\n\n")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
@@ -255,7 +256,6 @@ def main():
     # Unsicherheiten
     D_Kall = [np.sqrt(np.diag(pcov1))[4], np.sqrt(np.diag(pcov1))[5], np.sqrt(np.diag(pcov2))[2], np.sqrt(np.diag(pcov3))[3]] # Uncertainties
     
-    #print(D_Kall)
 
     # Linear Fit
     fit_range = [0,1000]
@@ -276,8 +276,8 @@ def main():
     plt.xlabel(r"Kanal")
     plt.ylabel(r"Energie/keV")
     plt.legend()
-    #plt.xlim()
-    #plt.ylim(0, 200)
+    #plt.xlim(0, 900)
+    #plt.ylim(0, 700)
     plt.title("Energiekallibrierung")
     #plt.savefig('plot_e_calib.pdf', bbox_inches='tight')
     plt.show()
@@ -290,7 +290,7 @@ def main():
     # plot nun mit Energiekalibrierung:
 
     #Cs Gamma Spektrum
-    plot_range = [20,800]
+    plot_range = [0,1000]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(lin(x_cs_G,popt_Kall[0],popt_Kall[1]), y_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
     plt.xlabel(r"Energie / keV")
@@ -298,24 +298,23 @@ def main():
     plt.legend()
     plt.xscale('log')
     plt.xlim(plot_range[0], plot_range[1])
-    
     #fig.set_xticks([20,30,40,50,100,200,300,500,800])
-    #plt.ylim(0, 700)
-    plt.title("Cs Gamma Spektrum (energiekalibriert)")
+    plt.ylim(0, 400)
+    plt.title("Cs Gamma-Spektrum (energiekalibriert)")
     #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
     plt.show()
    
    #Cs Beta Spektrum
     plot_range = [0,800]
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), y_cs_B, '-', label="Cs Beta-Spektrum bis "+str(plot_range[1]))
     plt.plot(lin(x_cs_G,popt_Kall[0],popt_Kall[1]), y_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
+    plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), y_cs_B, '-', label="Cs Beta-Spektrum bis "+str(plot_range[1]))
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 700)
-    plt.title("Cs Beta Spektrum (energiekalibriert)")
+    plt.title("Cs Gamma- und Beta-Spektrum (energiekalibriert)")
     #plt.savefig('plot_cs_calib.pdf', bbox_inches='tight')
     plt.show()
    
@@ -328,7 +327,7 @@ def main():
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 1100)
-    plt.title("Am 241 Spektrum (energiekalibriert)")
+    plt.title("Am 241 gesamtes Spektrum (energiekalibriert)")
     #plt.savefig('plot_am_calib.pdf', bbox_inches='tight')
     plt.show()
 
@@ -364,9 +363,10 @@ def main():
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
+    plt.xscale('log')
     plt.xlim(0, 1200)
-    plt.ylim(0, 1750)
-    plt.title("Kr gesamt Spektrum (energiekalibriert)")
+    plt.ylim(0, 1800)
+    plt.title("Kr gesamtes Spektrum (energiekalibriert)")
     #plt.savefig('plot_kr_calib.pdf', bbox_inches='tight')
     plt.show()
 
@@ -377,23 +377,32 @@ def main():
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
+    plt.xscale('log')
     plt.xlim(0, 1200)
-    plt.ylim(0, 1750)
+    plt.ylim(0, 1800)
     plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
     #plt.savefig('plot_kr_and_gamma_calib.pdf', bbox_inches='tight')
     plt.show()
 
 
     # Auflösevermögen Spektrometer
+    FWHM_K = lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[6], popt_Kall[0],popt_Kall[1])
+    FWHM_L = lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[7], popt_Kall[0],popt_Kall[1])
+    delta_FWHM_K = lin(2*np.sqrt(2*np.log(2))*np.sqrt(np.diag(pcov1))[6],popt_Kall[0],popt_Kall[1])
+    delta_FWHM_L = lin(2*np.sqrt(2*np.log(2))*np.sqrt(np.diag(pcov1))[7],popt_Kall[0],popt_Kall[1])
+    pos_FWHM_K = lin(opt_fit_parameters1[4],popt_Kall[0],popt_Kall[1])
+    pos_FWHM_L = lin(opt_fit_parameters1[5],popt_Kall[0],popt_Kall[1])
+
     print("\nAuflösevermögen Spektrometer\n")  
-    print("Bei Linie von K-Konv.elektronen: FWHM={:.4f}keV +/- {:.4f} @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[6],  # Uncertainty of FWHM  is calculated the same as FWHM except, that you use Delta sigma. needs to go here##    ,popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[4],popt_Kall[0],popt_Kall[1])))
-    print("Bei Linie von L-Konv.elektronen: FWHM={:.4f}keV +/- {:.4f} @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[7],  # Same thing except for L-Peak of course  ,popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[5],popt_Kall[0],popt_Kall[1])))
+    print("Bei Linie von K-Konv.elektronen: FWHM={:.4f}keV +/- {:.4f} @ E={:.4f}keV".format(FWHM_K, delta_FWHM_K, pos_FWHM_K))
+    print("Bei Linie von L-Konv.elektronen: FWHM={:.4f}keV +/- {:.4f} @ E={:.4f}keV\n\n".format(FWHM_L, delta_FWHM_L, pos_FWHM_L))
     
 
 
     # Als nächstes Logarithmische darstellung der Gamma-Spektren von Cs und Kr über die Energie
     # Am besten die Zählraten, also N/t über die Energie.
 
+    '''
     # Für Cs
     t_cs_G = dataSet_cs_gamma['time']
     Z_cs_G = y_cs_G/t_cs_G
@@ -439,8 +448,16 @@ def main():
     plt.title("Cs Gamma Spektrum (energiekalibriert)")
     #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
     plt.show()
+    '''
+    
 
-
+    # Konversionskoeffizienten
+    # Integral der Fit Funktion von Cs über jeden IC Peak. Als Int. Grenzen mu+- 3sigma
+    
+    N_K = integrate.quad(lambda x: func(x,*opt_fit_parameters1), opt_fit_parameters1[4] - 3*opt_fit_parameters1[6], opt_fit_parameters1[4] + 3*opt_fit_parameters1[6])
+    print(N_K)
+    N_L = integrate.quad(lambda x: func(x,*opt_fit_parameters1), opt_fit_parameters1[4] - 3*opt_fit_parameters1[6], opt_fit_parameters1[4] + 3*opt_fit_parameters1[6])
+    print(N_L)
 main()
 
 #...end_script1...#
