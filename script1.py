@@ -496,8 +496,9 @@ def main():
     x_0_cs =  popt_F_1_cs[1] # b = E_0 Die Energie aus dem Ersten Fermiplot
     # Korrekturterm
     S_1 = (x_cs_F + m)**2 -m + (x_0_cs - x_cs_F)**2
-    print((x_cs_F + m)**2)
-    print(S_1)
+    print("S_1: ", S_1)
+    print("(x_cs_F + m)**2: ",(x_cs_F + m)**2) # warum ist das so grossssss
+    print("(x_0_cs - x_cs_F)**2: ",(x_0_cs - x_cs_F)**2)
     F_2 =  np.sqrt(y_cs_B/(np.sqrt(x_cs_F**2+2*m*x_cs_F)*(x_cs_F+m)*F_Cs*S_1))
     print(F_2)
 
