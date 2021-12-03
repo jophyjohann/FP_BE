@@ -433,8 +433,8 @@ def main():
                       [ -0.5, -800]]       # min bounds
     
     popt, pcov = curve_fit(lin, x_cs_F[fit_range_conv[0]:fit_range_conv[1]], F_1[fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
-    popt_F_1 = popt.copy()
-    pcov_F_1 = pcov.copy()
+    popt_F_1_cs = popt.copy()
+    pcov_F_1_cs = pcov.copy()
 
     #Cs Beta Spektrum Fermi-Plot
     plot_range = [0,800]
@@ -471,8 +471,8 @@ def main():
                       [ -0.5, -800]]       # min bounds
     
     popt, pcov = curve_fit(lin, x_Kr_F[fit_range_conv[0]:fit_range_conv[1]], F_1[fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
-    popt_F_1 = popt.copy()
-    pcov_F_1 = pcov.copy()
+    popt_F_1_kr = popt.copy()
+    pcov_F_1_kr = pcov.copy()
 
     #Kr Beta Spektrum Fermi-Plot
     plot_range = [0,800]
@@ -493,9 +493,79 @@ def main():
 
 
     # Fermi-Plots von Cs und Kr mit Korrektur
-    x_0_cs =  popt_F_1[1] # b = E_0 Die Energie aus dem Ersten Fermiplot
+    x_0_cs =  popt_F_1_cs[1] # b = E_0 Die Energie aus dem Ersten Fermiplot
     # Korrekturterm
-    S_1 = 0
+    S_1 = (x_cs_F + m)**2 -m + (x_0_cs - x_cs_F)**2
+    print(S_1)
+    F_2 =  np.sqrt(y_cs_B/(np.sqrt(x_cs_F**2+2*m*x_cs_F)*(x_cs_F+m)*F_Cs*S_1))
+    print(F_2)
+
+    # Linear Fit
+    fit_range = [200,475]
+    fit_plot_range = [0,800]
+
+    fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    
+    fit_parameters = [[ "a",  "b"],
+                      [ 0, -200],     # max bounds 
+                      [ -0.001, -500],       # start values
+                      [ -0.5, -800]]       # min bounds
+    
+    popt, pcov = curve_fit(lin, x_cs_F[fit_range_conv[0]:fit_range_conv[1]], F_1[fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    popt_F_2_cs = popt.copy()
+    pcov_F_2_cs = pcov.copy()
+
+    #Cs Beta Spektrum Fermi-Plot mit Korrektur
+    plot_range = [0,800]
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), F_2, '-', label="Cs Fermi-Plot mit Korrektur")
+    plt.plot(x_cs_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], lin(x_cs_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], *popt), 'r--', label="Linearer Fit (von "+str(fit_range[0])+" bis "+str(fit_range[1])+")")
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Fermi-Term")
+    plt.legend()
+    plt.xlim(plot_range[0], plot_range[1])
+    #plt.ylim(0, 0.032)
+    plt.title("Cs Beta Spektrum Fermi-Plot mit Korrekturterm")
+    #plt.savefig('plot_cs_beta_fermi2.pdf', bbox_inches='tight')
+    plt.show()
+
+
+
+    # WW mit Materie
+
+    #Cs mit Alu
+    
+    file_path_cs_Alu3 = directory_path + 'CS_ALU3.TXT'
+    file_path_cs_Alu6 = directory_path + 'CS_ALU6.TXT'
+    file_path_cs_Alu9 = directory_path + 'CS_ALU9.TXT'
+    file_path_cs_Alu12 = directory_path + 'CS_ALU12.TXT'
+    
+
+    dataSet_cs_Alu3 = DatasetTools.read_file(file_path_cs_Alu3)
+    dataSet_cs_Alu6 = DatasetTools.read_file(file_path_cs_Alu6)
+    dataSet_cs_Alu9 = DatasetTools.read_file(file_path_cs_Alu9)
+    dataSet_cs_Alu12 = DatasetTools.read_file(file_path_cs_Alu12)
+    
+    #plot the Cs Spektrum with Alu Folie
+    plot_range = [0,800]
+    plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
+    plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu3['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
+    plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu6['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
+    plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu9['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
+    plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu12['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="Kr Gamma-Spektrum  bis "+str(plot_range[1]))
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Counts")
+    plt.legend()
+    #plt.xlim(plot_range[0], plot_range[1])
+    #plt.ylim(0, 1800)
+    plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
+    #plt.savefig('plot_kr_beta_and_gamma_calib.pdf', bbox_inches='tight')
+    plt.show()
+    
 
 
 main()
