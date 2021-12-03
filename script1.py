@@ -204,7 +204,7 @@ def main():
     DN = dataSet_Am['counts_uncert']  
 
     # fitting the function
-    plot_range = [5,28]  # Durch 4 geteilt wegen rebin
+    plot_range = [12,26]  # Durch 4 geteilt wegen rebin
     fit_range = [13,24]   # Durch 4 geteilt wegen rebin
     fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
                       [   0,  -70, 600, 80,  15],      # max bounds
@@ -227,7 +227,7 @@ def main():
     plt.legend()
     plt.xlim(plot_range[0]*bins_combined, plot_range[1]*bins_combined)
     plt.ylim(-100, 3000)
-    plt.title("Am 241 Spektrum von "+str(plot_range[0]*bins_combined)+" bis "+str(plot_range[1]*bins_combined))
+    plt.title("Am 241 Spektrum von "+str(plot_range[0]*bins_combined)+" bis "+str(plot_range[1]*bins_combined)+" rebinned (jeweils "+str(bins_combined)+" Kanäle zsm.)")
     #plt.savefig('plot_am_cut.pdf', bbox_inches='tight')
     plt.show()
 
