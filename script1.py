@@ -599,7 +599,7 @@ def main():
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
-    plt.ylim(0, 1900)
+    plt.ylim(0, 2000)
     plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
     #plt.savefig('plot_cs_pap_all_calib.pdf', bbox_inches='tight')
     plt.show()
@@ -623,7 +623,7 @@ def main():
     plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
 
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(dataSet_kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="ungeschirmt")
+    plt.plot(lin(dataSet_Kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_Kr['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="ungeschirmt")
     plt.plot(lin(dataSet_kr_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_Alu3['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 3 Alu Lagen geschirmt")
     plt.plot(lin(dataSet_kr_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_Alu6['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 6 Alu Lagen geschirmt")
     plt.plot(lin(dataSet_kr_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_kr_Alu9['counts'][plot_range_conv[0]:plot_range_conv[1]], '-', label="mit 9 Alu Lagen geschirmt")
@@ -632,13 +632,13 @@ def main():
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
-    plt.ylim(0, 1500)
+    plt.ylim(0, 1700)
     plt.title("Kr Spektrum mit Alufolie geschirmt (energiekalibriert)")
     #plt.savefig('plot_kr_alu_all_calib.pdf', bbox_inches='tight')
     plt.show()
 
 
-    #Cs mit Papier
+    #Kr mit Papier
     
     file_path_kr_pap1 = directory_path + 'KR_PAP1.TXT'
     file_path_kr_pap2 = directory_path + 'KR_PAP2.TXT'
