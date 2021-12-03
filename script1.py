@@ -493,11 +493,13 @@ def main():
 
 
     # Fermi-Plots von Cs und Kr mit Korrektur
-    x_0_cs =  popt_F_1_cs[1] # b = E_0 Die Energie aus dem Ersten Fermiplot
+    x_0_cs =  -popt_F_1_cs[1] #  E_0 Die Energie aus dem Ersten Fermiplot ist der Schnittpunkt des Fits mit der Energieachse
+    
     # Korrekturterm
+    print(x_cs_F)
     S_1 = (x_cs_F + m)**2 -m + (x_0_cs - x_cs_F)**2
     print("S_1: ", S_1)
-    print("(x_cs_F + m)**2: ",(x_cs_F + m)**2) # warum ist das so grossssss
+    print("(x_cs_F + m)**2: ",(x_cs_F + m)**2)
     print("(x_0_cs - x_cs_F)**2: ",(x_0_cs - x_cs_F)**2)
     F_2 =  np.sqrt(y_cs_B/(np.sqrt(x_cs_F**2+2*m*x_cs_F)*(x_cs_F+m)*F_Cs*S_1))
     print(F_2)
