@@ -220,14 +220,14 @@ def main():
     # Plot limited spectrum of Am with fit
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(x_Am[fit_range[0]:fit_range[1]], func2(x_Am[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(fit_range[0]*bins_combined)+" bis "+str(fit_range[1]*bins_combined))
-    plt.plot(x_Am[plot_range[0]:plot_range[1]], y_Am[plot_range[0]:plot_range[1]], '.', label='Am Spektrum von '+str(plot_range[0])+" bis "+str(plot_range[1]))
+    plt.plot(x_Am[plot_range[0]:plot_range[1]], y_Am[plot_range[0]:plot_range[1]], '.', label='Am Spektrum von '+str(plot_range[0]*bins_combined)+" bis "+str(plot_range[1]*bins_combined))
     plt.errorbar(x_Am[plot_range[0]:plot_range[1]], y_Am[plot_range[0]:plot_range[1]], label="Fehlerbalken", yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
     plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0]*bins_combined, plot_range[1]*bins_combined)
     plt.ylim(-100, 3000)
-    plt.title("Am 241 Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
+    plt.title("Am 241 Spektrum von "+str(plot_range[0]*bins_combined)+" bis "+str(plot_range[1]*bins_combined))
     #plt.savefig('plot_am_cut.pdf', bbox_inches='tight')
     plt.show()
 
