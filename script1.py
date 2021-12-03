@@ -77,7 +77,7 @@ def main():
     plt.ylim(0, 700)
     plt.title("Cs Spektrum")
     #plt.savefig('plot_cs.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
 
     # Plot limited spectrum Cs
@@ -92,7 +92,7 @@ def main():
     plt.ylim(0, 500)
     plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     #plt.savefig('plot_cs_cut.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
     
     print("Parameter für den Fit:\n\n")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
@@ -117,7 +117,7 @@ def main():
     plt.xlim(plot_range[0], plot_range[1])
     plt.ylim(0, 500)
     plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
-    #plt.show()
+    plt.show()
     
     print("Parameter für den Fit:\n\n")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
@@ -146,7 +146,7 @@ def main():
     plt.ylim(0, 700)
     plt.title(r"Cs Gamma und Beta-Spektrum")
     #plt.savefig('plot_cs_and_gamma.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
 
     # fitting the function
@@ -176,7 +176,7 @@ def main():
     plt.ylim(0, 40)
     plt.title(r"Cs Gammaspektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     #plt.savefig('plot_cs_gamma_cut.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
     print("Parameter für den Fit:\n")
     print("Logistische Funktion mit y = a / (1 + exp(- b * (x + c))) + d\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n-> c = {:.4f} +/- {:.4f}\n-> d = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1],popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3]))
@@ -201,7 +201,7 @@ def main():
     plt.ylim(0, 1100)
     plt.title("Am 241 Spektrum")
     #plt.savefig('plot_am.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
 
     # Am Spektrum rebinned
@@ -237,7 +237,7 @@ def main():
     plt.ylim(0, 600)
     plt.title("Am 241 Spektrum von "+str(plot_range[0]*bins_combined)+" bis "+str(plot_range[1]*bins_combined)+" rebinned (jeweils "+str(bins_combined)+" Kanäle zsm.)")
     #plt.savefig('plot_am_cut.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
     print("Parameter für den Fit:\n")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
@@ -287,7 +287,7 @@ def main():
     #plt.ylim(0, 700)
     plt.title("Energiekallibrierung")
     #plt.savefig('plot_e_calib.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
     
     print("Parameter für den Fit:\n")
     print("Lineare Funktion y = a * (x + b)\n-> a = ({:.4f} +/- {:.4f})keV/Kanal\n-> b = ({:.4f} +/- {:.4f})Kanal".format(popt[0], np.sqrt(np.diag(pcov))[0], popt[1], np.sqrt(np.diag(pcov))[1]))
@@ -309,7 +309,7 @@ def main():
     plt.ylim(0, 400)
     plt.title("Cs Gamma-Spektrum (energiekalibriert)")
     #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
    
    #Cs Beta Spektrum
     plot_range = [0,800]
@@ -323,7 +323,7 @@ def main():
     plt.ylim(0, 700)
     plt.title("Cs Gamma- und Beta-Spektrum (energiekalibriert)")
     #plt.savefig('plot_cs_beta_and_gamma_calib.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
     # Kr Spektren Messung
 
@@ -361,7 +361,7 @@ def main():
     plt.ylim(0, 1800)
     plt.title("Kr Gamma-Spektrum (energiekalibriert)")
     #plt.savefig('plot_kr_gamma_calib.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
     # Plot Gamma and Beta spectra of Kr
     plot_range = [0,800]
@@ -376,7 +376,7 @@ def main():
     plt.ylim(0, 1800)
     plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
     #plt.savefig('plot_kr_beta_and_gamma_calib.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
 
     # Auflösevermögen Spektrometer
@@ -569,7 +569,7 @@ def main():
     #plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV mit Alufolie geschirmt (energiekalibriert)")
     plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
     #plt.savefig('plot_cs_alu_all_calib.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
 
     #Cs mit Papier
@@ -602,7 +602,7 @@ def main():
     plt.ylim(0, 2000)
     plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
     #plt.savefig('plot_cs_pap_all_calib.pdf', bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
 
     #Kr mit Alu
@@ -781,7 +781,7 @@ def main():
     print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
     
 
-
+    '''
     #plot the Kr Spektrum with Alu Folie
     plot_range = [50,650]
     plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
@@ -886,7 +886,7 @@ def main():
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
     print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt[6],np.sqrt(np.diag(pcov))[6]))
     print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
-    
+    '''
 
 
     #plot the Cs Spektrum with Papier
@@ -995,7 +995,7 @@ def main():
     
 
 
-
+    '''
     #plot the kr Spektrum with Papier
     plot_range = [50,700]
     plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
@@ -1099,8 +1099,46 @@ def main():
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
     print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt[6],np.sqrt(np.diag(pcov))[6]))
     print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
-    
+    '''
 
+
+
+    # Plot der Energien gegen die FLächemasse
+    
+    #Alu
+
+    m = 2.7#flächemasse pro Aluminiumfolienblatt
+    x_data = [opt_fit_parameters_cs_alu3[5],opt_fit_parameters_cs_alu6[5],opt_fit_parameters_cs_alu9[5],opt_fit_parameters_cs_alu12[5],]
+    y_data = [3*m,6*m,9*m,12*m]
+
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(x_data, y_data, 'r.', label="Messwerte")
+    plt.xlabel(r"Flächenmasse / mg/cm^2")
+    plt.ylabel(r"Energie / keV")
+    plt.legend()
+    #plt.xlim(plot_range[0], plot_range[1])
+    #plt.ylim(0, 1800)
+    plt.title("Mittlere Energie der K-Konv.-El. über Flächenmasse von Alu")
+    #plt.savefig('plot_cs_alu_area_mass.pdf', bbox_inches='tight')
+    plt.show()
+
+
+    #Papier
+
+    m = 80#flächemasse pro Aluminiumfolienblatt
+    x_data = [opt_fit_parameters_cs_pap1[5],opt_fit_parameters_cs_pap2[5],opt_fit_parameters_cs_pap3[5],opt_fit_parameters_cs_pap4[5],]
+    y_data = [3*m,6*m,9*m,12*m]
+
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(x_data, y_data, 'r.', label="Messwerte")
+    plt.xlabel(r"Flächenmasse / g/m^2")
+    plt.ylabel(r"Energie / keV")
+    plt.legend()
+    #plt.xlim(plot_range[0], plot_range[1])
+    #plt.ylim(0, 1800)
+    plt.title("Mittlere Energie der K-Konv.-El. über Flächenmasse von Papier")
+    #plt.savefig('plot_cs_pap_area_mass.pdf', bbox_inches='tight')
+    plt.show()
 
 
 main()
