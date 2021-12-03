@@ -332,41 +332,6 @@ def main():
     #plt.savefig('plot_am_calib.pdf', bbox_inches='tight')
     plt.show()
 
-    # Am Spektrum rebinned
-    bins_combined = 4
-    dataSet_Am = DatasetTools.rebin_file(dataSet_Am,bins_combined)  
-
-    
-    # fitting the function
-    fit_range = [13,25] #channel bounds must be devided by 'bins_combined'
-    fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
-                      [   0,  -65, 600, 65,  15],     # max bounds
-                      [-3,  -77,  500, 57,   12],    # start values
-                      [-10, -90,  200, 50,   5]]      # min bounds
-    
-    
-    popt, pcov = curve_fit(func2, lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], dataSet_Am['counts'][fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
-    
-    opt_fit_parameters4 = popt.copy()
-    pcov4 = pcov.copy()
-    
-    plot_range = [0,100]
-    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1]), dataSet_Am['counts'], '-', label="Am Spektrum bis "+str(plot_range[1]))
-    plt.plot(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], func2(lin(dataSet_Am['channel'],popt_Kall[0],popt_Kall[1])[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(int(lin(fit_range[0]*bins_combined,popt_Kall[0],popt_Kall[1])))+" bis "+str(int(lin(fit_range[1]*bins_combined,popt_Kall[0],popt_Kall[1]))))
-    plt.xlabel(r"Energie / keV")
-    plt.ylabel(r"Counts")
-    plt.legend()
-    plt.xlim(plot_range[0], plot_range[1])
-    plt.ylim(0, 3010)
-    plt.title("Am 241 Spektrum (energiekalibriert, 4bins zsm)")
-    #plt.savefig('plot_am_calib_rebinned.pdf', bbox_inches='tight')
-    plt.show()
-    
-    print("Parameter für den Fit:\n")
-    print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
-    print("Gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3],popt[4],np.sqrt(np.diag(pcov))[4]))
-    
 
     # Kr Spektren Messung
 
