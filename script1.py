@@ -226,7 +226,7 @@ def main():
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0]*bins_combined, plot_range[1]*bins_combined)
-    plt.ylim(-100, 3000)
+    plt.ylim(0, 600)
     plt.title("Am 241 Spektrum von "+str(plot_range[0]*bins_combined)+" bis "+str(plot_range[1]*bins_combined)+" rebinned (jeweils "+str(bins_combined)+" Kanäle zsm.)")
     #plt.savefig('plot_am_cut.pdf', bbox_inches='tight')
     plt.show()
@@ -314,7 +314,7 @@ def main():
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
-    #plt.ylim(0, 700)
+    plt.ylim(0, 700)
     plt.title("Cs Beta Spektrum (energiekalibriert)")
     #plt.savefig('plot_cs_calib.pdf', bbox_inches='tight')
     plt.show()
@@ -386,9 +386,59 @@ def main():
 
     # Auflösevermögen Spektrometer
     print("\nAuflösevermögen Spektrometer\n")  
-    print("Bei Linie von K-Konv.elektronen: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[6],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[4],popt_Kall[0],popt_Kall[1])))
-    print("Bei Linie von L-Konv.elektronen: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[7],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[5],popt_Kall[0],popt_Kall[1])))
+    print("Bei Linie von K-Konv.elektronen: FWHM={:.4f}keV +/- {:.4f} @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[6],  # Uncertainty of FWHM  is calculated the same as FWHM except, that you use Delta sigma. needs to go here##    ,popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[4],popt_Kall[0],popt_Kall[1])))
+    print("Bei Linie von L-Konv.elektronen: FWHM={:.4f}keV +/- {:.4f} @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[7],  # Same thing except for L-Peak of course  ,popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[5],popt_Kall[0],popt_Kall[1])))
     
+
+
+    # Als nächstes Logarithmische darstellung der Gamma-Spektren von Cs und Kr über die Energie
+    # Am besten die Zählraten, also N/t über die Energie.
+
+    # Für Cs
+    t_cs_G = dataSet_cs_gamma['time']
+    Z_cs_G = y_cs_G/t_cs_G
+
+    # Plot Z_cs_G gegen Energie     
+    #Cs Gamma Spektrum
+    plot_range = [20,800]
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(x_cs_G,popt_Kall[0],popt_Kall[1]), Z_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Logarithmische Zählrate log(Z/s^-1)")
+    plt.legend()
+    #plt.xscale('log')
+    #plt.ylim(0,1)
+    plt.yscale('log')
+    plt.xlim(plot_range[0], plot_range[1])
+    
+    #fig.set_xticks([20,30,40,50,100,200,300,500,800])
+    #plt.ylim(0, 700)
+    plt.title("Cs Gamma Spektrum (energiekalibriert)")
+    #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
+    plt.show()
+
+    # Für Kr
+    t_Kr_G = dataSet_Kr_Gamma['time']
+    Z_Kr_G = y_Kr_G/t_Kr_G
+
+    # Plot Z_Kr_G gegen Energie     
+    #Kr Gamma Spektrum
+    plot_range = [20,800]
+    fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+    plt.plot(lin(x_Kr,popt_Kall[0],popt_Kall[1]), Z_Kr_G, '-', label="Kr Gamma-Spektrum bis "+str(plot_range[1]))
+    plt.xlabel(r"Energie / keV")
+    plt.ylabel(r"Logarithmische Zählrate log(Z/s^-1)")
+    plt.legend()
+    #plt.xscale('log')
+    #plt.ylim(0, 1)
+    plt.yscale('log')
+    plt.xlim(plot_range[0], plot_range[1])
+    
+    #fig.set_xticks([20,30,40,50,100,200,300,500,800])
+    #plt.ylim(0, 700)
+    plt.title("Cs Gamma Spektrum (energiekalibriert)")
+    #plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
+    plt.show()
 
 
 main()
