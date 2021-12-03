@@ -196,13 +196,20 @@ def main():
     plt.show()
 
 
+    # Am Spektrum rebinned
+    bins_combined = 4
+    dataSet_Am = DatasetTools.rebin_file(dataSet_Am,bins_combined)
+    x_Am = dataSet_Am['channel']
+    y_Am = dataSet_Am['counts']
+    DN = dataSet_Am['counts_uncert']  
+
     # fitting the function
-    plot_range = [40,120]
-    fit_range = [55,90]
+    plot_range = [50,90]
+    fit_range = [13,24]
     fit_parameters = [[ "a",  "b" ,"C1","μ1","σ1"],
-                      [   0,  -30, 175, 100,  75],     # max bounds
-                      [-0.2,  -50,  150, 75,   50],    # start values
-                      [-10, -70,  100, 40,   10]]      # min bounds
+                      [   0,  -70, 600, 80,  15],     # max bounds
+                      [-3,  -90,  500, 72,   12],    # start values
+                      [-10, -105,  200, 65,   5]]      # min bounds
     
     
     popt, pcov = curve_fit(func2, x_Am[fit_range[0]:fit_range[1]], y_Am[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
@@ -212,14 +219,14 @@ def main():
 
     # Plot limited spectrum of Am with fit
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-    plt.plot(x_Am[fit_range[0]:fit_range[1]], func2(x_Am[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
+    plt.plot(x_Am[fit_range[0]:fit_range[1]], func2(x_Am[fit_range[0]:fit_range[1]], *popt), 'r--', label="Fit von "+str(fit_range[0]*bins_combined)+" bis "+str(fit_range[1]*bins_combined))
     plt.plot(x_Am[plot_range[0]:plot_range[1]], y_Am[plot_range[0]:plot_range[1]], '.', label='Am Spektrum von '+str(plot_range[0])+" bis "+str(plot_range[1]))
     plt.errorbar(x_Am[plot_range[0]:plot_range[1]], y_Am[plot_range[0]:plot_range[1]], label="Fehlerbalken", yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', alpha=0.9, elinewidth=0.5)
     plt.xlabel(r"Channel")
     plt.ylabel(r"Counts")
     plt.legend()
     plt.xlim(plot_range[0], plot_range[1])
-    plt.ylim(0, 200)
+    plt.ylim(-100, 3000)
     plt.title("Am 241 Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
     #plt.savefig('plot_am_cut.pdf', bbox_inches='tight')
     plt.show()
@@ -227,6 +234,12 @@ def main():
     print("Parameter für den Fit:\n")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
     print("Gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3],popt[4],np.sqrt(np.diag(pcov))[4]))
+    
+    # Für Am Spektrum
+    dataSet_Am = DatasetTools.read_file(file_path_Am)
+    x_Am = dataSet_Am['channel']
+    y_Am = dataSet_Am['counts']
+    DN = dataSet_Am['counts_uncert']         # Unsicherheiten
     
 
 
@@ -407,7 +420,7 @@ def main():
 
 
     # Auflösevermögen Spektrometer
-    print("\nAuflösevermögen Spektrometer\n")
+    print("\nAuflösevermögen Spektrometer\n")  
     print("Bei Linie von K-Konv.elektronen: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[6],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[4],popt_Kall[0],popt_Kall[1])))
     print("Bei Linie von L-Konv.elektronen: delta E={:.4f}keV @ E={:.4f}keV".format(lin(2*np.sqrt(2*np.log(2))*opt_fit_parameters1[7],popt_Kall[0],popt_Kall[1]),lin(opt_fit_parameters1[5],popt_Kall[0],popt_Kall[1])))
     
