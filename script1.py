@@ -693,16 +693,58 @@ def main():
     opt_fit_parameters_cs_alu3 = popt.copy()
     pcov_cs_alu3 = pcov.copy()
     fit_plot_range_cs_alu3 = fit_plot_range_conv
-
+    #for alu6
+    fit_range = [525,675] 
+    fit_plot_range = [525,675]
+    fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
+                      [   0,  -575, 800, 150, 620, 650,  20,  20],   # max bounds
+                      [-0.2,  -650, 500,  90, 610, 635,  12,  12],   # start values
+                      [-0.5, -1000, 300,  50, 600, 625,   5,   5]]   # min bounds
+    popt, pcov = curve_fit(func, lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu6['counts'][fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    opt_fit_parameters_cs_alu6 = popt.copy()
+    pcov_cs_alu6 = pcov.copy()
+    fit_plot_range_cs_alu6 = fit_plot_range_conv
+    #for alu9
+    fit_range = [525,675] 
+    fit_plot_range = [525,675]
+    fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
+                      [   0,  -575, 800, 150, 620, 650,  20,  20],   # max bounds
+                      [-0.2,  -650, 500,  90, 610, 635,  12,  12],   # start values
+                      [-0.5, -1000, 300,  50, 600, 625,   5,   5]]   # min bounds
+    popt, pcov = curve_fit(func, lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu9['counts'][fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    opt_fit_parameters_cs_alu9 = popt.copy()
+    pcov_cs_alu9 = pcov.copy()
+    fit_plot_range_cs_alu9 = fit_plot_range_conv
+    #for alu12
+    fit_range = [525,675] 
+    fit_plot_range = [525,675]
+    fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   #convert fit range from energy into channels
+    fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
+                      [   0,  -575, 800, 150, 620, 650,  20,  20],   # max bounds
+                      [-0.2,  -650, 500,  90, 610, 635,  12,  12],   # start values
+                      [-0.5, -1000, 300,  50, 600, 625,   5,   5]]   # min bounds
+    popt, pcov = curve_fit(func, lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu12['counts'][fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+    opt_fit_parameters_cs_alu12 = popt.copy()
+    pcov_cs_alu12 = pcov.copy()
+    fit_plot_range_cs_alu12 = fit_plot_range_conv
+    
 
     fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
     plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], 'r.', label="ungeschirmt")
     plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu3['counts'][plot_range_conv[0]:plot_range_conv[1]], 'g.', label="mit 3 Alu Lagen geschirmt")
-    #plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu6['counts'][plot_range_conv[0]:plot_range_conv[1]], 'b.', label="mit 6 Alu Lagen geschirmt")
-    #plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu9['counts'][plot_range_conv[0]:plot_range_conv[1]], 'y.', label="mit 9 Alu Lagen geschirmt")
-    #plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu12['counts'][plot_range_conv[0]:plot_range_conv[1]], 'm.', label="mit 12 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu6['counts'][plot_range_conv[0]:plot_range_conv[1]], 'b.', label="mit 6 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu9['counts'][plot_range_conv[0]:plot_range_conv[1]], 'y.', label="mit 9 Alu Lagen geschirmt")
+    plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]:plot_range_conv[1]], dataSet_cs_Alu12['counts'][plot_range_conv[0]:plot_range_conv[1]], 'm.', label="mit 12 Alu Lagen geschirmt")
     
-    plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]], func(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]],*opt_fit_parameters_cs_alu3), 'g--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
+    plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]], func(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]],*opt_fit_parameters_cs_alu3), 'g--')
+    plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]], func(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]],*opt_fit_parameters_cs_alu3), 'b--')
+    plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]], func(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]],*opt_fit_parameters_cs_alu3), 'y--')
+    plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]], func(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]],*opt_fit_parameters_cs_alu3), 'm--')
     plt.xlabel(r"Energie / keV")
     plt.ylabel(r"Counts")
     plt.legend()
@@ -713,6 +755,28 @@ def main():
     #plt.savefig('plot_cs_alu_all_calib.pdf', bbox_inches='tight')
     plt.show()
 
+
+    popt=opt_fit_parameters_cs_alu3
+    pcov=pcov_cs_alu3
+    print("\nFür 3 Alu Lagen")
+    print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
+    print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt[6],np.sqrt(np.diag(pcov))[6]))
+    print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
+    popt=opt_fit_parameters_cs_alu3
+    pcov=pcov_cs_alu3
+    print("\nFür 6 Alu Lagen")
+    print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
+    print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt[6],np.sqrt(np.diag(pcov))[6]))
+    print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
+    popt=opt_fit_parameters_cs_alu3
+    pcov=pcov_cs_alu3
+    print("\nFür 9 Alu Lagen")
+    print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
+    print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt[6],np.sqrt(np.diag(pcov))[6]))
+    print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
+    popt=opt_fit_parameters_cs_alu3
+    pcov=pcov_cs_alu3
+    print("\nFür 12 Alu Lagen")
     print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
     print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt[6],np.sqrt(np.diag(pcov))[6]))
     print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt[7],np.sqrt(np.diag(pcov))[7]))
