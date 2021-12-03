@@ -491,19 +491,14 @@ def main():
     print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} +/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
     
 
-
+    '''
     # Fermi-Plots von Cs und Kr mit Korrektur
     x_0_cs =  -popt_F_1_cs[1] #  E_0 Die Energie aus dem Ersten Fermiplot ist der Schnittpunkt des Fits mit der Energieachse
     
     # Korrekturterm 
-    print(x_cs_F)
     S_1 = (x_cs_F + m)**2 -m + (x_0_cs - x_cs_F)**2
-    print("S_1: ", S_1)
-    print("(x_cs_F + m)**2: ",(x_cs_F + m)**2)
-    print("(x_0_cs - x_cs_F)**2: ",(x_0_cs - x_cs_F)**2)
     F_2 =  np.sqrt(y_cs_B/(np.sqrt(x_cs_F**2+2*m*x_cs_F)*(x_cs_F+m)*F_Cs*S_1))
-    print(max(F_2))
-
+    
     # Linear Fit
     fit_range = [200,475]
     fit_plot_range = [0,800]
@@ -533,7 +528,7 @@ def main():
     plt.title("Cs Beta Spektrum Fermi-Plot mit Korrekturterm")
     #plt.savefig('plot_cs_beta_fermi2.pdf', bbox_inches='tight')
     plt.show()
-
+    '''
 
 
     # WW mit Materie
