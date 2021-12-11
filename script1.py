@@ -12,7 +12,7 @@ import DatasetTools
 from matplotlib.ticker import ScalarFormatter
 
 def main():
-    directory_path = ''
+    directory_path = 'measurements/'
     file_path_cs = directory_path + 'CS_BLANK.TXT'
     file_path_cs_gamma = directory_path + 'CS_GAMMA.TXT'
 
