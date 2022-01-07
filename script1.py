@@ -95,7 +95,7 @@ class run:
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 				
 				
-		print(80*"_"+"\n\nPlotting: Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]+" mit Fit"))
+		print(80*"_"+"\n\nPlotting: Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" mit Fit")
 		
 		# Plot limited spectrum Cs
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
