@@ -102,7 +102,7 @@ def main():
     
 
     # fitting the function again but now with other limits
-    fit_range = [780,870]
+    fit_range = [790,870]
     
     popt, pcov = curve_fit(func, x_cs[fit_range[0]:fit_range[1]], y_cs[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
     
