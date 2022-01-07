@@ -71,7 +71,7 @@ class run:
 				fit_parameters_var[i][3] = float(c_cr_scaling) * fit_parameters_var[i][3]
 			return fit_parameters_var
 		
-
+		
 		print(80*"_"+"\n\nPlotting: Cs Spektrum")
 		
     # Für Cs Spektrum
@@ -326,6 +326,7 @@ class run:
 		                  [ 0, -100]]    # min bounds
 				
 		popt, pcov = curve_fit(lin, x_Kall[fit_range[0]:fit_range[1]], y_Kall[fit_range[0]		:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+		
 		popt_Kall = popt.copy()
 		pcov_Kall = pcov.copy()
 		
@@ -569,7 +570,7 @@ class run:
 		#plt.savefig('plot_kr_beta_fermi1.pdf', bbox_inches='tight')
 		maximize()
 		#plt.show()
-		
+		'''
 		
 		'''
 		# Fermi-Plots von Cs und Kr mit Korrektur
@@ -608,7 +609,7 @@ class run:
 		plt.title("Cs Beta Spektrum Fermi-Plot mit Korrekturterm")
 		#plt.savefig('plot_cs_beta_fermi2.pdf', bbox_inches='tight')
 		plt.show()
-		'''
+		
 		
 		
 		# WW mit Materie
@@ -733,7 +734,7 @@ class run:
 		plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
 		#plt.savefig('plot_cs_pap_all_calib.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		
 		#Kr mit Alu
@@ -794,7 +795,7 @@ class run:
 		plt.title("Kr Spektrum mit Alufolie geschirmt (energiekalibriert)")
 		#plt.savefig('plot_kr_alu_all_calib.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		
 		#Kr mit Papier
@@ -855,7 +856,7 @@ class run:
 		plt.title("Kr Spektrum mit Papier geschirmt (energiekalibriert)")
 		#plt.savefig('plot_kr_pap_all_calib.pdf', bbox_inches='tight')
 		maximize()
-		#plt.show()
+		plt.show()
 		
 		
 		
@@ -872,13 +873,14 @@ class run:
 		fit_plot_range = [525,675]
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
-		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
-		                  [   0,  -575, 800, 150, 620, 650,  20,  20],   # max bounds
-		                  [-0.2,  -650, 500,  90, 610, 635,  12,  12],   # start values
-		                  [-0.5, -1000, 300,  50, 600, 625,   5,   5]]   # min bounds
+		fit_parameters = [[ "a",    "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
+		                  [   0,    -575, 400e-3, 70e-3, 620, 650,  20,  20],   # max bounds
+		                  [-0.1e-3, -650, 200e-3,  40e-3, 610, 635,  12,  12],   # start values
+		                  [-0.2e-3,-1000, 150e-3,  20e-3, 600, 625,   5,   5]]   # min bounds
 		
 		#fit_parameters = counts_to_countrate_fit_param_conv(y_3_cs_Alu, n_3_cs_Alu, fit_parameters)
-		
+		print(n_3_cs_Alu[int(len(n_3_cs_Alu)/2)-3] / y_3_cs_Alu[int(len(y_3_cs_Alu)/2)-3])
+			
 		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu3['counts'][fit_range_conv		[0]:fit_range_conv[1]])#, fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu3 = popt.copy()
 		pcov_cs_alu3 = pcov.copy()
