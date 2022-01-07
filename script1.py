@@ -56,6 +56,22 @@ class run:
 				return lin(x, a, b) + Gauss(x, C_1, mu_1, sigma_1)
 
 
+		def counts_to_countrate_fit_param_conv(counts_var, countrate_var, fit_parameters_var):
+			c_cr_scaling = countrate_var[int(len(countrate_var)/2)-3] / counts_var[int(len(counts_var)/2)-3]
+			'''
+			for line in fit_parameters_var[1:]:
+				line[0] = int(float(c_cr_scaling) * line[0])
+				line[2] = int(float(c_cr_scaling) * line[2])
+				line[3] = int(float(c_cr_scaling) * line[3])
+			return fit_parameters_var
+			'''
+			for i in range(1,len(fit_parameters_var)):
+				fit_parameters_var[i][0] = float(c_cr_scaling) * fit_parameters_var[i][0]
+				fit_parameters_var[i][2] = float(c_cr_scaling) * fit_parameters_var[i][2]
+				fit_parameters_var[i][3] = float(c_cr_scaling) * fit_parameters_var[i][3]
+			return fit_parameters_var
+		
+
 		print(80*"_"+"\n\nPlotting: Cs Spektrum")
 		
     # Für Cs Spektrum
@@ -86,7 +102,7 @@ class run:
 		plt.title("Cs Spektrum")
 		#plt.savefig('plot_cs.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		print(80*"_"+"\n\nPlotting: Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" mit Fit")
 		
@@ -109,7 +125,7 @@ class run:
 		plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
 		#plt.savefig('plot_cs_cut.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 				
 
 		print(80*"_"+"\n\nPlotting: Cs Spektrum")
@@ -140,7 +156,7 @@ class run:
 		plt.ylim(0, 500)
 		plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		
 		print(80*"_"+"\n\nPlotting: Cs Gamma und Beta-Spektrum")
@@ -171,7 +187,7 @@ class run:
 		plt.title(r"Cs Gamma und Beta-Spektrum")
 		#plt.savefig('plot_cs_and_gamma.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		
 		# fitting the function
@@ -206,7 +222,7 @@ class run:
 		plt.title(r"Cs Gammaspektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
 		#plt.savefig('plot_cs_gamma_cut.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 
 		print(80*"_"+"\n\nPlotting: whole spectrum Am")
@@ -232,7 +248,7 @@ class run:
 		plt.title("Am 241 Spektrum")
 		#plt.savefig('plot_am.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		
 		# Am Spektrum rebinned
@@ -277,7 +293,7 @@ class run:
 		plt.title("Am 241 Spektrum von "+str(plot_range[0]*bins_combined)+" bis "+str(plot_range[1]*bins_combined)+" rebinned (jeweils "+str(bins_combined)+" Kanäle zsm.)")
 		#plt.savefig('plot_am_cut.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 				
 		# Für Am Spektrum
@@ -331,7 +347,7 @@ class run:
 		plt.title("Energiekallibrierung")
 		#plt.savefig('plot_e_calib.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 				
 		
 		# plot nun mit Energiekalibrierung:
@@ -351,7 +367,7 @@ class run:
 		plt.title("Cs Gamma-Spektrum (energiekalibriert)")
 		#plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		print(80*"_"+"\n\nPlotting: Cs Gamma- und Beta-Spektrum (energiekalibriert)")
 		
@@ -368,7 +384,7 @@ class run:
 		plt.title("Cs Gamma- und Beta-Spektrum (energiekalibriert)")
 		#plt.savefig('plot_cs_beta_and_gamma_calib.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		# Kr Spektren Messung
 		
@@ -414,7 +430,7 @@ class run:
 		plt.title("Kr Gamma-Spektrum (energiekalibriert)")
 		#plt.savefig('plot_kr_gamma_calib.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		print(80*"_"+"\n\nPlotting: Kr Gamma- und Beta-Spektrum (energiekalibriert)")
 		
@@ -432,7 +448,7 @@ class run:
 		plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
 		#plt.savefig('plot_kr_beta_and_gamma_calib.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		
 		# Auflösevermögen Spektrometer
@@ -510,7 +526,7 @@ class run:
 		plt.title("Cs Beta Spektrum Fermi-Plot ohne Korrekturterm")
 		#plt.savefig('plot_cs_beta_fermi1.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		
 		# Für Kr
@@ -552,7 +568,7 @@ class run:
 		plt.title("Kr Beta Spektrum Fermi-Plot ohne Korrekturterm")
 		#plt.savefig('plot_kr_beta_fermi1.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		
 		'''
@@ -839,7 +855,7 @@ class run:
 		plt.title("Kr Spektrum mit Papier geschirmt (energiekalibriert)")
 		#plt.savefig('plot_kr_pap_all_calib.pdf', bbox_inches='tight')
 		maximize()
-		plt.show()
+		#plt.show()
 		
 		
 		
@@ -860,7 +876,10 @@ class run:
 		                  [   0,  -575, 800, 150, 620, 650,  20,  20],   # max bounds
 		                  [-0.2,  -650, 500,  90, 610, 635,  12,  12],   # start values
 		                  [-0.5, -1000, 300,  50, 600, 625,   5,   5]]   # min bounds
-		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu3['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
+		
+		#fit_parameters = counts_to_countrate_fit_param_conv(y_3_cs_Alu, n_3_cs_Alu, fit_parameters)
+		
+		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu3['counts'][fit_range_conv		[0]:fit_range_conv[1]])#, fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu3 = popt.copy()
 		pcov_cs_alu3 = pcov.copy()
 
@@ -874,6 +893,8 @@ class run:
 		                  [   0,  -575, 800, 150, 610, 630,  20,  20],   # max bounds
 		                  [-0.2,  -650, 500,  90, 590, 625,  12,  12],   # start values
 		                  [-0.5, -1000, 300,  50, 580, 615,   5,   5]]   # min bounds
+		#fit_parameters = counts_to_countrate_fit_param_conv(y_6_cs_Alu, n_6_cs_Alu, fit_parameters)
+		
 		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu6['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu6 = popt.copy()
 		pcov_cs_alu6 = pcov.copy()
@@ -887,6 +908,8 @@ class run:
 		                  [   0,  -575, 800, 150, 585, 625,  20,  20],   # max bounds
 		                  [-0.2,  -650, 500,  90, 575, 615,  12,  12],   # start values
 		                  [-0.5, -1000, 300,  50, 565, 605,   5,   5]]   # min bounds
+		fit_parameters = counts_to_countrate_fit_param_conv(y_9_cs_Alu, n_9_cs_Alu, fit_parameters)
+		
 		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu9['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu9 = popt.copy()
 		pcov_cs_alu9 = pcov.copy()
@@ -900,6 +923,8 @@ class run:
 		                  [   0,  -575, 800, 150, 570, 610,  20,  20],   # max bounds
 		                  [-0.2,  -650, 500,  90, 560, 600,  12,  12],   # start values
 		                  [-0.5, -1000, 300,  50, 550, 595,   5,   5]]   # min bounds
+		fit_parameters = counts_to_countrate_fit_param_conv(y_12_cs_Alu, n_12_cs_Alu, fit_parameters)
+		
 		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu12['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu12 = popt.copy()
 		pcov_cs_alu12 = pcov.copy()
@@ -948,7 +973,7 @@ class run:
 		plt.ylabel(r"Counts")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
-		plt.ylim(0, 1300)
+		#plt.ylim(0, 1300)
 		#plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV 		mit Alufolie geschirmt (energiekalibriert)")
 		plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
 		#plt.savefig('plot_cs_alu_all_fit_calib.pdf', bbox_inches='tight')
@@ -1058,7 +1083,7 @@ class run:
 		plt.ylabel(r"Counts")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
-		plt.ylim(0, 1300)
+		#plt.ylim(0, 1300)
 		plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
 		#plt.savefig('plot_cs_pap_all_fit_calib.pdf', bbox_inches='tight')
 		maximize()
