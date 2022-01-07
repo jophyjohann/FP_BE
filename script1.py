@@ -65,7 +65,7 @@ class run:
     
 		# fitting the function
 		plot_range = [750,900]
-		fit_range = [750,900]
+		fit_range = [790,860]
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
                       [   0,  -800, 450, 120, 825, 860,  20,  20],   # max bounds
                       [-0.2,  -940, 400,  90, 800, 850,   5,   5],   # start values
@@ -167,7 +167,7 @@ class run:
 		plt.ylabel(r"Zählrate")
 		plt.legend()
 		plt.xlim(0, 1000)
-		#plt.ylim(0, 700)
+		plt.ylim(0, 1.7)
 		plt.title(r"Cs Gamma und Beta-Spektrum")
 		#plt.savefig('plot_cs_and_gamma.pdf', bbox_inches='tight')
 		maximize()
@@ -323,7 +323,7 @@ class run:
 		plt.plot(x_Kall, y_Kall, '.')
 		plt.plot(x_Kall[fit_range[0]:fit_range[1]], lin(x_Kall[fit_range[0]:fit_range[1]], 		*popt), 'r--', label="Linearer Fit")
 		plt.errorbar(x_Kall, y_Kall, label="Fehlerbalken", xerr=D_Kall, fmt='none', 		ecolor='k', alpha=0.9, elinewidth=0.5)
-		plt.xlabel(r"Kanal")
+		plt.xlabel(r"Channel")
 		plt.ylabel(r"Energie/keV")
 		plt.legend()
 		#plt.xlim(0, 900)
@@ -364,7 +364,7 @@ class run:
 		plt.ylabel(r"Zählrate")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
-		#plt.ylim(0, 700)
+		plt.ylim(0, 1.7)
 		plt.title("Cs Gamma- und Beta-Spektrum (energiekalibriert)")
 		#plt.savefig('plot_cs_beta_and_gamma_calib.pdf', bbox_inches='tight')
 		maximize()
@@ -409,7 +409,7 @@ class run:
 		plt.legend()
 		#plt.xscale('log')
 		plt.yscale('log')
-		plt.xlim(0, 1200)
+		plt.xlim(0, 900)
 		plt.ylim(0, 1800)
 		plt.title("Kr Gamma-Spektrum (energiekalibriert)")
 		#plt.savefig('plot_kr_gamma_calib.pdf', bbox_inches='tight')
@@ -428,7 +428,7 @@ class run:
 		plt.legend()
 		#plt.xscale('log')
 		plt.xlim(plot_range[0], plot_range[1])
-		#plt.ylim(0, 1800)
+		plt.ylim(0, 10)
 		plt.title("Kr Gamma- und Beta-Spektrum (energiekalibriert)")
 		#plt.savefig('plot_kr_beta_and_gamma_calib.pdf', bbox_inches='tight')
 		maximize()
@@ -615,43 +615,43 @@ class run:
 		plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 
 		# Ungeschirmt
-		y_0 = dataSet_cs['counts']
-		t_0 = dataSet_cs['time']
-		n_0 = y_0/t_0   # Zählrate
+		y_0_cs_Alu = dataSet_cs['counts']
+		t_0_cs_Alu = dataSet_cs['time']
+		n_0_cs_Alu = y_0_cs_Alu/t_0_cs_Alu   # Zählrate
 
 		# 3 Alu Lagen
-		y_3 = dataSet_cs_Alu3['counts']
-		t_3 = dataSet_cs_Alu3['time']
-		n_3 = y_3/t_3   # Zählrate
+		y_3_cs_Alu = dataSet_cs_Alu3['counts']
+		t_3_cs_Alu = dataSet_cs_Alu3['time']
+		n_3_cs_Alu = y_3_cs_Alu/t_3_cs_Alu   # Zählrate
 
 		# 6 Alu Lagen
-		y_6 = dataSet_cs_Alu6['counts']
-		t_6 = dataSet_cs_Alu6['time']
-		n_6 = y_6/t_6   # Zählrate
+		y_6_cs_Alu = dataSet_cs_Alu6['counts']
+		t_6_cs_Alu = dataSet_cs_Alu6['time']
+		n_6_cs_Alu = y_6_cs_Alu/t_6_cs_Alu   # Zählrate
 
 		# 9 Alu Lagen
-		y_9 = dataSet_cs_Alu9['counts']
-		t_9 = dataSet_cs_Alu9['time']
-		n_9 = y_9/t_9   # Zählrate
+		y_9_cs_Alu = dataSet_cs_Alu9['counts']
+		t_9_cs_Alu = dataSet_cs_Alu9['time']
+		n_9_cs_Alu = y_9_cs_Alu/t_9_cs_Alu   # Zählrate
 
 		# 12 Alu Lagen
-		y_12 = dataSet_cs_Alu12['counts']
-		t_12 = dataSet_cs_Alu12['time']
-		n_12 = y_12/t_12   # Zählrate
+		y_12_cs_Alu = dataSet_cs_Alu12['counts']
+		t_12_cs_Alu = dataSet_cs_Alu12['time']
+		n_12_cs_Alu = y_12_cs_Alu/t_12_cs_Alu   # Zählrate
 		
 		print(80*"_"+"\n\nPlotting: Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
 		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], n_0[plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
-		plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Alu Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_6[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 6 Alu Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_9[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 9 Alu Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_12[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 12 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], n_0_cs_Alu[plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
+		plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_6_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 6 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_9_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 9 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_12_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 12 Alu Lagen geschirmt")
 		plt.xlabel(r"Energie / keV")
-		plt.ylabel(r"Counts")
+		plt.ylabel(r"Zählrate")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
-		#plt.ylim(0, 1300)
+		plt.ylim(0, 3)
 		#plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV 		mit Alufolie geschirmt (energiekalibriert)")
 		plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
 		#plt.savefig('plot_cs_alu_all_calib.pdf', bbox_inches='tight')
@@ -679,41 +679,41 @@ class run:
 		print(80*"_"+"\n\nPlotting: Cs Spektrum mit Papier geschirmt (energiekalibriert)")
 
 		# Ungeschirmt
-		y_0 = dataSet_cs['counts']
-		t_0 = dataSet_cs['time']
-		n_0 = y_0/t_0  # Zählrate
+		y_0_cs_pap = dataSet_cs['counts']
+		t_0_cs_pap = dataSet_cs['time']
+		n_0_cs_pap = y_0_cs_pap/t_0_cs_pap  # Zählrate
 
 		# 1 Lage Papier
-		y_1 = dataSet_cs_pap1['counts']
-		t_1 = dataSet_cs_pap1['time']
-		n_1 = y_1/t_1  # Zählrate
+		y_1_cs_pap = dataSet_cs_pap1['counts']
+		t_1_cs_pap = dataSet_cs_pap1['time']
+		n_1_cs_pap = y_1_cs_pap/t_1_cs_pap  # Zählrate
 
 		# 2 Lagen Papier
-		y_2 = dataSet_cs_pap2['counts']
-		t_2 = dataSet_cs_pap2['time']
-		n_2 = y_2/t_2  # Zählrate
+		y_2_cs_pap = dataSet_cs_pap2['counts']
+		t_2_cs_pap = dataSet_cs_pap2['time']
+		n_2_cs_pap = y_2_cs_pap/t_2_cs_pap  # Zählrate
 
 		# 3 Lagen Papier
-		y_3 = dataSet_cs_pap3['counts']
-		t_3 = dataSet_cs_pap3['time']
-		n_3 = y_3/t_3  # Zählrate
+		y_3_cs_pap = dataSet_cs_pap3['counts']
+		t_3_cs_pap = dataSet_cs_pap3['time']
+		n_3_cs_pap = y_3_cs_pap/t_3_cs_pap  # Zählrate
 
 		# 4 Lagen Papier
-		y_4 = dataSet_cs_pap4['counts']
-		t_4 = dataSet_cs_pap4['time']
-		n_4 = y_4/t_4  # Zählrate
+		y_4_cs_pap = dataSet_cs_pap4['counts']
+		t_4_cs_pap = dataSet_cs_pap4['time']
+		n_4_cs_pap = y_4_cs_pap/t_4_cs_pap  # Zählrate
 		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], n_0[plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
-		plt.plot(lin(dataSet_cs_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_1[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 1 Papier Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_pap2['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_2[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 2 Papier Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Papier Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_4[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 4 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], n_0_cs_pap[plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
+		plt.plot(lin(dataSet_cs_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_1_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 1 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_pap2['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_2_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 2 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_4_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 4 Papier Lagen geschirmt")
 		plt.xlabel(r"Energie / keV")
 		plt.ylabel(r"Zählrate")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
-		#plt.ylim(0, 2000)
+		plt.ylim(0, 3.5)
 		plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
 		#plt.savefig('plot_cs_pap_all_calib.pdf', bbox_inches='tight')
 		maximize()
@@ -738,18 +738,43 @@ class run:
 		plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		
 		print(80*"_"+"\n\nPlotting: Kr Spektrum mit Alufolie geschirmt (energiekalibriert)")
+
+		# Ungeschirmt
+		y_0_kr_Alu = dataSet_Kr['counts']
+		t_0_kr_Alu = dataSet_Kr['time']
+		n_0_kr_Alu = y_0_kr_Alu/t_0_kr_Alu # Zählrate
 		
+		# 3 Lagen Alu
+		y_3_kr_Alu = dataSet_kr_Alu3['counts']
+		t_3_kr_Alu = dataSet_kr_Alu3['time']
+		n_3_kr_Alu = y_3_kr_Alu/t_3_kr_Alu # Zählrate
+
+		# 6 Lagen Alu
+		y_6_kr_Alu = dataSet_kr_Alu6['counts']
+		t_6_kr_Alu = dataSet_kr_Alu6['time']
+		n_6_kr_Alu = y_6_kr_Alu/t_6_kr_Alu # Zählrate
+
+		# 9 Lagen Alu
+		y_9_kr_Alu = dataSet_kr_Alu9['counts']
+		t_9_kr_Alu = dataSet_kr_Alu9['time']
+		n_9_kr_Alu = y_9_kr_Alu/t_9_kr_Alu # Zählrate
+
+		# 12 Lagen Alu
+		y_12_kr_Alu = dataSet_kr_Alu12['counts']
+		t_12_kr_Alu = dataSet_kr_Alu12['time']
+		n_12_kr_Alu = y_12_kr_Alu/t_12_kr_Alu # Zählrate
+
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(lin(dataSet_Kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], dataSet_Kr['counts'][plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
-		plt.plot(lin(dataSet_kr_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_kr_Alu3['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Alu Lagen geschirmt")
-		plt.plot(lin(dataSet_kr_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_kr_Alu6['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 6 Alu Lagen geschirmt")
-		plt.plot(lin(dataSet_kr_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_kr_Alu9['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 9 Alu Lagen geschirmt")
-		plt.plot(lin(dataSet_kr_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_kr_Alu12['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 12 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_Kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], n_0_kr_Alu[plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
+		plt.plot(lin(dataSet_kr_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3_kr_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_kr_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_6_kr_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 6 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_kr_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_9_kr_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 9 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_kr_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_12_kr_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 12 Alu Lagen geschirmt")
 		plt.xlabel(r"Energie / keV")
-		plt.ylabel(r"Counts")
+		plt.ylabel(r"Zählrate 1/s")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
-		plt.ylim(0, 1700)
+		plt.ylim(0, 10)
 		plt.title("Kr Spektrum mit Alufolie geschirmt (energiekalibriert)")
 		#plt.savefig('plot_kr_alu_all_calib.pdf', bbox_inches='tight')
 		maximize()
@@ -774,18 +799,43 @@ class run:
 		plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		
 		print(80*"_"+"\n\nPlotting: Kr Spektrum mit Papier geschirmt (energiekalibriert)")
+
+		# Ungeschirmt
+		y_0_kr_pap = dataSet_Kr['counts']
+		t_0_kr_pap = dataSet_Kr['time']
+		n_0_kr_pap = y_0_kr_pap/t_0_kr_pap # Zählrate
+
+		# 1 Lage Papier
+		y_1_kr_pap = dataSet_kr_pap1['counts']
+		t_1_kr_pap = dataSet_kr_pap1['time']
+		n_1_kr_pap = y_1_kr_pap/t_1_kr_pap # Zählrate
+
+		# 2 Lagen Papier
+		y_2_kr_pap = dataSet_kr_pap2['counts']
+		t_2_kr_pap = dataSet_kr_pap2['time']
+		n_2_kr_pap = y_2_kr_pap/t_2_kr_pap # Zählrate
+
+		# 3 Lagen Papier
+		y_3_kr_pap = dataSet_kr_pap3['counts']
+		t_3_kr_pap = dataSet_kr_pap3['time']
+		n_3_kr_pap = y_3_kr_pap/t_3_kr_pap # Zählrate
+
+		# 4 Lagen Papier
+		y_4_kr_pap = dataSet_kr_pap4['counts']
+		t_4_kr_pap = dataSet_kr_pap4['time']
+		n_4_kr_pap = y_4_kr_pap/t_4_kr_pap # Zählrate
 		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(lin(dataSet_Kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], dataSet_Kr['counts'][plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
-		plt.plot(lin(dataSet_kr_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_kr_pap1['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 1 Papier Lagen geschirmt")
-		plt.plot(lin(dataSet_kr_pap2['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_kr_pap2['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 2 Papier Lagen geschirmt")
-		plt.plot(lin(dataSet_kr_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_kr_pap3['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Papier Lagen geschirmt")
-		plt.plot(lin(dataSet_kr_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_kr_pap4['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 4 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_Kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], n_0_kr_pap[plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
+		plt.plot(lin(dataSet_kr_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_1_kr_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 1 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_kr_pap2['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_2_kr_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 2 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_kr_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3_kr_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_kr_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_4_kr_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 4 Papier Lagen geschirmt")
 		plt.xlabel(r"Energie / keV")
 		plt.ylabel(r"Counts")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
-		plt.ylim(0, 1700)
+		plt.ylim(0, 10)
 		plt.title("Kr Spektrum mit Papier geschirmt (energiekalibriert)")
 		#plt.savefig('plot_kr_pap_all_calib.pdf', bbox_inches='tight')
 		maximize()
@@ -813,6 +863,7 @@ class run:
 		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu3['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu3 = popt.copy()
 		pcov_cs_alu3 = pcov.copy()
+
 		fit_plot_range_cs_alu3 = fit_plot_range_conv
 		#for alu6
 		fit_range = [525,675] 
@@ -883,11 +934,11 @@ class run:
 		
 		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], 		'r.', label="ungeschirmt")
-		plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_Alu3['counts'][plot_range_conv[0]		:plot_range_conv[1]], 'g.', label="mit 3 Alu Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_Alu6['counts'][plot_range_conv[0]		:plot_range_conv[1]], 'b.', label="mit 6 Alu Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_Alu9['counts'][plot_range_conv[0]		:plot_range_conv[1]], 'y.', label="mit 9 Alu Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_Alu12['counts'][plot_range_conv[0]		:plot_range_conv[1]], 'm.', label="mit 12 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], n_0_cs_Alu[plot_range_conv[0]:plot_range_conv[1]], 		'r.', label="ungeschirmt")
+		plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], 'g.', label="mit 3 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_6_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], 'b.', label="mit 6 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_9_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], 'y.', label="mit 9 Alu Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_12_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], 'm.', label="mit 12 Alu Lagen geschirmt")
 				
 		plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])		[fit_plot_range_cs_alu3[0]:fit_plot_range_cs_alu3[1]], func(lin(dataSet_cs_Alu3		['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu3[0]		:fit_plot_range_cs_alu3[1]],*opt_fit_parameters_cs_alu3), 'g--')
 		plt.plot(lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall[1])		[fit_plot_range_cs_alu6[0]:fit_plot_range_cs_alu6[1]], func(lin(dataSet_cs_Alu6		['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu6[0]		:fit_plot_range_cs_alu6[1]],*opt_fit_parameters_cs_alu6), 'b--')
