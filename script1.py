@@ -570,7 +570,7 @@ class run:
 		#plt.savefig('plot_kr_beta_fermi1.pdf', bbox_inches='tight')
 		maximize()
 		#plt.show()
-		'''
+		
 		
 		'''
 		# Fermi-Plots von Cs und Kr mit Korrektur
@@ -609,7 +609,7 @@ class run:
 		plt.title("Cs Beta Spektrum Fermi-Plot mit Korrekturterm")
 		#plt.savefig('plot_cs_beta_fermi2.pdf', bbox_inches='tight')
 		plt.show()
-		
+		'''
 		
 		
 		# WW mit Materie
@@ -869,19 +869,19 @@ class run:
 				
 		## Gauss Fits
 		#for alu3
-		fit_range = [525,675] 
-		fit_plot_range = [525,675]
+		fit_range = [590,650] 
+		fit_plot_range = [590,650]
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",    "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
-		                  [   0,    -575, 400e-3, 70e-3, 620, 650,  20,  20],   # max bounds
-		                  [-0.1e-3, -650, 200e-3,  40e-3, 610, 635,  12,  12],   # start values
-		                  [-0.2e-3,-1000, 150e-3,  20e-3, 600, 625,   5,   5]]   # min bounds
+		                  [   0,    -575,   1.7, 0.5, 615,  650,  15,  15],   # max bounds
+		                  [-0.01e-3, -650, 1.5, 0.2,  610,  635,  0.5,  0.5],   # start values
+		                  [-0.3e-3,-700,     1,   0,  600,  630,   0.1,   0.1]]   # min bounds
 		
 		#fit_parameters = counts_to_countrate_fit_param_conv(y_3_cs_Alu, n_3_cs_Alu, fit_parameters)
-		print(n_3_cs_Alu[int(len(n_3_cs_Alu)/2)-3] / y_3_cs_Alu[int(len(y_3_cs_Alu)/2)-3])
+		#print(n_3_cs_Alu[int(len(n_3_cs_Alu)/2)-3] / y_3_cs_Alu[int(len(y_3_cs_Alu)/2)-3])
 			
-		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu3['counts'][fit_range_conv		[0]:fit_range_conv[1]])#, fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
+		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], n_3_cs_Alu[fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu3 = popt.copy()
 		pcov_cs_alu3 = pcov.copy()
 
@@ -892,12 +892,12 @@ class run:
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
-		                  [   0,  -575, 800, 150, 610, 630,  20,  20],   # max bounds
-		                  [-0.2,  -650, 500,  90, 590, 625,  12,  12],   # start values
-		                  [-0.5, -1000, 300,  50, 580, 615,   5,   5]]   # min bounds
+		                  [   0,  -575, 1.5, 0.5, 610, 630,  20,  20],   # max bounds
+		                  [-0.02,  -650, 1.3,  0.3, 590, 625,  12,  12],   # start values
+		                  [-0.05, -1000, 1,  0.1, 580, 615,   5,   5]]   # min bounds
 		#fit_parameters = counts_to_countrate_fit_param_conv(y_6_cs_Alu, n_6_cs_Alu, fit_parameters)
 		
-		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu6['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
+		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu6['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], n_6_cs_Alu[fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu6 = popt.copy()
 		pcov_cs_alu6 = pcov.copy()
 		fit_plot_range_cs_alu6 = fit_plot_range_conv
@@ -907,12 +907,12 @@ class run:
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
-		                  [   0,  -575, 800, 150, 585, 625,  20,  20],   # max bounds
-		                  [-0.2,  -650, 500,  90, 575, 615,  12,  12],   # start values
-		                  [-0.5, -1000, 300,  50, 565, 605,   5,   5]]   # min bounds
-		fit_parameters = counts_to_countrate_fit_param_conv(y_9_cs_Alu, n_9_cs_Alu, fit_parameters)
+		                  [   0,  -575, 1.5, 0.5, 610, 630,  20,  20],   # max bounds
+		                  [-0.02,  -650, 1.3,  0.3, 575, 610,  12,  12],   # start values
+		                  [-0.05, -1000, 1,  0.1, 560, 600,   5,   5]]   # min bounds
+		#fit_parameters = counts_to_countrate_fit_param_conv(y_9_cs_Alu, n_9_cs_Alu, fit_parameters)
 		
-		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu9['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
+		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], n_9_cs_Alu[fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu9 = popt.copy()
 		pcov_cs_alu9 = pcov.copy()
 		fit_plot_range_cs_alu9 = fit_plot_range_conv
@@ -922,12 +922,12 @@ class run:
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
-		                  [   0,  -575, 800, 150, 570, 610,  20,  20],   # max bounds
-		                  [-0.2,  -650, 500,  90, 560, 600,  12,  12],   # start values
-		                  [-0.5, -1000, 300,  50, 550, 595,   5,   5]]   # min bounds
-		fit_parameters = counts_to_countrate_fit_param_conv(y_12_cs_Alu, n_12_cs_Alu, fit_parameters)
+		                  [   0,  -575, 1.5, 0.5, 575, 620,  20,  20],   # max bounds
+		                  [-0.02,  -650, 1.3,  0.3, 560, 600,  12,  12],   # start values
+		                  [-0.05, -1000, 0.8,  0.1, 540, 580,   5,   5]]   # min bounds
+		#fit_parameters = counts_to_countrate_fit_param_conv(y_12_cs_Alu, n_12_cs_Alu, fit_parameters)
 		
-		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_Alu12['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
+		popt, pcov = curve_fit(func, lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], n_12_cs_Alu[fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_alu12 = popt.copy()
 		pcov_cs_alu12 = pcov.copy()
 		fit_plot_range_cs_alu12 = fit_plot_range_conv
@@ -972,10 +972,10 @@ class run:
 		plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])		[fit_plot_range_cs_alu9[0]:fit_plot_range_cs_alu9[1]], func(lin(dataSet_cs_Alu9		['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu9[0]		:fit_plot_range_cs_alu9[1]],*opt_fit_parameters_cs_alu9), 'y--')
 		plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])		[fit_plot_range_cs_alu12[0]:fit_plot_range_cs_alu12[1]], func(lin(dataSet_cs_Alu12		['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_alu12[0]		:fit_plot_range_cs_alu12[1]],*opt_fit_parameters_cs_alu12), 'm--')
 		plt.xlabel(r"Energie / keV")
-		plt.ylabel(r"Counts")
+		plt.ylabel(r"Zählrate 1/s")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
-		#plt.ylim(0, 1300)
+		plt.ylim(0, 2.0)
 		#plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV 		mit Alufolie geschirmt (energiekalibriert)")
 		plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
 		#plt.savefig('plot_cs_alu_all_fit_calib.pdf', bbox_inches='tight')
@@ -995,10 +995,10 @@ class run:
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
-		                  [   0,  -575, 800, 150, 620, 650,  20,  20],   # max bounds
-		                  [-0.2,  -650, 500,  90, 610, 635,  12,  12],   # start values
-		                  [-0.5, -1000, 300,  50, 600, 625,   5,   5]]   # min bounds
-		popt, pcov = curve_fit(func, lin(dataSet_cs_pap1['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_pap1['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
+		                  [   0,  -575, 1.5, 0.5, 620, 650,  20,  20],   # max bounds
+		                  [-0.2,  -650, 1.3,  0.25, 610, 635,  12,  12],   # start values
+		                  [-0.5, -1000, 0.9,  0.05, 600, 625,   5,   5]]   # min bounds
+		popt, pcov = curve_fit(func, lin(dataSet_cs_pap1['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], n_1_cs_pap[fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_pap1 = popt.copy()
 		pcov_cs_pap1 = pcov.copy()
 		fit_plot_range_cs_pap1 = fit_plot_range_conv
@@ -1008,10 +1008,10 @@ class run:
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
-		                  [   0,  -575, 800, 150, 610, 630,  20,  20],   # max bounds
-		                  [-0.2,  -650, 500,  90, 590, 625,  12,  12],   # start values
-		                  [-0.5, -1000, 300,  50, 580, 615,   5,   5]]   # min bounds
-		popt, pcov = curve_fit(func, lin(dataSet_cs_pap2['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_pap2['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
+		                  [   0,  -575, 1.5, 0.5, 610, 650,  20,  20],   # max bounds
+		                  [-0.2,  -650, 1.3,  0.25, 590, 625,  12,  12],   # start values
+		                  [-0.5, -1000, 0.9,  0.05, 580, 610,   5,   5]]   # min bounds
+		popt, pcov = curve_fit(func, lin(dataSet_cs_pap2['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], n_2_cs_pap[fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_pap2 = popt.copy()
 		pcov_cs_pap2 = pcov.copy()
 		fit_plot_range_cs_pap2 = fit_plot_range_conv
@@ -1021,10 +1021,10 @@ class run:
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
-		                  [   0,  -575, 800, 150, 585, 625,  20,  20],   # max bounds
-		                  [-0.2,  -650, 500,  90, 575, 615,  12,  12],   # start values
-		                  [-0.5, -1000, 300,  50, 565, 605,   5,   5]]   # min bounds
-		popt, pcov = curve_fit(func, lin(dataSet_cs_pap3['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_pap3['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
+		                  [   0,  -575, 1.5, 0.5, 590, 625,  20,  20],   # max bounds
+		                  [-0.2,  -650, 1.3,  0.25, 580, 615,  12,  12],   # start values
+		                  [-0.5, -1000, 0.9,  0.05, 560, 600,   5,   5]]   # min bounds
+		popt, pcov = curve_fit(func, lin(dataSet_cs_pap3['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], n_3_cs_pap[fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_pap3 = popt.copy()
 		pcov_cs_pap3 = pcov.copy()
 		fit_plot_range_cs_pap3 = fit_plot_range_conv
@@ -1034,10 +1034,10 @@ class run:
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
-		                  [   0,  -575, 800, 150, 570, 610,  20,  20],   # max bounds
-		                  [-0.2,  -650, 500,  90, 560, 600,  12,  12],   # start values
-		                  [-0.5, -1000, 300,  50, 550, 595,   5,   5]]   # min bounds
-		popt, pcov = curve_fit(func, lin(dataSet_cs_pap4['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], dataSet_cs_pap4['counts'][fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
+		                  [   0,  -575, 1.5, 0.5, 590, 625,  20,  20],   # max bounds
+		                  [-0.2,  -650, 1.3,  0.25, 560, 600,  12,  12],   # start values
+		                  [-0.5, -1000, 0.9,  0.05, 550, 580,   5,   5]]   # min bounds
+		popt, pcov = curve_fit(func, lin(dataSet_cs_pap4['channel'],popt_Kall[0],popt_Kall		[1])[fit_range_conv[0]:fit_range_conv[1]], n_4_cs_pap[fit_range_conv		[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters		[1]))
 		opt_fit_parameters_cs_pap4 = popt.copy()
 		pcov_cs_pap4 = pcov.copy()
 		fit_plot_range_cs_pap4 = fit_plot_range_conv
@@ -1071,11 +1071,11 @@ class run:
 
 		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], 		'r.', label="ungeschirmt")
-		plt.plot(lin(dataSet_cs_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_pap1['counts'][plot_range_conv[0]		:plot_range_conv[1]], 'g.', label="mit 1 Papier Lage geschirmt")
-		plt.plot(lin(dataSet_cs_pap2['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_pap2['counts'][plot_range_conv[0]		:plot_range_conv[1]], 'b.', label="mit 2 Papier Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_pap3['counts'][plot_range_conv[0]		:plot_range_conv[1]], 'y.', label="mit 3 Papier Lagen geschirmt")
-		plt.plot(lin(dataSet_cs_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_pap4['counts'][plot_range_conv[0]		:plot_range_conv[1]], 'm.', label="mit 4 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], n_0_cs_pap[plot_range_conv[0]:plot_range_conv[1]], 		'r.', label="ungeschirmt")
+		plt.plot(lin(dataSet_cs_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_1_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], 'g.', label="mit 1 Papier Lage geschirmt")
+		plt.plot(lin(dataSet_cs_pap2['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_2_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], 'b.', label="mit 2 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], 'y.', label="mit 3 Papier Lagen geschirmt")
+		plt.plot(lin(dataSet_cs_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_4_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], 'm.', label="mit 4 Papier Lagen geschirmt")
 				
 		plt.plot(lin(dataSet_cs_pap1['channel'],popt_Kall[0],popt_Kall[1])		[fit_plot_range_cs_pap1[0]:fit_plot_range_cs_pap1[1]], func(lin(dataSet_cs_pap1		['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_pap1[0]		:fit_plot_range_cs_pap1[1]],*opt_fit_parameters_cs_pap1), 'g--')
 		plt.plot(lin(dataSet_cs_pap2['channel'],popt_Kall[0],popt_Kall[1])		[fit_plot_range_cs_pap2[0]:fit_plot_range_cs_pap2[1]], func(lin(dataSet_cs_pap2		['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_pap2[0]		:fit_plot_range_cs_pap2[1]],*opt_fit_parameters_cs_pap2), 'b--')
@@ -1085,7 +1085,7 @@ class run:
 		plt.ylabel(r"Counts")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
-		#plt.ylim(0, 1300)
+		plt.ylim(0, 2.0)
 		plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
 		#plt.savefig('plot_cs_pap_all_fit_calib.pdf', bbox_inches='tight')
 		maximize()
