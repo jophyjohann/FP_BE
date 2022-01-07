@@ -472,12 +472,12 @@ class run:
 		
 		print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} 		+/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov)		)[1]))
 				
-				
+
 		#Cs Beta Spektrum Fermi-Plot
 		plot_range = [0,800]
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), F_1, '-', label="Cs Fermi-Plot ohne 		Korrektur")
-		plt.plot(x_cs_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], lin(x_cs_F		[fit_plot_range_conv[0]:fit_plot_range_conv[1]], *popt), 'r--', label="Linearer Fit 		(von "+str(fit_range[0])+" bis "+str(fit_range[1])+")")
+		plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), F_1, '-', label="Cs Fermi-Plot ohne Korrektur")
+		plt.plot(x_cs_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], lin(x_cs_F		[fit_plot_range_conv[0]:fit_plot_range_conv[1]], *popt), 'r--', label="Linearer Fit (von "+str(fit_range[0])+" bis "+str(fit_range[1])+")")
 		plt.xlabel(r"Energie / keV")
 		plt.ylabel(r"Fermi-Term")
 		plt.legend()
@@ -517,8 +517,8 @@ class run:
 		#Kr Beta Spektrum Fermi-Plot
 		plot_range = [0,800]
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(lin(x_Kr_B,popt_Kall[0],popt_Kall[1]), F_1, '-', label="Kr Fermi-Plot ohne 		Korrektur")
-		plt.plot(x_Kr_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], lin(x_Kr_F		[fit_plot_range_conv[0]:fit_plot_range_conv[1]], *popt), 'r--', label="Linearer Fit 		(von "+str(fit_range[0])+" bis "+str(fit_range[1])+")")
+		plt.plot(lin(x_Kr_B,popt_Kall[0],popt_Kall[1]), F_1, '-', label="Kr Fermi-Plot ohne Korrektur")
+		plt.plot(x_Kr_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], lin(x_Kr_F		[fit_plot_range_conv[0]:fit_plot_range_conv[1]], *popt), 'r--', label="Linearer Fit (von "+str(fit_range[0])+" bis "+str(fit_range[1])+")")
 		plt.xlabel(r"Energie / keV")
 		plt.ylabel(r"Fermi-Term")
 		plt.legend()
