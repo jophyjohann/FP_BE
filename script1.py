@@ -56,6 +56,8 @@ class run:
 				return lin(x, a, b) + Gauss(x, C_1, mu_1, sigma_1)
 
 
+		print(80*"_"+"\n\nPlotting: Cs Spektrum")
+		
     # Für Cs Spektrum
 		x_cs = dataSet_cs['channel']#[700:1000]
 		y_cs = dataSet_cs['counts']#[700:1000]
@@ -93,6 +95,7 @@ class run:
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 				
 				
+		print(80*"_"+"\n\nPlotting: Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]+" mit Fit"))
 		
 		# Plot limited spectrum Cs
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
@@ -110,6 +113,7 @@ class run:
 		plt.show()
 				
 
+		print(80*"_"+"\n\nPlotting: Cs Spektrum")
 		
 		# fitting the function again but now with other limits
 		fit_range = [790,860]
@@ -122,8 +126,10 @@ class run:
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
 		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
-				
+		
 
+		print(80*"_"+"\n\nPlotting: Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
+		
 		# Plot limited spectrum Cs
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(x_cs[fit_range[0]:fit_range[1]], func(x_cs[fit_range[0]:fit_range[1]], 		*popt), 'r--', label="Fit von "+str(fit_range[0])+" bis "+str(fit_range[1]))
@@ -138,6 +144,8 @@ class run:
 		maximize()
 		plt.show()
 		
+		
+		print(80*"_"+"\n\nPlotting: Cs Gamma und Beta-Spektrum")
 		
 		# Für Cs_Gamma Spektrum
 		x_cs_G = dataSet_cs_gamma['channel'] 
@@ -186,7 +194,8 @@ class run:
 		print("Parameter für den Fit:\n")
 		print("Logistische Funktion mit y = a / (1 + exp(- b * (x + c))) + d\n-> a = {:.4f} 		+/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n-> c = {:.4f} +/- {:.4f}\n-> d = {:.4f} +/- 		{:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]		,popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3]))
 				
-
+		print(80*"_"+"\n\nPlotting: limited Gamma spectrum Cs)
+		
 		#Plot limited Gamma spectrum Cs
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(x_cs_G[plot_range[0]:plot_range[1]], y_cs_G[plot_range[0]:plot_range[1]], 		'.', label='Cs Spektrum von '+str(plot_range[0])+" bis "+str(plot_range[1]))
@@ -203,6 +212,8 @@ class run:
 		plt.show()
 		
 
+		print(80*"_"+"\n\nPlotting: whole spectrum Am)
+		
 		# Am Messung
 		
 		file_path_Am = directory_path + 'AM.TXT'
@@ -247,6 +258,8 @@ class run:
 		
 		opt_fit_parameters3 = popt.copy()
 		pcov3 = pcov.copy()
+
+		print(80*"_"+"\n\nPlotting: Am 241 Spektrum von "+str(plot_range[0]*bins_combined)+" bis "+str(plot_range[1]*bins_combined)+" rebinned (jeweils "+str(bins_combined)+" Kanäle zsm.)")
 		
 		
 		print("Parameter für den Fit:\n")
@@ -277,6 +290,7 @@ class run:
 		DN = dataSet_Am['counts_uncert']         # Unsicherheiten
 				
 		
+		print(80*"_"+"\n\nPlotting: Energiekalibrierung")
 		
 		# Energie Kallibrierungs Fit
 		# Literaturwerte
@@ -324,6 +338,7 @@ class run:
 				
 		
 		# plot nun mit Energiekalibrierung:
+		print(80*"_"+"\n\nPlotting: Cs Gamma-Spektrum (energiekalibriert)")
 		
 		#Cs Gamma Spektrum
 		plot_range = [0,1000]
@@ -340,7 +355,9 @@ class run:
 		#plt.savefig('plot_cs_gamma_calib.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
-			
+		
+		print(80*"_"+"\n\nPlotting: Cs Gamma- und Beta-Spektrum (energiekalibriert)")
+		
 		#Cs Beta Spektrum
 		plot_range = [0,800]
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
@@ -380,7 +397,9 @@ class run:
 		
 		# Für Kr Beta Spektrum
 		y_Kr_B = dataSet_Kr_beta['counts']
-				
+		
+		print(80*"_"+"\n\nPlotting: Kr Gamma-Spektrum (energiekalibriert)")
+		
 		# Plot whole spectrum Kr
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(E_Kr, y_Kr_G, '-', label='Kr Gamma-Spektrum')
@@ -394,6 +413,8 @@ class run:
 		#plt.savefig('plot_kr_gamma_calib.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
+		
+		print(80*"_"+"\n\nPlotting: Kr Gamma- und Beta-Spektrum (energiekalibriert)")
 		
 		# Plot Gamma and Beta spectra of Kr
 		plot_range = [0,800]
@@ -420,7 +441,7 @@ class run:
 		pos_FWHM_K = lin(opt_fit_parameters1[4],popt_Kall[0],popt_Kall[1])
 		pos_FWHM_L = lin(opt_fit_parameters1[5],popt_Kall[0],popt_Kall[1])
 		
-		print("\nAuflösevermögen Spektrometer\n")  
+		print(80*"_"+"\n\nPlotting: Auflösevermögen Spektrometer\n")
 		print("Bei Linie von K-Konv.elektronen: FWHM={:.4f}keV +/- {:.4f} @ E={:.4f}		keV".format(FWHM_K, delta_FWHM_K, pos_FWHM_K))
 		print("Bei Linie von L-Konv.elektronen: FWHM={:.4f}keV +/- {:.4f} @ E={:.4f}		keV\n\n".format(FWHM_L, delta_FWHM_L, pos_FWHM_L))
 				
@@ -469,6 +490,7 @@ class run:
 		popt_F_1_cs = popt.copy()
 		pcov_F_1_cs = pcov.copy()
 		
+		print(80*"_"+"\n\nPlotting: Cs Beta Spektrum Fermi-Plot ohne Korrekturterm")
 		
 		print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} 		+/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov)		)[1]))
 				
@@ -509,7 +531,8 @@ class run:
 		popt, pcov = curve_fit(lin, x_Kr_F[fit_range_conv[0]:fit_range_conv[1]], F_1		[fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],		fit_parameters[1]))
 		popt_F_1_kr = popt.copy()
 		pcov_F_1_kr = pcov.copy()
-		
+
+		print(80*"_"+"\n\nPlotting: Kr Beta Spektrum Fermi-Plot ohne Korrekturterm")
 		
 		print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} 		+/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov)		)[1]))
 				
@@ -589,6 +612,8 @@ class run:
 		plot_range = [0,800]
 		plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		
+		print(80*"_"+"\n\nPlotting: Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
+		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
 		plt.plot(lin(dataSet_cs_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_Alu3['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Alu Lagen geschirmt")
@@ -624,6 +649,8 @@ class run:
 		plot_range = [0,800]
 		plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		
+		print(80*"_"+"\n\nPlotting: Cs Spektrum mit Papier geschirmt (energiekalibriert)")
+		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(lin(dataSet_cs['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], dataSet_cs['counts'][plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
 		plt.plot(lin(dataSet_cs_pap1['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_cs_pap1['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 1 Papier Lagen geschirmt")
@@ -658,6 +685,8 @@ class run:
 		plot_range = [0,800]
 		plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		
+		print(80*"_"+"\n\nPlotting: Kr Spektrum mit Alufolie geschirmt (energiekalibriert)")
+		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(lin(dataSet_Kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], dataSet_Kr['counts'][plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
 		plt.plot(lin(dataSet_kr_Alu3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], dataSet_kr_Alu3['counts'][plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Alu Lagen geschirmt")
@@ -691,6 +720,8 @@ class run:
 		#plot the Kr Spektrum with Papier
 		plot_range = [0,800]
 		plot_range_conv = lin_inv(plot_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
+		
+		print(80*"_"+"\n\nPlotting: Kr Spektrum mit Papier geschirmt (energiekalibriert)")
 		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(lin(dataSet_Kr['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv[0]		:plot_range_conv[1]], dataSet_Kr['counts'][plot_range_conv[0]:plot_range_conv[1]], 		'-', label="ungeschirmt")
@@ -771,6 +802,7 @@ class run:
 		pcov_cs_alu12 = pcov.copy()
 		fit_plot_range_cs_alu12 = fit_plot_range_conv
 				
+		print(80*"_"+"\n\nPlotting: Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
 		
 		popt=opt_fit_parameters_cs_alu3
 		pcov=pcov_cs_alu3
@@ -880,6 +912,7 @@ class run:
 		pcov_cs_pap4 = pcov.copy()
 		fit_plot_range_cs_pap4 = fit_plot_range_conv
 				
+		print(80*"_"+"\n\nPlotting: Cs Spektrum mit Papier geschirmt (energiekalibriert)")
 		
 		popt=opt_fit_parameters_cs_pap1
 		pcov=pcov_cs_pap1
@@ -933,6 +966,7 @@ class run:
 		# Plot der Energien gegen die FLächemasse
 				
 		#Alu
+		print(80*"_"+"\n\nPlotting: Mittlere Energie der K-Konv.-El. über Flächenmasse von Alu")
 		
 		m = 2.7#flächemasse pro Aluminiumfolienblatt
 		x_data = [opt_fit_parameters_cs_alu3[5],opt_fit_parameters_cs_alu6[5],		opt_fit_parameters_cs_alu9[5],opt_fit_parameters_cs_alu12[5],]
@@ -951,6 +985,7 @@ class run:
 		
 		
 		#Papier
+		print(80*"_"+"\n\nPlotting: Mittlere Energie der K-Konv.-El. über Flächenmasse von Papier")
 		
 		m = 80#flächemasse pro Aluminiumfolienblatt
 		x_data = [opt_fit_parameters_cs_pap1[5],opt_fit_parameters_cs_pap2[5],		opt_fit_parameters_cs_pap3[5],opt_fit_parameters_cs_pap4[5],]
