@@ -194,7 +194,7 @@ class run:
 		print("Parameter für den Fit:\n")
 		print("Logistische Funktion mit y = a / (1 + exp(- b * (x + c))) + d\n-> a = {:.4f} 		+/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n-> c = {:.4f} +/- {:.4f}\n-> d = {:.4f} +/- 		{:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]		,popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3]))
 				
-		print(80*"_"+"\n\nPlotting: limited Gamma spectrum Cs)
+		print(80*"_"+"\n\nPlotting: limited Gamma spectrum Cs")
 		
 		#Plot limited Gamma spectrum Cs
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
@@ -212,7 +212,7 @@ class run:
 		plt.show()
 		
 
-		print(80*"_"+"\n\nPlotting: whole spectrum Am)
+		print(80*"_"+"\n\nPlotting: whole spectrum Am")
 		
 		# Am Messung
 		
