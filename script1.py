@@ -88,14 +88,13 @@ class run:
 		maximize()
 		plt.show()
 		
+		print(80*"_"+"\n\nPlotting: Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" mit Fit")
 		
 		print("Parameter für den Fit:\n\n")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
 		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 				
-				
-		print(80*"_"+"\n\nPlotting: Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" mit Fit")
 		
 		# Plot limited spectrum Cs
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
@@ -121,14 +120,13 @@ class run:
 		popt, pcov = curve_fit(func, x_cs[fit_range[0]:fit_range[1]], y_cs[fit_range[0]		:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
 				
 
-				
+		print(80*"_"+"\n\nPlotting: Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
+		
 		print("Parameter für den Fit:\n\n")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
 		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 		
-
-		print(80*"_"+"\n\nPlotting: Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1]))
 		
 		# Plot limited spectrum Cs
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
@@ -190,11 +188,10 @@ class run:
 		opt_fit_parameters2 = popt.copy()
 		pcov2 = pcov.copy()
 		
+		print(80*"_"+"\n\nPlotting: limited Gamma spectrum Cs")
 		
 		print("Parameter für den Fit:\n")
 		print("Logistische Funktion mit y = a / (1 + exp(- b * (x + c))) + d\n-> a = {:.4f} 		+/- {:.4f}\n-> b = {:.4f} +/- {:.4f}\n-> c = {:.4f} +/- {:.4f}\n-> d = {:.4f} +/- 		{:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]		,popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3]))
-				
-		print(80*"_"+"\n\nPlotting: limited Gamma spectrum Cs")
 		
 		#Plot limited Gamma spectrum Cs
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
