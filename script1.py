@@ -1126,10 +1126,10 @@ class run:
 		F = 1 - beta_qu + ((tau**2 / 8) - np.log(2 * (2 * tau + 1))) / ((1 + tau)**2)
 
 		#Bethe Bloch E_loss_BB / keV
-		E_loss_BB = 1e-3 * m_data * K * Z / (2 * A * beta_qu) * (np.log((tau**2)*(tau + 2) / (2 * (I / mc)**2)) + F)
+		E_loss_BB = -1e-3 * m_data * K * Z / (2 * A * beta_qu) * (np.log((tau**2)*(tau + 2) / (2 * (I / mc)**2)) + F)
 
 		#Landau E_loss_L / keV
-		E_loss_L =  1e-3 * m_data * K * Z / (2 * A * beta_qu) * (np.log((K * Z * mc * m_data) / (2 * I**2 * (1 - beta_qu) * A)) - beta_qu)
+		E_loss_L =  -1e-3 * m_data * K * Z / (2 * A * beta_qu) * (np.log((K * Z * mc * m_data) / (2 * I**2 * (1 - beta_qu) * A)) - beta_qu)
 
 
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
