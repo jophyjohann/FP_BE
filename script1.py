@@ -849,7 +849,7 @@ class run:
 		plt.plot(lin(dataSet_kr_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3_kr_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Papier Lagen geschirmt")
 		plt.plot(lin(dataSet_kr_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_4_kr_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 4 Papier Lagen geschirmt")
 		plt.xlabel(r"Energie / keV")
-		plt.ylabel(r"Counts")
+		plt.ylabel(r"Zählrate 1/s")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
 		plt.ylim(0, 10)
@@ -938,25 +938,25 @@ class run:
 		pcov=pcov_cs_alu3
 		print("\nFür 3 Alu Lagen")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
-		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
+		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n  -> FWHM = {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6], 2*np.sqrt(2*np.log(2))*popt[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 		popt=opt_fit_parameters_cs_alu6
 		pcov=pcov_cs_alu6
 		print("\nFür 6 Alu Lagen")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
-		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
+		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n  -> FWHM = {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6], 2*np.sqrt(2*np.log(2))*popt[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 		popt=opt_fit_parameters_cs_alu9
 		pcov=pcov_cs_alu9
 		print("\nFür 9 Alu Lagen")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
-		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
-		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
+		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n  -> FWHM = {:.4f} \n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6], 2*np.sqrt(2*np.log(2))*popt[6]))
+		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n ".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 		popt=opt_fit_parameters_cs_alu12
 		pcov=pcov_cs_alu12
 		print("\nFür 12 Alu Lagen")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
-		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
+		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n  -> FWHM = {:.4f} 	\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6], 2*np.sqrt(2*np.log(2))*popt[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 		
 		
@@ -990,8 +990,8 @@ class run:
 				
 		## Gauss Fits
 		#for pap1
-		fit_range = [525,675] 
-		fit_plot_range = [525,675]
+		fit_range = [575,675] 
+		fit_plot_range = [575,675]
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
@@ -1003,8 +1003,8 @@ class run:
 		pcov_cs_pap1 = pcov.copy()
 		fit_plot_range_cs_pap1 = fit_plot_range_conv
 		#for pap2
-		fit_range = [525,675] 
-		fit_plot_range = [525,675]
+		fit_range = [550,650] 
+		fit_plot_range = [550,650]
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
@@ -1016,8 +1016,8 @@ class run:
 		pcov_cs_pap2 = pcov.copy()
 		fit_plot_range_cs_pap2 = fit_plot_range_conv
 		#for pap3
-		fit_range = [525,675] 
-		fit_plot_range = [525,675]
+		fit_range = [525,625] 
+		fit_plot_range = [525,625]
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
@@ -1029,8 +1029,8 @@ class run:
 		pcov_cs_pap3 = pcov.copy()
 		fit_plot_range_cs_pap3 = fit_plot_range_conv
 		#for pap4
-		fit_range = [525,675] 
-		fit_plot_range = [525,675]
+		fit_range = [540,625] 
+		fit_plot_range = [540,625]
 		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
 		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
 		fit_parameters = [[ "a",  "b" ,"C1","C2","μ1","μ2","σ1","σ2"],
@@ -1048,25 +1048,25 @@ class run:
 		pcov=pcov_cs_pap1
 		print("\nFür 1 Papier Lage")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
-		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
+		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n  -> FWHM = {:.4f} 	\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6], 2*np.sqrt(2*np.log(2))*popt[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 		popt=opt_fit_parameters_cs_pap2
 		pcov=pcov_cs_pap2
 		print("\nFür 2 Papier Lagen")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
-		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
+		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n  -> FWHM = {:.4f}\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6], 2*np.sqrt(2*np.log(2))*popt[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 		popt=opt_fit_parameters_cs_pap3
 		pcov=pcov_cs_pap3
 		print("\nFür 3 Papier Lagen")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
-		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
+		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n -> FWHM = {:.4f} \n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6], 2*np.sqrt(2*np.log(2))*popt[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))
 		popt=opt_fit_parameters_cs_pap4
 		pcov=pcov_cs_pap4
 		print("\nFür 4 Papier Lagen")
 		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
-		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6]))
+		print("Peak 1 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n -> FWHM = {:.4f} \n".format(popt[2],np.sqrt(np.diag(pcov))[2],popt[4],np.sqrt(np.diag(pcov))[4],popt		[6],np.sqrt(np.diag(pcov))[6], 2*np.sqrt(2*np.log(2))*popt[6]))
 		print("Peak 2 (gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))		\n-> C = {:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}		\n".format(popt[3],np.sqrt(np.diag(pcov))[3],popt[5],np.sqrt(np.diag(pcov))[5],popt		[7],np.sqrt(np.diag(pcov))[7]))		
 
 		
@@ -1082,7 +1082,7 @@ class run:
 		plt.plot(lin(dataSet_cs_pap3['channel'],popt_Kall[0],popt_Kall[1])		[fit_plot_range_cs_pap3[0]:fit_plot_range_cs_pap3[1]], func(lin(dataSet_cs_pap3		['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_pap3[0]		:fit_plot_range_cs_pap3[1]],*opt_fit_parameters_cs_pap3), 'y--')
 		plt.plot(lin(dataSet_cs_pap4['channel'],popt_Kall[0],popt_Kall[1])		[fit_plot_range_cs_pap4[0]:fit_plot_range_cs_pap4[1]], func(lin(dataSet_cs_pap4		['channel'],popt_Kall[0],popt_Kall[1])[fit_plot_range_cs_pap4[0]		:fit_plot_range_cs_pap4[1]],*opt_fit_parameters_cs_pap4), 'm--')
 		plt.xlabel(r"Energie / keV")
-		plt.ylabel(r"Counts")
+		plt.ylabel(r"Zählrate 1/s")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
 		plt.ylim(0, 2.0)
@@ -1119,7 +1119,7 @@ class run:
 		
 		m = 80#flächemasse pro Aluminiumfolienblatt
 		x_data = [opt_fit_parameters_cs_pap1[5],opt_fit_parameters_cs_pap2[5],		opt_fit_parameters_cs_pap3[5],opt_fit_parameters_cs_pap4[5],]
-		y_data = [3*m,6*m,9*m,12*m]
+		y_data = [m,2*m,3*m,4*m]
 		
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(x_data, y_data, 'r.', label="Messwerte")
