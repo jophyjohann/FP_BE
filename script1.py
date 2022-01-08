@@ -1108,7 +1108,7 @@ class run:
 
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(x_data, y_data, 'r.', label="Messwerte")
-		plt.errorbar(x_data[plot_range[0]:plot_range[1]], y_data[plot_range[0]:plot_range[1]], 		label="Fehlerbalken", yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', 		alpha=0.9, elinewidth=0.5)
+		plt.errorbar(x_data, y_data, label="Fehlerbalken", yerr=yerr_data, fmt='none', ecolor='k', 		alpha=0.9, elinewidth=0.5)
 		plt.xlabel(r"Flächenmasse / $mg/cm^2$")
 		plt.ylabel(r"Energie / keV")
 		plt.legend()
@@ -1133,7 +1133,7 @@ class run:
 
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(x_data, y_data, 'r.', label="Messwerte")
-		plt.errorbar(x_data[plot_range[0]:plot_range[1]], y_data[plot_range[0]:plot_range[1]], 		label="Fehlerbalken", yerr=DN[plot_range[0]:plot_range[1]], fmt='none', ecolor='k', 		alpha=0.9, elinewidth=0.5)
+		plt.errorbar(x_data, y_data,label="Fehlerbalken", yerr=yerr_data, fmt='none', ecolor='k', 		alpha=0.9, elinewidth=0.5)
 		plt.xlabel(r"Flächenmasse / $g/m^2$")
 		plt.ylabel(r"Energie / keV")
 		plt.legend()
