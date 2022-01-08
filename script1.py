@@ -671,7 +671,7 @@ class run:
 		plt.ylim(0, 3)
 		#plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV 		mit Alufolie geschirmt (energiekalibriert)")
 		plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
-		#plt.savefig('plot_cs_alu_all_calib.pdf', bbox_inches='tight')
+		plt.savefig('plot_cs_alu_all_calib.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 		
@@ -732,7 +732,7 @@ class run:
 		plt.xlim(plot_range[0], plot_range[1])
 		plt.ylim(0, 3.5)
 		plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
-		#plt.savefig('plot_cs_pap_all_calib.pdf', bbox_inches='tight')
+		plt.savefig('plot_cs_pap_all_calib.pdf', bbox_inches='tight')
 		maximize()
 		#plt.show()
 		
@@ -793,7 +793,7 @@ class run:
 		plt.xlim(plot_range[0], plot_range[1])
 		plt.ylim(0, 10)
 		plt.title("Kr Spektrum mit Alufolie geschirmt (energiekalibriert)")
-		#plt.savefig('plot_kr_alu_all_calib.pdf', bbox_inches='tight')
+		plt.savefig('plot_kr_alu_all_calib.pdf', bbox_inches='tight')
 		maximize()
 		#plt.show()
 		
@@ -854,7 +854,7 @@ class run:
 		plt.xlim(plot_range[0], plot_range[1])
 		plt.ylim(0, 10)
 		plt.title("Kr Spektrum mit Papier geschirmt (energiekalibriert)")
-		#plt.savefig('plot_kr_pap_all_calib.pdf', bbox_inches='tight')
+		plt.savefig('plot_kr_pap_all_calib.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 		
@@ -1098,6 +1098,12 @@ class run:
 		#Alu
 		print(80*"_"+"\n\nPlotting: Mittlere Energie der K-Konv.-El. über Flächenmasse von Alu")
 		
+		I = 150e-3  # keV
+		K = 0.3071e3 #in keV * cm² / mol
+		Z = 13
+		A = 26.98
+		mc = 500	#keV
+
 		m = 2.7#flächemasse pro Aluminiumfolienblatt
 		y_data = [opt_fit_parameters_cs_alu3[5],opt_fit_parameters_cs_alu6[5],		opt_fit_parameters_cs_alu9[5],opt_fit_parameters_cs_alu12[5],]
 		x_data = [3*m,6*m,9*m,12*m]
@@ -1106,9 +1112,25 @@ class run:
 							np.sqrt(2*np.log(2))*opt_fit_parameters_cs_alu9[6],
 							np.sqrt(2*np.log(2))*opt_fit_parameters_cs_alu12[6]]
 
+		E_kin = np.linspace(y_data[0], y_data[-1], 1000)
+		m_data = np.linspace(x_data[0], x_dat[-1], 1000)
+		tau = E_kin / m_data
+		gamma = tau + 1
+		beta_qu = 1 - 1/gamma**2
+		F = 1 - beta_qu + (tau**2 / 8 - np.log(2 * (2 * tau + 1))) / ((1 + tau)**2)
+
+		#Bethe Bloch
+		E_loss_BB = -m_data * K * Z / (2 * A * beta_qu) * (np.log((tau**2)*(tau + 2) / (2 * (I / mc)**2)) + F)
+
+		#Landau
+		E_loss_L =  -m_data * K * Z / (2 * A * beta_qu) * (np.log(K * Z * mc* m_data) / (2 * I**2 * (1 - beta_qu) * A) - beta_qu)
+
+
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(x_data, y_data, 'r.', label="Messwerte")
 		plt.errorbar(x_data, y_data, label="Fehlerbalken", yerr=yerr_data, fmt='none', ecolor='k', 		alpha=0.9, elinewidth=0.5)
+		plt.plot(m_data, E_loss_BB, 'r-', label="Bethe-Bloch")
+		plt.plot(m_data, E_loss_L, 'r-', label="Landau")
 		plt.xlabel(r"Flächenmasse / $mg/cm^2$")
 		plt.ylabel(r"Energie / keV")
 		plt.legend()
