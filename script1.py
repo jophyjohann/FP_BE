@@ -182,7 +182,7 @@ class run:
 		plt.plot(x_cs_G, n_cs_G, '-', label='Cs Gamma-Spektrum')
 		plt.plot(x_cs_B, n_cs_B, '-', label='Cs Beta-Spektrum')
 		plt.xlabel(r"Channel")
-		plt.ylabel(r"Zählrate")
+		plt.ylabel(r"Zählrate 1/s")
 		plt.legend()
 		plt.xlim(0, 1000)
 		plt.ylim(0, 1.7)
@@ -380,7 +380,7 @@ class run:
 		plt.plot(lin(x_cs_G,popt_Kall[0],popt_Kall[1]), n_cs_G, '-', label="Cs Gamma-Spektrum bis "+str(plot_range[1]))
 		plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), n_cs_B, '-', label="Cs Beta-Spektrum bis "+str(plot_range[1]))
 		plt.xlabel(r"Energie / keV")
-		plt.ylabel(r"Zählrate")
+		plt.ylabel(r"Zählrate 1/s")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
 		plt.ylim(0, 1.7)
@@ -615,7 +615,7 @@ class run:
 		#plt.xlim(plot_range[0], plot_range[1])
 		#plt.ylim(0, 0.032)
 		plt.title("Cs Beta Spektrum Fermi-Plot mit Korrekturterm")
-		#plt.savefig('plot_cs_beta_fermi2.pdf', bbox_inches='tight')
+		plt.savefig('plot_cs_beta_fermi2.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 		
@@ -660,7 +660,7 @@ class run:
 		#plt.xlim(plot_range[0], plot_range[1])
 		#plt.ylim(0, 0.032)
 		plt.title("Kr Beta Spektrum Fermi-Plot mit Korrekturterm")
-		#plt.savefig('plot_Kr_beta_fermi2.pdf', bbox_inches='tight')
+		plt.savefig('plot_Kr_beta_fermi2.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 		
@@ -718,7 +718,7 @@ class run:
 		plt.plot(lin(dataSet_cs_Alu9['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_9_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 9 Alu Lagen geschirmt")
 		plt.plot(lin(dataSet_cs_Alu12['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_12_cs_Alu[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 12 Alu Lagen geschirmt")
 		plt.xlabel(r"Energie / keV")
-		plt.ylabel(r"Zählrate")
+		plt.ylabel(r"Zählrate 1/s")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
 		plt.ylim(0, 3)
@@ -780,7 +780,7 @@ class run:
 		plt.plot(lin(dataSet_cs_pap3['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_3_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 3 Papier Lagen geschirmt")
 		plt.plot(lin(dataSet_cs_pap4['channel'],popt_Kall[0],popt_Kall[1])[plot_range_conv		[0]:plot_range_conv[1]], n_4_cs_pap[plot_range_conv[0]		:plot_range_conv[1]], '-', label="mit 4 Papier Lagen geschirmt")
 		plt.xlabel(r"Energie / keV")
-		plt.ylabel(r"Zählrate")
+		plt.ylabel(r"Zählrate 1/s")
 		plt.legend()
 		plt.xlim(plot_range[0], plot_range[1])
 		plt.ylim(0, 3.5)
@@ -1031,7 +1031,7 @@ class run:
 		plt.ylim(0, 2.0)
 		#plt.title("Cs Spektrum von "+str(plot_range[0])+" bis "+str(plot_range[1])+" keV 		mit Alufolie geschirmt (energiekalibriert)")
 		plt.title("Cs Spektrum mit Alufolie geschirmt (energiekalibriert)")
-		#plt.savefig('plot_cs_alu_all_fit_calib.pdf', bbox_inches='tight')
+		plt.savefig('plot_cs_alu_all_fit_calib.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 		
@@ -1140,7 +1140,7 @@ class run:
 		plt.xlim(plot_range[0], plot_range[1])
 		plt.ylim(0, 2.0)
 		plt.title("Cs Spektrum mit Papier geschirmt (energiekalibriert)")
-		#plt.savefig('plot_cs_pap_all_fit_calib.pdf', bbox_inches='tight')
+		plt.savefig('plot_cs_pap_all_fit_calib.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 		
@@ -1201,7 +1201,7 @@ class run:
 		#plt.xlim(plot_range[0], plot_range[1])
 		#plt.ylim(0, 1800)
 		plt.title("Energieverlust der K-Konv.-El. über Flächenmasse von Al")
-		#plt.savefig('plot_cs_alu_area_mass.pdf', bbox_inches='tight')
+		plt.savefig('plot_cs_alu_area_mass.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 
@@ -1226,13 +1226,14 @@ class run:
 		#plt.xlim(plot_range[0], plot_range[1])
 		#plt.ylim(0, 1800)
 		plt.title("Mittlere Energie der K-Konv.-El. über Flächenmasse von Papier")
-		#plt.savefig('plot_cs_pap_area_mass.pdf', bbox_inches='tight')
+		plt.savefig('plot_cs_pap_area_mass.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 
 
 
-
+		print(80*"_"+"\n\nPlotting: Integrierte Zählrate von Cs mit Al Abschirmung")
+		
 		# Absorption von Beta Strahlung
 		# Für Cs mit Alu
 		m_Alu = 2.7 *10**(-2)# kg/m^2  Flächenmasse pro Alu Blatt
@@ -1295,18 +1296,19 @@ class run:
 		m_data = np.linspace(m_data[0],m_data[-1],1000)
 		plt.plot(m_data, schw(m_data, *popt), 'r--', label=" Fit")
 		plt.xlabel(r"Flächenmasse / $kg/m^2$")
-		plt.ylabel(r"Integrierte Zählrate")
+		plt.ylabel(r"Integrierte Zählrate 1/s")
 		plt.legend()
 		plt.xlim(0, 0.35)
 		#plt.ylim(0, 1800)
 		plt.title("Integrierte Zählrate von Cs mit Al Abschirmung")
-		#plt.savefig('plot_cs_alu_int.pdf', bbox_inches='tight')
+		plt.savefig('plot_cs_alu_int.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 
-
-# Für Cs mit Papier
-		m_pap = 2.7 *10**(-2)# kg/m^2  Flächenmasse pro Papier Blatt
+		print(80*"_"+"\n\nPlotting: Integrierte Zählrate von Cs mit Papier Abschirmung")
+		
+		# Für Cs mit Papier
+		m_pap = 80 *10**(-3)# kg/m^2  Flächenmasse pro Papier Blatt
 		m_data = [0*m_pap, 1*m_pap, 2*m_pap, 3*m_pap, 4*m_pap]   # kg/m^2  kommt auf die x_Achse
 		m_data = np.array(m_data)
 
@@ -1320,8 +1322,8 @@ class run:
 		# 1 Papier Lage
 		y_1_cs_pap = dataSet_cs_pap1['counts']
 		t_1_cs_pap = dataSet_cs_pap1['time']
-		n_1_cs_pap = y_3_cs_pap/t_3_cs_pap   # Zählrate
-		I_1_cs_pap = np.sum(n_3_cs_pap[:647]) # Integral
+		n_1_cs_pap = y_1_cs_pap/t_1_cs_pap   # Zählrate
+		I_1_cs_pap = np.sum(n_1_cs_pap[:647]) # Integral
 
 		# 2 Papier Lagen
 		y_2_cs_pap = dataSet_cs_pap2['counts']
@@ -1366,11 +1368,168 @@ class run:
 		m_data = np.linspace(m_data[0],m_data[-1],1000)
 		plt.plot(m_data, schw(m_data, *popt), 'r--', label=" Fit")
 		plt.xlabel(r"Flächenmasse / $kg/m^2$")
-		plt.ylabel(r"Integrierte Zählrate")
+		plt.ylabel(r"Integrierte Zählrate 1/s")
 		plt.legend()
 		plt.xlim(0, 0.35)
 		#plt.ylim(0, 1800)
-		plt.title("Integrierte Zählrate von Cs mit Al Abschirmung")
-		#plt.savefig('plot_cs_pap_int.pdf', bbox_inches='tight')
+		plt.title("Integrierte Zählrate von Cs mit Papier Abschirmung")
+		plt.savefig('plot_cs_pap_int.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
+
+		print(80*"_"+"\n\nPlotting: Integrierte Zählrate von Kr mit Al Abschirmung")
+		
+		# Für Kr mit Alu
+		m_Alu = 2.7 *10**(-2)# kg/m^2  Flächenmasse pro Alu Blatt
+		m_data = [0*m_Alu, 3*m_Alu, 6*m_Alu, 9*m_Alu, 12*m_Alu]   # kg/m^2  kommt auf die x_Achse
+		m_data = np.array(m_data)
+
+		# Integrierte Zählrate ist die Summe der Zählraten über das gesamte Gamma Spektrum (Also ohne K und L Peaks)
+		# Ungeschirmt
+		y_0_kr_Alu = dataSet_Kr['counts']
+		t_0_kr_Alu = dataSet_Kr['time']
+		n_0_kr_Alu = y_0_kr_Alu/t_0_kr_Alu   # Zählrate
+		I_0_kr_Alu = np.sum(n_0_kr_Alu[:647]) # Integral
+
+		# 3 Alu Lagen
+		y_3_kr_Alu = dataSet_kr_Alu3['counts']
+		t_3_kr_Alu = dataSet_kr_Alu3['time']
+		n_3_kr_Alu = y_3_kr_Alu/t_3_kr_Alu   # Zählrate
+		I_3_kr_Alu = np.sum(n_3_kr_Alu[:647]) # Integral
+
+		# 6 Alu Lagen
+		y_6_kr_Alu = dataSet_kr_Alu6['counts']
+		t_6_kr_Alu = dataSet_kr_Alu6['time']
+		n_6_kr_Alu = y_6_kr_Alu/t_6_kr_Alu   # Zählrate
+		I_6_kr_Alu = np.sum(n_6_kr_Alu[:647]) # Integral
+
+		# 9 Alu Lagen
+		y_9_kr_Alu = dataSet_kr_Alu9['counts']
+		t_9_kr_Alu = dataSet_kr_Alu9['time']
+		n_9_kr_Alu = y_9_kr_Alu/t_9_kr_Alu   # Zählrate
+		I_9_kr_Alu = np.sum(n_9_kr_Alu[:647]) # Integral
+
+		# 12 Alu Lagen
+		y_12_kr_Alu = dataSet_kr_Alu12['counts']
+		t_12_kr_Alu = dataSet_kr_Alu12['time']
+		n_12_kr_Alu = y_12_kr_Alu/t_12_kr_Alu   # Zählrate
+		I_12_kr_Alu = np.sum(n_12_kr_Alu[:647]) # Integral
+
+		y_data = [I_0_kr_Alu, I_3_kr_Alu, I_6_kr_Alu, I_9_kr_Alu, I_12_kr_Alu]
+		y_data = np.array(y_data)
+
+		# Fit mit dem exp. schwächungsgesetz
+		fit_parameters = [[ "N_0",  "mu_m"],
+		                  [ 6000, 800],     # max bounds 
+		                  [ 4500, 1],       # start values
+		                  [ 2000, -800]]       # min bounds
+				
+		popt, pcov = curve_fit(schw, m_data, y_data, fit_parameters[2], bounds=(fit_parameters[3],		fit_parameters[1]))
+		popt_kr_alu_int = popt.copy()
+		pcov_kr_alu_int = pcov.copy()
+		
+		print("\nFit Parameter:")
+		print("Param.      Wert      Δ(Fit)")
+		for param in fit_parameters[0]:
+			i = fit_parameters[0].index(param)
+			print("{} \t= \t{:.5}".format(param,popt[i])+ (11-len("{:.5}".format(popt[i])))*" "+"± {:.5}".format(np.sqrt(np.diag(pcov))[i]))
+		
+		# Plot
+		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+		plt.plot(m_data, y_data, 'r.', label="Messwerte")
+		m_data = np.linspace(m_data[0],m_data[-1],1000)
+		plt.plot(m_data, schw(m_data, *popt), 'r--', label=" Fit")
+		plt.xlabel(r"Flächenmasse / $kg/m^2$")
+		plt.ylabel(r"Integrierte Zählrate 1/s")
+		plt.legend()
+		plt.xlim(0, 0.35)
+		#plt.ylim(0, 1800)
+		plt.title("Integrierte Zählrate von Kr mit Al Abschirmung")
+		plt.savefig('plot_kr_alu_int.pdf', bbox_inches='tight')
+		maximize()
+		plt.show()
+
+		print(80*"_"+"\n\nPlotting: Integrierte Zählrate von Kr mit Papier Abschirmung")
+
+
+				# Für kr mit Papier
+		m_pap = 80 *10**(-3)# kg/m^2  Flächenmasse pro Papier Blatt
+		m_data = [0*m_pap, 1*m_pap, 2*m_pap, 3*m_pap, 4*m_pap]   # kg/m^2  kommt auf die x_Achse
+		m_data = np.array(m_data)
+
+		# Integrierte Zählrate ist die Summe der Zählraten über das gesamte Gamma Spektrum (Also ohne K und L Peaks)
+		# Ungeschirmt
+		y_0_kr_pap = dataSet_Kr['counts']
+		t_0_kr_pap = dataSet_Kr['time']
+		n_0_kr_pap = y_0_kr_pap/t_0_kr_pap   # Zählrate
+		I_0_kr_pap = np.sum(n_0_kr_pap[:647]) # Integral
+
+		# 1 Papier Lage
+		y_1_kr_pap = dataSet_kr_pap1['counts']
+		t_1_kr_pap = dataSet_kr_pap1['time']
+		n_1_kr_pap = y_1_kr_pap/t_1_kr_pap   # Zählrate
+		I_1_kr_pap = np.sum(n_1_kr_pap[:647]) # Integral
+
+		# 2 Papier Lagen
+		y_2_kr_pap = dataSet_kr_pap2['counts']
+		t_2_kr_pap = dataSet_kr_pap2['time']
+		n_2_kr_pap = y_2_kr_pap/t_2_kr_pap   # Zählrate
+		I_2_kr_pap = np.sum(n_2_kr_pap[:647]) # Integral
+
+		# 3 Papier Lagen
+		y_3_kr_pap = dataSet_kr_pap3['counts']
+		t_3_kr_pap = dataSet_kr_pap3['time']
+		n_3_kr_pap = y_3_kr_pap/t_3_kr_pap   # Zählrate
+		I_3_kr_pap = np.sum(n_3_kr_pap[:647]) # Integral
+
+		# 4 Papier Lagen
+		y_4_kr_pap = dataSet_kr_pap4['counts']
+		t_4_kr_pap = dataSet_kr_pap4['time']
+		n_4_kr_pap = y_4_kr_pap/t_4_kr_pap   # Zählrate
+		I_4_kr_pap = np.sum(n_4_kr_pap[:647]) # Integral
+
+		y_data = [I_0_kr_pap, I_1_kr_pap, I_2_kr_pap, I_3_kr_pap, I_4_kr_pap]
+		y_data = np.array(y_data)
+
+		# Fit mit dem exp. schwächungsgesetz
+		fit_parameters = [[ "N_0",  "mu_m"],
+		                  [ 6000, 800],     # max bounds 
+		                  [ 4500, 1],       # start values
+		                  [ 2000, -800]]       # min bounds
+				
+		popt, pcov = curve_fit(schw, m_data, y_data, fit_parameters[2], bounds=(fit_parameters[3],		fit_parameters[1]))
+		popt_kr_pap_int = popt.copy()
+		pcov_kr_pap_int = pcov.copy()
+		
+		print("\nFit Parameter:")
+		print("Param.      Wert      Δ(Fit)")
+		for param in fit_parameters[0]:
+			i = fit_parameters[0].index(param)
+			print("{} \t= \t{:.5}".format(param,popt[i])+ (11-len("{:.5}".format(popt[i])))*" "+"± {:.5}".format(np.sqrt(np.diag(pcov))[i]))
+		
+		# Plot
+		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+		plt.plot(m_data, y_data, 'r.', label="Messwerte")
+		m_data = np.linspace(m_data[0],m_data[-1],1000)
+		plt.plot(m_data, schw(m_data, *popt), 'r--', label=" Fit")
+		plt.xlabel(r"Flächenmasse / $kg/m^2$")
+		plt.ylabel(r"Integrierte Zählrate 1/s")
+		plt.legend()
+		plt.xlim(0, 0.35)
+		#plt.ylim(0, 1800)
+		plt.title("Integrierte Zählrate von Kr mit Papier Abschirmung")
+		plt.savefig('plot_kr_pap_int.pdf', bbox_inches='tight')
+		maximize()
+		plt.show()
+		
+
+
+		# Blei Abschirmung von Kr				
+		file_path_kr_pb = directory_path + 'KR_PB.TXT'	
+		
+		dataSet_kr_pb = DatasetTools.read_file(file_path_kr_pb)
+		E_kr_pb = dataSet_kr_pb['channel']
+		E_kr_pb = lin(dataSet_kr_pap4['channel'],popt_Kall[0],popt_Kall[1])
+		kr_pb_counts = dataSet_kr_pb['']
+
+
