@@ -1530,6 +1530,18 @@ class run:
 		dataSet_kr_pb = DatasetTools.read_file(file_path_kr_pb)
 		E_kr_pb = dataSet_kr_pb['channel']
 		E_kr_pb = lin(dataSet_kr_pap4['channel'],popt_Kall[0],popt_Kall[1])
-		kr_pb_counts = dataSet_kr_pb['']
+		kr_pb_counts = dataSet_kr_pb['counts']
 
+		# plot
+		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+		plt.plot(E_kr_pb, kr_pb, 'r.', label="Messwerte")
+		plt.xlabel(r"Flächenmasse / $kg/m^2$")
+		plt.ylabel(r"Integrierte Zählrate 1/s")
+		plt.legend()
+		#plt.xlim(0, 0.35)
+		#plt.ylim(0, 1800)
+		plt.title("Integrierte Zählrate von Kr mit Papier Abschirmung")
+		#plt.savefig('plot_kr_pap_int.pdf', bbox_inches='tight')
+		maximize()
+		plt.show()
 
