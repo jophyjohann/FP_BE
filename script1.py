@@ -600,7 +600,7 @@ class run:
 		
 		print(80*"_"+"\n\nPlotting: Cs Beta Spektrum Fermi-Plot mit Korrekturterm")
 		
-		print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} 		+/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov)		)[1]))
+		print("linearer Fit mit y = a * (x + b)\n-> a = {:.6g} +/- {:.6g}\n-> b = {:.6g} 		+/- {:.6g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov)		)[1]))
 
 		#Cs Beta Spektrum Fermi-Plot mit Korrektur
 		plot_range = [0,800]
@@ -645,7 +645,7 @@ class run:
 
 		print(80*"_"+"\n\nPlotting: Kr Beta Spektrum Fermi-Plot mit Korrekturterm")
 		
-		print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} 		+/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
+		print("linearer Fit mit y = a * (x + b)\n-> a = {:.6g} +/- {:.6g}\n-> b = {:.6g} 		+/- {:.6g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
 		
 		#Kr Beta Spektrum Fermi-Plot mit Korrektur
 		plot_range = [0,800]
@@ -1533,14 +1533,55 @@ class run:
 
 		# plot
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(E_kr_pb, kr_pb_counts, 'r.', label="Messwerte")
+		plt.plot(E_kr_pb, kr_pb_counts, '.', label="Messwerte")
 		plt.xlabel(r"Energie / keV")
 		plt.ylabel(r"Counts")
 		plt.legend()
-		#plt.xlim(0, 0.35)
-		#plt.ylim(0, 1800)
+		plt.xlim(0, 1600)
+		plt.ylim(0, 5000)
 		plt.title("Kr Spektrum mit Bleiabschirmung")
-		#plt.savefig('plot_kr_pap_int.pdf', bbox_inches='tight')
+		#plt.savefig('plot_kr_pb.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 
+
+		#fit_range=[70,100]
+		#fit_plot_range=[70,100]
+		
+		fit_range=[40,100]
+		fit_plot_range=[40,100]
+		
+		
+		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
+		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
+		
+		fit_range = fit_range_conv
+		fit_plot_range = fit_plot_range_conv
+		
+		# fitting the function
+		fit_parameters = [[ "a",  "b" , "C1","μ1","σ1"],
+		                  [-0.1,  -100,  120,  85,  55],      # max bounds
+		                  [  -1,  -130,  80,   75,  20],      # start values
+		                  [  -5,  -150,  10,   65,  5]]      # min bounds
+				
+				
+		popt, pcov = curve_fit(func2, E_kr_pb[fit_range[0]:fit_range[1]], kr_pb_counts[fit_range[0]:fit_range[1]], fit_parameters[2], bounds=(fit_parameters[3],fit_parameters[1]))
+		
+		print("Parameter für den Fit:\n")
+		print("lineare Untergrund-Gerade mit y = a * (x + b)\n-> a = {:.4f} +/- {:.4f}\n-> 		b = {:.4f} +/- {:.4f}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt		(np.diag(pcov))[1]))
+		print("Gausssche Glockenkurve) mit y = C * exp((x - mu)^2 / (2 sigma^2))\n-> C = 		{:.4f} +/- {:.4f}\n-> mu = {:.4f} +/- {:.4f}\n-> sigma = {:.4f} +/- {:.4f}\n".format		(popt[2],np.sqrt(np.diag(pcov))[2],popt[3],np.sqrt(np.diag(pcov))[3],popt[4],np.sqrt		(np.diag(pcov))[4]))
+
+		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+		plt.plot(E_kr_pb, kr_pb_counts, '.', label="Messwerte")
+		plt.plot(E_kr_pb[fit_plot_range[0]:fit_plot_range[1]],func2(E_kr_pb[fit_plot_range[0]:fit_plot_range[1]], *popt), 'r--', label="Fit")
+		plt.xlabel(r"Energie / keV")
+		plt.ylabel(r"Counts")
+		plt.legend()
+		plt.xlim(35, 110)
+		plt.ylim(0, 150)
+		plt.title("Kr Spektrum mit Bleiabschirmung und Fit")
+		#plt.savefig('plot_kr_pb2.pdf', bbox_inches='tight')
+		maximize()
+		plt.show()
+
+		
