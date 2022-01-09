@@ -606,7 +606,7 @@ class run:
 		plot_range = [0,800]
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
 		plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), F_2, '-', label="Cs Fermi-Plot mit Korrektur")
-		plt.plot(x_cs_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], lin(x_cs_F		[fit_plot_range_conv[0]:fit_plot_range_conv[1]], *popt), 'r--', label="Linearer Fit 		(von "+str(fit_range[0])+" bis "+str(fit_range[1])+")")
+		plt.plot(x_cs_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], lin(x_cs_F		[fit_plot_range_conv[0]:fit_plot_range_conv[1]], *popt), 'r--', label="Linearer Fit (von "+str(fit_range[0])+" bis "+str(fit_range[1])+")")
 		plt.xlabel(r"Energie / keV")
 		plt.ylabel(r"Fermi-Term")
 		plt.legend()
@@ -645,7 +645,7 @@ class run:
 
 		print(80*"_"+"\n\nPlotting: Kr Beta Spektrum Fermi-Plot mit Korrekturterm")
 		
-		print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} 		+/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov)		)[1]))
+		print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} 		+/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov))[1]))
 		
 		#Kr Beta Spektrum Fermi-Plot mit Korrektur
 		plot_range = [0,800]
@@ -1528,19 +1528,18 @@ class run:
 		file_path_kr_pb = directory_path + 'KR_PB.TXT'	
 		
 		dataSet_kr_pb = DatasetTools.read_file(file_path_kr_pb)
-		E_kr_pb = dataSet_kr_pb['channel']
-		E_kr_pb = lin(dataSet_kr_pap4['channel'],popt_Kall[0],popt_Kall[1])
+		E_kr_pb = lin(dataSet_kr_pb['channel'],popt_Kall[0],popt_Kall[1])
 		kr_pb_counts = dataSet_kr_pb['counts']
 
 		# plot
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(E_kr_pb, kr_pb, 'r.', label="Messwerte")
-		plt.xlabel(r"Flächenmasse / $kg/m^2$")
-		plt.ylabel(r"Integrierte Zählrate 1/s")
+		plt.plot(E_kr_pb, kr_pb_counts, 'r.', label="Messwerte")
+		plt.xlabel(r"Energie / keV")
+		plt.ylabel(r"Counts")
 		plt.legend()
 		#plt.xlim(0, 0.35)
 		#plt.ylim(0, 1800)
-		plt.title("Integrierte Zählrate von Kr mit Papier Abschirmung")
+		plt.title("Kr Spektrum mit Bleiabschirmung")
 		#plt.savefig('plot_kr_pap_int.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
