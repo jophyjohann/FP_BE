@@ -1540,7 +1540,7 @@ class run:
 		plt.xlim(0, 1600)
 		plt.ylim(0, 5000)
 		plt.title("Kr Spektrum mit Bleiabschirmung")
-		#plt.savefig('plot_kr_pb.pdf', bbox_inches='tight')
+		plt.savefig('plot_kr_pb.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 
@@ -1580,7 +1580,7 @@ class run:
 		plt.xlim(35, 110)
 		plt.ylim(0, 150)
 		plt.title("Kr Spektrum mit Bleiabschirmung und Fit")
-		#plt.savefig('plot_kr_pb2.pdf', bbox_inches='tight')
+		plt.savefig('plot_kr_pb2.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
 
