@@ -71,6 +71,8 @@ class run:
 				fit_parameters_var[i][3] = float(c_cr_scaling) * fit_parameters_var[i][3]
 			return fit_parameters_var
 		
+		def schw(m, N_0, mu_m):
+			return N_0*np.exp(-mu_m*m)
 		
 		print(80*"_"+"\n\nPlotting: Cs Spektrum")
 		
@@ -572,7 +574,7 @@ class run:
 		#plt.show()
 		
 		
-		'''
+		
 		# Fermi-Plots von Cs und Kr mit Korrektur
 		x_0_cs =  -popt_F_1_cs[1] #  E_0 Die Energie aus dem Ersten Fermiplot ist der 		Schnittpunkt des Fits mit der Energieachse
 				
@@ -592,24 +594,75 @@ class run:
 		                  [ -0.001, -500],       # start values
 		                  [ -0.5, -800]]       # min bounds
 				
-		popt, pcov = curve_fit(lin, x_cs_F[fit_range_conv[0]:fit_range_conv[1]], F_1		[fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],		fit_parameters[1]))
+		popt, pcov = curve_fit(lin, x_cs_F[fit_range_conv[0]:fit_range_conv[1]], F_2		[fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],		fit_parameters[1]))
 		popt_F_2_cs = popt.copy()
 		pcov_F_2_cs = pcov.copy()
 		
+		print(80*"_"+"\n\nPlotting: Cs Beta Spektrum Fermi-Plot mit Korrekturterm")
+		
+		print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} 		+/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov)		)[1]))
+
 		#Cs Beta Spektrum Fermi-Plot mit Korrektur
 		plot_range = [0,800]
 		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
-		plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), F_2, '-', label="Cs Fermi-Plot mit 		Korrektur")
+		plt.plot(lin(x_cs_B,popt_Kall[0],popt_Kall[1]), F_2, '-', label="Cs Fermi-Plot mit Korrektur")
 		plt.plot(x_cs_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], lin(x_cs_F		[fit_plot_range_conv[0]:fit_plot_range_conv[1]], *popt), 'r--', label="Linearer Fit 		(von "+str(fit_range[0])+" bis "+str(fit_range[1])+")")
 		plt.xlabel(r"Energie / keV")
 		plt.ylabel(r"Fermi-Term")
 		plt.legend()
+		plt.xlim(0, 800)
+		plt.ylim(0, 4.3e-5)
 		#plt.xlim(plot_range[0], plot_range[1])
 		#plt.ylim(0, 0.032)
 		plt.title("Cs Beta Spektrum Fermi-Plot mit Korrekturterm")
 		#plt.savefig('plot_cs_beta_fermi2.pdf', bbox_inches='tight')
+		maximize()
 		plt.show()
-		'''
+		
+
+		# Fermi-Plot Kr mit Korrektur
+		x_0_Kr =  -popt_F_1_kr[1] #  E_0 Die Energie aus dem Ersten Fermiplot ist der Schnittpunkt des Fits mit der Energieachse
+				
+		# Korrekturterm 
+		S_1 = (x_Kr_F + m)**2 -m + (x_0_Kr - x_Kr_F)**2
+		F_2 =  np.sqrt(y_Kr_B/(np.sqrt(x_Kr_F**2+2*m*x_Kr_F)*(x_Kr_F+m)*F_Kr*S_1))
+				
+		# Linear Fit
+		fit_range = [450,600]
+		fit_plot_range = [0,800]
+		
+		fit_range_conv = lin_inv(fit_range,popt_Kall[0],popt_Kall[1]).astype(int)   		#convert fit range from energy into channels
+		fit_plot_range_conv = lin_inv(fit_plot_range,popt_Kall[0],popt_Kall[1]).astype(int) 		  #convert fit range from energy into channels
+				
+		fit_parameters = [[ "a",  "b"],
+		                  [ 0, -200],     # max bounds 
+		                  [ -0.001, -500],       # start values
+		                  [ -0.5, -800]]       # min bounds
+				
+		popt, pcov = curve_fit(lin, x_Kr_F[fit_range_conv[0]:fit_range_conv[1]], F_2		[fit_range_conv[0]:fit_range_conv[1]], fit_parameters[2], bounds=(fit_parameters[3],		fit_parameters[1]))
+		popt_F_2_cs = popt.copy()
+		pcov_F_2_cs = pcov.copy()
+
+		print(80*"_"+"\n\nPlotting: Kr Beta Spektrum Fermi-Plot mit Korrekturterm")
+		
+		print("linearer Fit mit y = a * (x + b)\n-> a = {:.4g} +/- {:.4g}\n-> b = {:.4g} 		+/- {:.4g}\n".format(popt[0],np.sqrt(np.diag(pcov))[0],popt[1],np.sqrt(np.diag(pcov)		)[1]))
+		
+		#Kr Beta Spektrum Fermi-Plot mit Korrektur
+		plot_range = [0,800]
+		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+		plt.plot(lin(x_Kr_B,popt_Kall[0],popt_Kall[1]), F_2, '-', label="Cs Fermi-Plot mit Korrektur")
+		plt.plot(x_Kr_F[fit_plot_range_conv[0]:fit_plot_range_conv[1]], lin(x_cs_F		[fit_plot_range_conv[0]:fit_plot_range_conv[1]], *popt), 'r--', label="Linearer Fit (von "+str(fit_range[0])+" bis "+str(fit_range[1])+")")
+		plt.xlabel(r"Energie / keV")
+		plt.ylabel(r"Fermi-Term")
+		plt.legend()
+		plt.xlim(0, 800)
+		plt.ylim(0, 5.5e-5)
+		#plt.xlim(plot_range[0], plot_range[1])
+		#plt.ylim(0, 0.032)
+		plt.title("Kr Beta Spektrum Fermi-Plot mit Korrekturterm")
+		#plt.savefig('plot_Kr_beta_fermi2.pdf', bbox_inches='tight')
+		maximize()
+		plt.show()
 		
 		
 		# WW mit Materie
@@ -1107,14 +1160,19 @@ class run:
 		mc = 500e3	#eV
 
 		m = 2.7#flächemasse pro Aluminiumfolienblatt
-		y_data = [opt_fit_parameters_cs_alu3[5],opt_fit_parameters_cs_alu6[5],		opt_fit_parameters_cs_alu9[5],opt_fit_parameters_cs_alu12[5],]
+		y_0 = 624.219   # keV Ungeschirmte Peak energie
+		y_3 = opt_fit_parameters_cs_alu3[4] - y_0 # Differenz zur ungeschirmten messung
+		y_6 = opt_fit_parameters_cs_alu6[4] - y_0 # Differenz zur ungeschirmten messung
+		y_9 = opt_fit_parameters_cs_alu9[4] - y_0 # Differenz zur ungeschirmten messung
+		y_12 = opt_fit_parameters_cs_alu12[4] - y_0 # Differenz zur ungeschirmten messung
+		y_data = [y_3, y_6, y_9, y_12]
 		x_data = [3*m,6*m,9*m,12*m]
 		yerr_data=[np.sqrt(2*np.log(2))*opt_fit_parameters_cs_alu3[6],
 							np.sqrt(2*np.log(2))*opt_fit_parameters_cs_alu6[6],
 							np.sqrt(2*np.log(2))*opt_fit_parameters_cs_alu9[6],
 							np.sqrt(2*np.log(2))*opt_fit_parameters_cs_alu12[6]]
 
-		E_kin = np.linspace(y_data[0], y_data[-1], 1000)
+		E_kin = np.linspace(opt_fit_parameters_cs_alu3[4], opt_fit_parameters_cs_alu12[4], 1000)
 		m_data_plot = np.linspace(x_data[0], x_data[-1], 1000)
 		
 		m_data = m_data_plot * 1e-3
@@ -1138,11 +1196,11 @@ class run:
 		plt.plot(m_data_plot, E_loss_BB, '--', label="Bethe-Bloch")
 		plt.plot(m_data_plot, E_loss_L, '--', label="Landau")
 		plt.xlabel(r"Flächenmasse / $mg/cm^2$")
-		plt.ylabel(r"Energie / keV")
+		plt.ylabel(r"$\Delta$ Energie / keV")
 		plt.legend()
 		#plt.xlim(plot_range[0], plot_range[1])
 		#plt.ylim(0, 1800)
-		plt.title("Mittlere Energie der K-Konv.-El. über Flächenmasse von Alu")
+		plt.title("Energieverlust der K-Konv.-El. über Flächenmasse von Al")
 		#plt.savefig('plot_cs_alu_area_mass.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
@@ -1179,3 +1237,72 @@ class run:
 		#plt.savefig('plot_cs_pap_area_mass.pdf', bbox_inches='tight')
 		maximize()
 		plt.show()
+
+
+
+
+		# Absorption von Beta Strahlung
+		# Für Cs mit Alu
+		m_Alu = 2.7 # mg/cm^2  Flächenmasse pro Alu Blatt
+		m_data = [0*m_Alu, 3*m_Alu, 6*m_Alu, 9*m_Alu, 12*m_Alu]*10*(-2)   # kg/m^2  kommt auf die x_Achse
+
+
+		# Integrierte Zählrate ist die Summe der Zählraten über das gesamte Gamma Spektrum (Also ohne K und L Peaks)
+		# Ungeschirmt
+		y_0_cs_Alu = dataSet_cs['counts']
+		t_0_cs_Alu = dataSet_cs['time']
+		n_0_cs_Alu = y_0_cs_Alu/t_0_cs_Alu   # Zählrate
+		I_0_cs_Alu = np.sum(n_0_cs_Alu[:647]) # Integral
+
+		# 3 Alu Lagen
+		y_3_cs_Alu = dataSet_cs_Alu3['counts']
+		t_3_cs_Alu = dataSet_cs_Alu3['time']
+		n_3_cs_Alu = y_3_cs_Alu/t_3_cs_Alu   # Zählrate
+		I_3_cs_Alu = np.sum(n_3_cs_Alu[:647]) # Integral
+
+		# 6 Alu Lagen
+		y_6_cs_Alu = dataSet_cs_Alu6['counts']
+		t_6_cs_Alu = dataSet_cs_Alu6['time']
+		n_6_cs_Alu = y_6_cs_Alu/t_6_cs_Alu   # Zählrate
+		I_6_cs_Alu = np.sum(n_6_cs_Alu[:647]) # Integral
+
+		# 9 Alu Lagen
+		y_9_cs_Alu = dataSet_cs_Alu9['counts']
+		t_9_cs_Alu = dataSet_cs_Alu9['time']
+		n_9_cs_Alu = y_9_cs_Alu/t_9_cs_Alu   # Zählrate
+		I_9_cs_Alu = np.sum(n_9_cs_Alu[:647]) # Integral
+
+		# 12 Alu Lagen
+		y_12_cs_Alu = dataSet_cs_Alu12['counts']
+		t_12_cs_Alu = dataSet_cs_Alu12['time']
+		n_12_cs_Alu = y_12_cs_Alu/t_12_cs_Alu   # Zählrate
+		I_12_cs_Alu = np.sum(n_12_cs_Alu[:647]) # Integral
+
+		y_data = [I_0_cs_Alu, I_3_cs_Alu, I_6_cs_Alu, I_9_cs_Alu, I_12_cs_Alu]
+		print(m_data)
+		print(y_data)
+		# Fit mit dem exp. schwächungsgesetz
+		fit_parameters = [[ "N_0",  "mu_m"],
+		                  [ 1000, 800],     # max bounds 
+		                  [ 900, 1],       # start values
+		                  [ 800, -800]]       # min bounds
+				
+		popt, pcov = curve_fit(schw, m_data, y_data, fit_parameters[2], bounds=(fit_parameters[3],		fit_parameters[1]))
+		popt_cs_alu_int = popt.copy()
+		pcov_cs_alu_int = pcov.copy()
+		print(popt)
+
+		# Plot
+		fig = plt.figure(figsize=(8, 4), dpi=120).add_subplot(1, 1, 1)
+		plt.plot(m_data, y_data, 'r.', label="Messwerte")
+		plt.plot(m_data, schw(m_data, *popt), 'r--', label=" Fit")
+		plt.xlabel(r"Flächenmasse / $kg/m^2$")
+		plt.ylabel(r"Integrierte Zählrate")
+		plt.legend()
+		plt.xlim(0, 40)
+		#plt.ylim(0, 1800)
+		plt.title("Integrierte Zählrate von Cs mit Al Abschirmung")
+		#plt.savefig('plot_cs_alu_int.pdf', bbox_inches='tight')
+		maximize()
+		plt.show()
+
