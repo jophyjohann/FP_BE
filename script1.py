@@ -73,6 +73,12 @@ class run:
 		
 		def schw(m, N_0, mu_m):
 			return N_0*np.exp(-mu_m*m)
+
+		def pap(E):
+			return 17/(E**1.14)
+
+		def Alu(E, Z):
+			return 0.008*Z**0.28*E**(-1.57+Z/160)
 		
 		print(80*"_"+"\n\nPlotting: Cs Spektrum")
 		
@@ -1522,6 +1528,24 @@ class run:
 		maximize()
 		plt.show()
 		
+
+		# Theoretische Vorhersagen für die Schwächungskoeff.
+		Z = 13 # Für Aluminium
+		E_cs = 624.219e-3  # MeV
+		E_kr = 687.1e-3  # MeV
+		# Papier Cs
+		mu_m_cs_pap = pap(E_cs)
+		# Alu Cs
+		mu_m_cs_alu = Alu(E_cs, Z)
+		# Papier kr
+		mu_m_kr_pap = pap(E_kr)
+		# Alu kr
+		mu_m_kr_alu = Alu(E_kr)
+
+		
+
+
+
 
 
 		# Blei Abschirmung von Kr				
