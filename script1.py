@@ -1389,31 +1389,31 @@ class run:
 		y_0_kr_Alu = dataSet_Kr['counts']
 		t_0_kr_Alu = dataSet_Kr['time']
 		n_0_kr_Alu = y_0_kr_Alu/t_0_kr_Alu   # Zählrate
-		I_0_kr_Alu = np.sum(n_0_kr_Alu[:647]) # Integral
+		I_0_kr_Alu = np.sum(n_0_kr_Alu) # Integral
 
 		# 3 Alu Lagen
 		y_3_kr_Alu = dataSet_kr_Alu3['counts']
 		t_3_kr_Alu = dataSet_kr_Alu3['time']
 		n_3_kr_Alu = y_3_kr_Alu/t_3_kr_Alu   # Zählrate
-		I_3_kr_Alu = np.sum(n_3_kr_Alu[:647]) # Integral
+		I_3_kr_Alu = np.sum(n_3_kr_Alu) # Integral
 
 		# 6 Alu Lagen
 		y_6_kr_Alu = dataSet_kr_Alu6['counts']
 		t_6_kr_Alu = dataSet_kr_Alu6['time']
 		n_6_kr_Alu = y_6_kr_Alu/t_6_kr_Alu   # Zählrate
-		I_6_kr_Alu = np.sum(n_6_kr_Alu[:647]) # Integral
+		I_6_kr_Alu = np.sum(n_6_kr_Alu) # Integral
 
 		# 9 Alu Lagen
 		y_9_kr_Alu = dataSet_kr_Alu9['counts']
 		t_9_kr_Alu = dataSet_kr_Alu9['time']
 		n_9_kr_Alu = y_9_kr_Alu/t_9_kr_Alu   # Zählrate
-		I_9_kr_Alu = np.sum(n_9_kr_Alu[:647]) # Integral
+		I_9_kr_Alu = np.sum(n_9_kr_Alu) # Integral
 
 		# 12 Alu Lagen
 		y_12_kr_Alu = dataSet_kr_Alu12['counts']
 		t_12_kr_Alu = dataSet_kr_Alu12['time']
 		n_12_kr_Alu = y_12_kr_Alu/t_12_kr_Alu   # Zählrate
-		I_12_kr_Alu = np.sum(n_12_kr_Alu[:647]) # Integral
+		I_12_kr_Alu = np.sum(n_12_kr_Alu) # Integral
 
 		y_data = [I_0_kr_Alu, I_3_kr_Alu, I_6_kr_Alu, I_9_kr_Alu, I_12_kr_Alu]
 		y_data = np.array(y_data)
@@ -1462,31 +1462,31 @@ class run:
 		y_0_kr_pap = dataSet_Kr['counts']
 		t_0_kr_pap = dataSet_Kr['time']
 		n_0_kr_pap = y_0_kr_pap/t_0_kr_pap   # Zählrate
-		I_0_kr_pap = np.sum(n_0_kr_pap[:647]) # Integral
+		I_0_kr_pap = np.sum(n_0_kr_pap) # Integral
 
 		# 1 Papier Lage
 		y_1_kr_pap = dataSet_kr_pap1['counts']
 		t_1_kr_pap = dataSet_kr_pap1['time']
 		n_1_kr_pap = y_1_kr_pap/t_1_kr_pap   # Zählrate
-		I_1_kr_pap = np.sum(n_1_kr_pap[:647]) # Integral
+		I_1_kr_pap = np.sum(n_1_kr_pap) # Integral
 
 		# 2 Papier Lagen
 		y_2_kr_pap = dataSet_kr_pap2['counts']
 		t_2_kr_pap = dataSet_kr_pap2['time']
 		n_2_kr_pap = y_2_kr_pap/t_2_kr_pap   # Zählrate
-		I_2_kr_pap = np.sum(n_2_kr_pap[:647]) # Integral
+		I_2_kr_pap = np.sum(n_2_kr_pap) # Integral
 
 		# 3 Papier Lagen
 		y_3_kr_pap = dataSet_kr_pap3['counts']
 		t_3_kr_pap = dataSet_kr_pap3['time']
 		n_3_kr_pap = y_3_kr_pap/t_3_kr_pap   # Zählrate
-		I_3_kr_pap = np.sum(n_3_kr_pap[:647]) # Integral
+		I_3_kr_pap = np.sum(n_3_kr_pap) # Integral
 
 		# 4 Papier Lagen
 		y_4_kr_pap = dataSet_kr_pap4['counts']
 		t_4_kr_pap = dataSet_kr_pap4['time']
 		n_4_kr_pap = y_4_kr_pap/t_4_kr_pap   # Zählrate
-		I_4_kr_pap = np.sum(n_4_kr_pap[:647]) # Integral
+		I_4_kr_pap = np.sum(n_4_kr_pap) # Integral
 
 		y_data = [I_0_kr_pap, I_1_kr_pap, I_2_kr_pap, I_3_kr_pap, I_4_kr_pap]
 		y_data = np.array(y_data)
